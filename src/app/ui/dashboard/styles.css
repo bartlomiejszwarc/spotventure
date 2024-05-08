@@ -1,0 +1,35 @@
+.closed-sidebar {
+	width: 0px;
+	background-color: #0f172a;
+	height: 100vh;
+	animation: sidebar-slide-left 300ms;
+}
+
+@keyframes sidebar-slide-left {
+	0% {
+		width: 300px;
+	}
+	100% {
+		width: 0px;
+	}
+}
+
+.closed-sidebar-initial {
+	width: 0px;
+}
+
+.opened-sidebar {
+	height: 100vh;
+	background-color: #0f172a;
+	animation: sidebar-slide-right 300ms;
+	width: 300px;
+}
+
+@keyframes sidebar-slide-right {
+	0% {
+		width: 0;
+	}
+	100% {
+		width: 300px;
+	}
+}
