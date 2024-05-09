@@ -2,7 +2,7 @@
   width: 0px;
   background-color: #18181b;
   height: 100vh;
-  animation: sidenav-slide-left 300ms ease;
+  animation: sidenav-slide-left-mobile 300ms ease;
 }
 
 @media (min-width: 640px) {
@@ -20,6 +20,14 @@
   }
   100% {
     width: 80px;
+  }
+}
+@keyframes sidenav-slide-left-mobile {
+  0% {
+    width: 300px;
+  }
+  100% {
+    width: 0px;
   }
 }
 

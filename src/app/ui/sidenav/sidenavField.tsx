@@ -22,14 +22,14 @@ function SidenavField({icon, title, route, iconOnly}: ISidenavField) {
     <div className='flex'>
       <Link href={route} className='flex items-center justify-center space-x-3'>
         <span
-          className={`${isRouteActive() ? 'text-emerald-500' : 'text-zinc-300'} ${
+          className={`${isRouteActive() ? 'text-emerald-500' : 'text-zinc-500'} ${
             isRouteActive() ? 'bg-zinc-700' : 'bg-zinc-700'
           } bg-opacity-20 p-2 rounded-md`}>
           {icon}
         </span>
         {!iconOnly ? (
           <span
-            className={`${isRouteActive() ? 'text-emerald-400' : 'text-zinc-300'} text-lg font-[400] tracking-wider`}>
+            className={`${isRouteActive() ? 'text-emerald-400' : 'text-zinc-500'} text-lg font-[400] tracking-wider`}>
             {title}
           </span>
         ) : null}
