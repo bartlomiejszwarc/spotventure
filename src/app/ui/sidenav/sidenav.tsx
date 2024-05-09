@@ -3,7 +3,8 @@ import {useEffect, useState} from 'react';
 import './styles.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import useWindowDimensions from './../../../hooks/useWindowDimensions';
+import useWindowDimensions from '../../../hooks/useWindowDimensions';
+import SidenavFieldList from './sidenavFieldList';
 
 function SideNav() {
   const [isMobile, setIsMobile] = useState<boolean>(true);
@@ -42,7 +43,7 @@ function SideNav() {
       {!open ? (
         <MenuIcon
           className={`absolute left-5 top-5  ${
-            !isMobile ? 'text-slate-300' : 'text-slate-800'
+            !isMobile ? 'text-zinc-300' : 'text-zinc-800'
           }   text-4xl cursor-pointer`}
           onClick={() => {
             changeStyle();
@@ -50,13 +51,19 @@ function SideNav() {
           }}></MenuIcon>
       ) : (
         <CloseIcon
-          className={`absolute left-5 top-5 text-slate-300 text-4xl cursor-pointer`}
+          className={`absolute left-5 top-5 text-zinc-300 text-4xl cursor-pointer`}
           onClick={() => {
             changeStyle();
             setOpen(false);
           }}></CloseIcon>
       )}
-      {open ? <div className={style}></div> : <div className={style}></div>}
+      {open ? (
+        <div className={style}>
+          <SidenavFieldList />
+        </div>
+      ) : (
+        <div className={style}></div>
+      )}
     </div>
   );
 }

@@ -1,16 +1,16 @@
 .closed-sidenav {
   width: 0px;
-  background-color: #0f172a;
+  background-color: #18181b;
   height: 100vh;
-  animation: sidenav-slide-left 300ms;
+  animation: sidenav-slide-left 300ms ease;
 }
 
 @media (min-width: 640px) {
   .closed-sidenav {
     width: 80px;
-    background-color: #0f172a;
+    background-color: #18181b;
     height: 100vh;
-    animation: sidenav-slide-left 300ms;
+    animation: sidenav-slide-left 300ms ease;
   }
 }
 
@@ -26,7 +26,7 @@
 .closed-sidenav-initial {
   width: 80px;
   height: 100vh;
-  background-color: #0f172a;
+  background-color: #18181b;
 }
 
 .closed-sidenav-initial-mobile {
@@ -37,8 +37,8 @@
 
 .opened-sidenav {
   height: 100vh;
-  background-color: #0f172a;
-  animation: sidenav-slide-right 300ms;
+  background-color: #18181b;
+  animation: sidenav-slide-right 300ms ease;
   width: 300px;
 }
 
