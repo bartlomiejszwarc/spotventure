@@ -6,8 +6,10 @@ export interface ISidenavField {
   icon: React.ReactElement;
   title: string;
   route: string;
+  iconOnly: boolean;
 }
-function SidenavField({icon, title, route}: ISidenavField) {
+
+function SidenavField({icon, title, route, iconOnly}: ISidenavField) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -20,12 +22,17 @@ function SidenavField({icon, title, route}: ISidenavField) {
     <div className='flex'>
       <Link href={route} className='flex items-center justify-center space-x-3'>
         <span
-          className={`${
-            isRouteActive() ? 'text-emerald-500' : 'text-zinc-300'
-          } bg-zinc-600 bg-opacity-20 p-1 rounded-md`}>
+          className={`${isRouteActive() ? 'text-emerald-500' : 'text-zinc-300'} ${
+            isRouteActive() ? 'bg-zinc-700' : 'bg-zinc-700'
+          } bg-opacity-20 p-2 rounded-md`}>
           {icon}
         </span>
-        <span className={`${isRouteActive() ? 'text-emerald-500' : 'text-zinc-300'} text-xl`}>{title}</span>
+        {!iconOnly ? (
+          <span
+            className={`${isRouteActive() ? 'text-emerald-400' : 'text-zinc-300'} text-lg font-[400] tracking-wider`}>
+            {title}
+          </span>
+        ) : null}
       </Link>
     </div>
   );

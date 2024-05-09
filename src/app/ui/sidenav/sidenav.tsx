@@ -27,6 +27,7 @@ function SideNav() {
   useEffect(() => {
     if (!open && !isMobile) {
       setStyle('closed-sidenav');
+      //bug stylu zamykania
     }
   }, [open]);
 
@@ -59,7 +60,11 @@ function SideNav() {
       )}
       {open ? (
         <div className={style}>
-          <SidenavFieldList />
+          <SidenavFieldList isSidenavOpen={open} />
+        </div>
+      ) : !open && !isMobile ? (
+        <div className={style}>
+          <SidenavFieldList isSidenavOpen={open} />
         </div>
       ) : (
         <div className={style}></div>
