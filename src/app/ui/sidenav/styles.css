@@ -16,7 +16,7 @@
 
 @keyframes sidenav-slide-left {
   0% {
-    width: 300px;
+    width: 275px;
   }
   100% {
     width: 80px;
@@ -24,7 +24,7 @@
 }
 @keyframes sidenav-slide-left-mobile {
   0% {
-    width: 300px;
+    width: 275px;
   }
   100% {
     width: 0px;
@@ -47,7 +47,7 @@
   height: 100vh;
   background-color: #18181b;
   animation: sidenav-slide-right 300ms ease;
-  width: 300px;
+  width: 275px;
 }
 
 @keyframes sidenav-slide-right {
@@ -55,6 +55,6 @@
     width: 80px;
   }
   100% {
-    width: 300px;
+    width: 275px;
   }
 }

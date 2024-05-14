@@ -22,7 +22,7 @@ export default function RootLayout({
           <div className='absolute z-30'>
             <SideNav />
           </div>
-          <div className='flex-grow pt-4 pl-20 md:pl-[100px] bg-zinc-200'>{children}</div>
+          <div className='flex-grow pt-6 pl-20 md:pl-[100px] bg-zinc-200'>{children}</div>
         </div>
       </body>
     </html>
