@@ -38,11 +38,12 @@
 }
 
 .closed-sidenav-initial-mobile {
-  width: 80px;
+  width: 0px;
+  height: 100vh;
   background-color: transparent;
 }
 
-.opened-sidenav {
+.open-sidenav {
   height: 100vh;
   background-color: #18181b;
   animation: sidenav-slide-right 300ms ease;

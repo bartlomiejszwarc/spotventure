@@ -5,12 +5,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import SidenavFieldList from './sidenavFieldList';
+import {usePathname} from 'next/navigation';
 
 function SideNav() {
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
   const [style, setStyle] = useState<string>('');
   const {width} = useWindowDimensions();
+  const path = usePathname();
 
   useEffect(() => {
     if (width && width > 768) {
@@ -19,13 +21,13 @@ function SideNav() {
       setOpen(false);
     } else {
       setIsMobile(true);
-      setOpen(false);
       setStyle('closed-sidenav-initial-mobile');
+      setOpen(false);
     }
-  }, [width]);
+  }, [width, path]);
 
   useEffect(() => {
-    if (!open && !isMobile) {
+    if (!open) {
       setStyle('closed-sidenav');
     }
   }, [open]);
@@ -34,7 +36,7 @@ function SideNav() {
     if (open) {
       setStyle('closed-sidenav');
     } else {
-      setStyle('opened-sidenav');
+      setStyle('open-sidenav');
     }
   };
 
