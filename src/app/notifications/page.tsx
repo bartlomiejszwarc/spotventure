@@ -1,4 +1,5 @@
+import NotificationList from '@/components/ui/notifications/notificationList';
 function Page() {
-  return <span>notifications</span>;
+  return <NotificationList />;
 }
 export default Page;

@@ -1,7 +1,7 @@
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import './globals.css';
-import SideNav from './ui/sidenav/sidenav';
+import SideNav from '../components/ui/sidenav/sidenav';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -23,7 +23,7 @@ export default function RootLayout({
             <SideNav />
           </div>
           <div className='flex min-h-screen'>
-            <div className=' pt-24 md:pt-6 bg-zinc-200 md:pl-24 w-full '>{children}</div>
+            <div className=' pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full '>{children}</div>
           </div>
         </div>
       </body>

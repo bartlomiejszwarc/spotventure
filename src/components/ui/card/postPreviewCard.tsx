@@ -4,6 +4,15 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
+interface IPostPreviewCard {
+  userId: string;
+  text: string;
+  whenVisited: Date;
+  location: string;
+  likesCount: number;
+  image: string;
+}
+
 function PostPreviewCard() {
   return (
     <div className='w-64 h-[12rem] lg:w-80 lg:h-[17rem] xl:w-96 xl:h-[20rem] border-0 rounded-xl border-zinc-400 relative bg-zinc-100'>
