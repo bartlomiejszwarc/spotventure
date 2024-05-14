@@ -13,7 +13,7 @@ function SideNav() {
   const {width} = useWindowDimensions();
 
   useEffect(() => {
-    if (width && width > 640) {
+    if (width && width > 768) {
       setIsMobile(false);
       setStyle('closed-sidenav-initial');
       setOpen(false);
@@ -27,7 +27,6 @@ function SideNav() {
   useEffect(() => {
     if (!open && !isMobile) {
       setStyle('closed-sidenav');
-      //bug stylu zamykania
     }
   }, [open]);
 

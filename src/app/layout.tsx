@@ -18,11 +18,13 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className='flex h-screen md:flex-row font-roboto'>
-          <div className='absolute z-30'>
+        <div className='min-h-screen font-roboto '>
+          <div className='fixed z-30'>
             <SideNav />
           </div>
-          <div className='flex-grow pt-6 pl-20 md:pl-[100px] bg-zinc-200'>{children}</div>
+          <div className='flex min-h-screen'>
+            <div className=' pt-24 md:pt-6 bg-zinc-200 md:pl-24 w-full '>{children}</div>
+          </div>
         </div>
       </body>
     </html>

@@ -5,7 +5,7 @@
   animation: sidenav-slide-left-mobile 300ms ease;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .closed-sidenav {
     width: 80px;
     background-color: #18181b;
@@ -39,7 +39,6 @@
 
 .closed-sidenav-initial-mobile {
   width: 80px;
-  height: 100vh;
   background-color: transparent;
 }
 
