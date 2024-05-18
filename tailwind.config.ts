@@ -27,7 +27,13 @@ const config = {
     extend: {
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
+        manrope: ['Manrope', 'sans-serif'],
+        merienda: ['Merienda', 'sans-serif'],
       },
+      scale: {
+        '-100': '-1',
+      },
+
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

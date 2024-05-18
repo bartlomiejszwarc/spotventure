@@ -15,7 +15,6 @@ function SideNav() {
   const path = usePathname();
 
   useEffect(() => {
-    console.log(path);
     if (width && width > 768) {
       setIsMobile(false);
       setStyle('closed-sidenav-initial');
