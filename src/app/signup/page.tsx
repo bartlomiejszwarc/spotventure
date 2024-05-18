@@ -15,7 +15,7 @@ export default function Page() {
         <img
           src={'/images/sign1.jpg'}
           alt={'Image'}
-          className='object-cover h-full rounded-l-lg opacity-75 transform -scale-x-100'
+          className='object-cover h-full rounded-r-lg opacity-75 transform -scale-x-100'
         />
       </div>
       <div className='flex justify-center w-full lg:w-1/2'>
