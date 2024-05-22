@@ -7,16 +7,6 @@ async function handler(req: NextRequest, res: NextApiResponse) {
   try {
     const {method} = req;
     switch (method) {
-      case 'GET': {
-        const id = req.nextUrl.searchParams.get('id');
-        if (!id) return NextResponse.json({success: false, message: 'No ID provided'});
-        const user = await prisma.user.findUnique({
-          where: {
-            uid: 'gerferg',
-          },
-        });
-        return NextResponse.json({success: true, user: user || null});
-      }
       case 'POST': {
         try {
           const data = await req.json();
@@ -39,6 +29,7 @@ async function handler(req: NextRequest, res: NextApiResponse) {
   } finally {
     prisma.$disconnect;
   }
+  prisma.$disconnect;
 }
 
 export {handler as GET, handler as POST};

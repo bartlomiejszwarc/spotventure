@@ -9,8 +9,9 @@ import Logo from '@/components/ui/logo/logo';
 import LogoContainer from '@/components/ui/logo/logoContainer';
 import ErrorIcon from '@mui/icons-material/Error';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
-import {app, auth} from '@/firebase/config';
 import {useCreateUser} from '@/hooks/user/useCreateUser';
+import {auth} from '@/firebase/config';
+import {useAuthState} from 'react-firebase-hooks/auth';
 
 interface SignUpFormData {
   email: string;
