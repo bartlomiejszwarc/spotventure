@@ -29,7 +29,6 @@ interface IUserContextState extends IUserContext {
 export const UserContext = createContext<IUserContextState | null>(null);
 
 export const userReducer = (state: IUserContextState, action: IUserAction): any => {
-  //type :
   switch (action.type) {
     case 'SET_USER_DATA':
       return {...state, user: action.payload};
@@ -50,7 +49,7 @@ export const UserContextProvider = ({children}: Props) => {
         try {
           const res = await getUserData(user.uid);
           if (res) {
-            dispatch({type: 'SET_USER_DATA', payload: res});
+            dispatch({type: 'SET_USER_DATA', payload: res.data.user});
             redirect('/home');
           }
         } catch (error) {}

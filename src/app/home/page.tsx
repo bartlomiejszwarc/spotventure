@@ -1,5 +1,6 @@
 'use client';
-import PostPreviewCard from '../../components/ui/card/postPreviewCard';
+import {useUserContext} from '@/hooks/context/useUserContext';
 export default function Page() {
+  const {user} = useUserContext();
   return <></>;
 }
