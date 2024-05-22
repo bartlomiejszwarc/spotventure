@@ -19,7 +19,6 @@ const addUser = async ({uid, email, name}: IUser) => {
     await connectDb();
     const newUser = new User({uid, email, name});
     const res = await newUser.save();
-    console.log(res);
   } catch (error) {
     throw new Error('Error while creating user');
   }

@@ -8,6 +8,8 @@ import LogoContainer from '@/components/ui/logo/logoContainer';
 import Link from 'next/link';
 import Logo from '@/components/ui/logo/logo';
 import ErrorIcon from '@mui/icons-material/Error';
+import {useLogin} from '@/hooks/auth/useLogin';
+import {redirect} from 'next/navigation';
 
 interface SignInFormData {
   email: string;
@@ -29,10 +31,13 @@ export default function Page() {
     const [errorMessage, setErrorMessage] = useState<string | null>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const handleOnSubmitData = () => {
+    const {loginUser, processing} = useLogin();
+    const handleOnSubmitData = async () => {
       setErrorMessage(null);
       try {
         if (!email || !password) throw Error('All fields are required');
+        const res = await loginUser(email, password);
+        if (!res) throw Error('Invalid credentials');
       } catch (error: any) {
         setErrorMessage(error.message);
       }
