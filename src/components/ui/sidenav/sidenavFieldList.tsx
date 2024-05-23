@@ -7,7 +7,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExploreIcon from '@mui/icons-material/Explore';
-import CreatePostDialog from '../post/createPostDialog';
+import CreatePostDialog from '../post/dialog/createPostDialog';
 
 interface ISidenavFieldListProps {
   isSidenavOpen: boolean;
