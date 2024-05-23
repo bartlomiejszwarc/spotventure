@@ -1,3 +1,4 @@
+'use client';
 import SidenavField from './sidenavField';
 import {ISidenavField} from './sidenavField';
 import HomeIcon from '@mui/icons-material/Home';
@@ -6,6 +7,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExploreIcon from '@mui/icons-material/Explore';
+import CreatePostDialog from '../post/createPostDialog';
 
 interface ISidenavFieldListProps {
   isSidenavOpen: boolean;
@@ -23,7 +25,6 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
       route: '/notifications',
       iconOnly: isSidenavOpen,
     },
-
     {icon: <SettingsIcon className='text-3xl' />, title: 'Settings', route: '/settings', iconOnly: isSidenavOpen},
   ];
   if (isSidenavOpen) {
@@ -32,6 +33,7 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
         {fieldList.map((field, id) => (
           <SidenavField icon={field.icon} title={field.title} route={field.route} key={id} iconOnly={!isSidenavOpen} />
         ))}
+        <CreatePostDialog isSidenavOpen={isSidenavOpen} />
       </div>
     );
   }
@@ -41,6 +43,7 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
         {fieldList.map((field, id) => (
           <SidenavField icon={field.icon} title={field.title} route={field.route} key={id} iconOnly={!isSidenavOpen} />
         ))}
+        <CreatePostDialog isSidenavOpen={isSidenavOpen} />
       </div>
     );
   }

@@ -18,10 +18,7 @@ export default function Layout({
     return (
       <UserContextProvider>
         <div className='flex min-h-screen'>
-          <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>
-            <span>Hello, {user?.email}</span>
-            {children}
-          </div>
+          <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
         </div>
       </UserContextProvider>
     );
