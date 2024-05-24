@@ -42,6 +42,9 @@
     "react-day-picker": "^8.10.1",
     "react-dom": "^18",
     "react-firebase-hooks": "^5.1.1",
+    "react-moving-text": "^0.0.7",
+    "react-spinners": "^0.13.8",
+    "styled-components": "^6.1.11",
     "tailwind-merge": "^2.3.0"
   },
   "devDependencies": {

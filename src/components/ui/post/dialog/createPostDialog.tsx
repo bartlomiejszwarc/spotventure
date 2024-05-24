@@ -27,8 +27,9 @@ import {useCreatePost} from '@/hooks/post/useCreatePost';
 import {uploadImage} from '@/firebase/storage';
 import {IImage} from '@/firebase/storage';
 import {auth} from '@/firebase/config';
-
 import {useAuthState} from 'react-firebase-hooks/auth';
+import CreatePostDialogSpinner from './createPostDialogSpinner';
+import CreatePostDialogSuccess from './createPostDialogSuccess';
 
 interface Props {
   isSidenavOpen: boolean;
@@ -38,6 +39,8 @@ function CreatePostDialog({isSidenavOpen}: Props) {
   const [user] = useAuthState(auth);
   const fileInputRef = useRef<any>(null);
   const CreateDialogContent = () => {
+    const [processing, setProcessing] = useState<boolean>(false);
+    const [success, setSuccess] = useState<boolean>(false);
     const MAX_DESCRIPTION_LENGTH = 300;
     const [postImage, setPostImage] = useState<File | null>(null);
     const [postImageUrl, setPostImageUrl] = useState<string>('null');
@@ -62,10 +65,10 @@ function CreatePostDialog({isSidenavOpen}: Props) {
       setPostImage(image);
       const url = URL.createObjectURL(image);
       setImagePreviewUrl(url);
-      // TODO: const imageUrl
     };
 
     const handleOnSubmit = async () => {
+      setProcessing(true);
       try {
         if (!user) return;
         if (!postImage) return;
@@ -88,7 +91,10 @@ function CreatePostDialog({isSidenavOpen}: Props) {
           anyTimeAvailable: postIsAvailableAnyTime,
         };
         await createPost(body);
+        setProcessing(false);
+        setSuccess(true);
       } catch (error) {
+        setProcessing(false);
         console.log(error);
       }
     };
@@ -170,7 +176,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
       <div className='flex flex-col items-center space-y-7 font-manrope'>
         <CreatePostDialogHeader />
 
-        {!postImage && (
+        {!postImage && !processing && !success && (
           <>
             <div className='flex flex-col items-center'>
               <div className='w-32'>
@@ -194,7 +200,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
           </>
         )}
 
-        {postImage && (
+        {postImage && !processing && !success && (
           <>
             <ScrollArea className='w-full max-h-[450px]'>
               <div className='flex flex-col items-center px-6 space-y-3'>
@@ -251,6 +257,8 @@ function CreatePostDialog({isSidenavOpen}: Props) {
             </button>
           </>
         )}
+        {processing && <CreatePostDialogSpinner />}
+        {!processing && success && <CreatePostDialogSuccess />}
       </div>
     );
   };

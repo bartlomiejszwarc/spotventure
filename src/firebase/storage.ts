@@ -1,5 +1,4 @@
 import {getStorage, ref, getDownloadURL, uploadBytes} from 'firebase/storage';
-import firebase from 'firebase/app';
 import {app} from '@/firebase/config';
 app;
 export interface IImage {
