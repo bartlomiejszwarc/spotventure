@@ -10,6 +10,7 @@ const categories: ICategory[] = [
   {categoryName: 'entertainment'},
   {categoryName: 'event'},
   {categoryName: 'services'},
+  {categoryName: 'others'},
 ];
 
 export default categories;

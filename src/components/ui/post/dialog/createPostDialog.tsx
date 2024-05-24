@@ -1,3 +1,4 @@
+'use client';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog';
 import SidenavField from '../../sidenav/sidenavField';
 import AddIcon from '@mui/icons-material/Add';
@@ -6,17 +7,50 @@ import CreatePostDialogHeader from './createPostDialogHeader';
 import SvgImage from './svgImage';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import ClearIcon from '@mui/icons-material/Clear';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import categories from '@/data/postCategories';
+import {Button} from '@/components/ui/button';
+import {Calendar} from '@/components/ui/calendar';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import EventIcon from '@mui/icons-material/Event';
+import {format} from 'date-fns';
+import {cn} from '@/lib/utils';
+import {Switch} from '@/components/ui/switch';
+import {Label} from '@/components/ui/label';
+import PaidIcon from '@mui/icons-material/Paid';
+import AccessibleIcon from '@mui/icons-material/Accessible';
+import LocalParkingIcon from '@mui/icons-material/LocalParking';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import {useCreatePost} from '@/hooks/post/useCreatePost';
+import {uploadImage} from '@/firebase/storage';
+import {IImage} from '@/firebase/storage';
+import {auth} from '@/firebase/config';
+
+import {useAuthState} from 'react-firebase-hooks/auth';
 
 interface Props {
   isSidenavOpen: boolean;
 }
 function CreatePostDialog({isSidenavOpen}: Props) {
+  const {createPost} = useCreatePost();
+  const [user] = useAuthState(auth);
   const fileInputRef = useRef<any>(null);
   const CreateDialogContent = () => {
     const MAX_DESCRIPTION_LENGTH = 300;
     const [postImage, setPostImage] = useState<File | null>(null);
+    const [postImageUrl, setPostImageUrl] = useState<string>('null');
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
+    const [postLocation, setPostLocation] = useState<string>('');
     const [postDescription, setPostDescription] = useState<string>('');
+    const [postCategory, setPostCategory] = useState<string>('');
+    const [postDate, setPostDate] = useState<Date>();
+    const [postIsFree, setPostIsFree] = useState<boolean>(false);
+    const [postIsDisabilityFriendly, setPostIsDisabilityFriendly] = useState<boolean>(false);
+    const [postIsParkingAvailable, setPostIsParkingAvailable] = useState<boolean>(false);
+    const [postIsAvailableAnyTime, setPostIsAvailableAnyTime] = useState<boolean>(false);
+
     const handleOnChooseButtonClick = () => {
       if (fileInputRef.current) {
         fileInputRef.current.click();
@@ -31,11 +65,106 @@ function CreatePostDialog({isSidenavOpen}: Props) {
       // TODO: const imageUrl
     };
 
-    const handleTextAreaChange = (e: HTMLTextAreaElement) => {
-      setPostDescription(e.value);
+    const handleOnSubmit = async () => {
+      try {
+        if (!user) return;
+        if (!postImage) return;
+        const uploadImageObject: IImage = {
+          uid: user.uid,
+          image: postImage,
+        };
+        const firebaseImageUrl = await uploadImage(uploadImageObject);
+        const body = {
+          uid: user.uid,
+          description: postDescription,
+          imageUrl: firebaseImageUrl,
+          category: postCategory,
+          visitDate: postDate,
+          location: postLocation,
+          likesCount: 0,
+          free: postIsFree,
+          disabilityFriendly: postIsDisabilityFriendly,
+          parkingAvailable: postIsParkingAvailable,
+          anyTimeAvailable: postIsAvailableAnyTime,
+        };
+        await createPost(body);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    const handleOnSubmit = () => {};
+    const SelectCategory = () => {
+      return (
+        <Select onValueChange={setPostCategory} defaultValue={postCategory ? postCategory : ''}>
+          <SelectTrigger className='w-full shadow-sm'>
+            <SelectValue placeholder='Category' className='capitalize' />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((category, idx) => (
+              <SelectItem key={idx} value={category.categoryName} className='capitalize'>
+                {category.categoryName}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      );
+    };
+
+    const Datepicker = () => {
+      return (
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={'outline'}
+              className={cn(
+                'w-full shadow-sm justify-start text-left font-normal',
+                !postDate && 'text-muted-foreground',
+              )}>
+              <EventIcon className='mr-2 h-4 w-4' />
+              {postDate ? format(postDate, 'PPP') : <span>Pick a date</span>}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className='w-auto p-0'>
+            <Calendar mode='single' selected={postDate} onSelect={setPostDate} initialFocus />
+          </PopoverContent>
+        </Popover>
+      );
+    };
+
+    const Switches = () => {
+      return (
+        <div className='w-full flex flex-col space-y-4'>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-1'>
+              <PaidIcon className='text-base lg:text-lg' />
+              <Label className='lg:text-base'>Free</Label>
+            </div>
+            <Switch checked={postIsFree} onCheckedChange={setPostIsFree} />
+          </div>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-1'>
+              <AccessibleIcon className='text-base lg:text-lg' />
+              <Label className='lg:text-base'>Disability-friendly</Label>
+            </div>
+            <Switch checked={postIsDisabilityFriendly} onCheckedChange={setPostIsDisabilityFriendly} />
+          </div>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-1'>
+              <LocalParkingIcon className='text-base lg:text-lg' />
+              <Label className='lg:text-base'>Parking</Label>
+            </div>
+            <Switch checked={postIsParkingAvailable} onCheckedChange={setPostIsParkingAvailable} />
+          </div>
+          <div className='flex items-center justify-between'>
+            <div className='flex items-center space-x-1'>
+              <AccessTimeIcon className='text-base lg:text-lg' />
+              <Label className='lg:text-base'>24/7 access</Label>
+            </div>
+            <Switch checked={postIsAvailableAnyTime} onCheckedChange={setPostIsAvailableAnyTime} />
+          </div>
+        </div>
+      );
+    };
 
     return (
       <div className='flex flex-col items-center space-y-7 font-manrope'>
@@ -77,7 +206,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
                       className='relative text-sm object-scale-down shadow-md max-h-72'
                     />
                     <div
-                      className='absolute top-2 right-2 p-1 bg-zinc-300 opacity-75 rounded-full z-50'
+                      className='absolute top-2 right-2 p-1 bg-zinc-300 opacity-75 rounded-full z-50 cursor-pointer'
                       onClick={() => {
                         setPostImage(null);
                       }}>
@@ -87,17 +216,22 @@ function CreatePostDialog({isSidenavOpen}: Props) {
                 </div>
                 <div className='flex flex-col w-full'>
                   <span className='text-sm font-light tracking-wide '>Location</span>
-                  <input className='border-[1px] border-zinc-200 px-3 py-1 outline-none rounded-md shadow-sm' />
+                  <Input
+                    className=' outline-none rounded-md shadow-sm'
+                    onChange={(e) => {
+                      setPostLocation(e.target.value);
+                    }}
+                  />
                 </div>
                 <div className='flex flex-col w-full'>
                   <span className='text-sm font-light tracking-wide'>Description</span>
-                  <textarea
+                  <Textarea
                     maxLength={MAX_DESCRIPTION_LENGTH}
                     rows={8}
                     style={{resize: 'none'}}
-                    className='border-[1px] border-zinc-200 px-3 py-1 outline-none rounded-md shadow-sm'
+                    className='outline-none rounded-md shadow-sm'
                     onChange={(e) => {
-                      handleTextAreaChange(e.target);
+                      setPostDescription(e.target.value);
                     }}
                   />
                   <div className='flex w-full justify-end'>
@@ -106,6 +240,9 @@ function CreatePostDialog({isSidenavOpen}: Props) {
                     </span>
                   </div>
                 </div>
+                <SelectCategory />
+                <Datepicker />
+                <Switches />
               </div>
             </ScrollArea>
 

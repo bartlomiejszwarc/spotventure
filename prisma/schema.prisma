@@ -18,3 +18,19 @@ model User {
   following       String[]
   likedPosts      String[]
 }
+
+model Post {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  uid                String
+  description        String
+  category           String
+  visitDate          DateTime  @default(now())
+  imageUrl           String
+  location           String
+  likesCount         Int       @default(0)
+  createdAt          DateTime? @default(now())
+  free               Boolean   @default(false)
+  disabilityFriendly Boolean   @default(false)
+  parkingAvailable   Boolean   @default(false)
+  anyTimeAvailable   Boolean   @default(false)
+}

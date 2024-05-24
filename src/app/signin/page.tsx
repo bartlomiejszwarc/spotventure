@@ -91,7 +91,7 @@ export default function Page() {
             <ButtonConfirm text='Sign in' />
           </div>
           <span className='text-zinc-300'>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href='/signup' className='font-semibold text-fuchsia-400'>
               Sign up here
             </Link>
