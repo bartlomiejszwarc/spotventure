@@ -11,6 +11,9 @@ export async function GET(req: Request, context: any) {
       where: {
         uid: id,
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
     return NextResponse.json({posts: posts});
   } catch (e) {}
