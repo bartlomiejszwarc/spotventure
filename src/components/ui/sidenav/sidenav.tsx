@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
 import SidenavFieldList from './sidenavFieldList';
 import {usePathname} from 'next/navigation';
+import {UserContextProvider} from '@/context/UserContext';
 
 function SideNav() {
   const [isMobile, setIsMobile] = useState<boolean>(true);
@@ -42,36 +43,38 @@ function SideNav() {
 
   if (path !== '/signup' && path !== '/signin') {
     return (
-      <div>
-        {!open ? (
-          <MenuIcon
-            className={`absolute left-5 top-5  ${
-              !isMobile ? 'text-zinc-300' : 'text-zinc-800'
-            }   text-4xl cursor-pointer`}
-            onClick={() => {
-              changeStyle();
-              setOpen(true);
-            }}></MenuIcon>
-        ) : (
-          <CloseIcon
-            className={`absolute left-5 top-5 text-zinc-300 text-4xl cursor-pointer`}
-            onClick={() => {
-              changeStyle();
-              setOpen(false);
-            }}></CloseIcon>
-        )}
-        {open ? (
-          <div className={style}>
-            <SidenavFieldList isSidenavOpen={open} />
-          </div>
-        ) : !open && !isMobile ? (
-          <div className={style}>
-            <SidenavFieldList isSidenavOpen={open} />
-          </div>
-        ) : (
-          <div className={style}></div>
-        )}
-      </div>
+      <UserContextProvider>
+        <div>
+          {!open ? (
+            <MenuIcon
+              className={`absolute left-5 top-5  ${
+                !isMobile ? 'text-zinc-300' : 'text-zinc-800'
+              }   text-4xl cursor-pointer`}
+              onClick={() => {
+                changeStyle();
+                setOpen(true);
+              }}></MenuIcon>
+          ) : (
+            <CloseIcon
+              className={`absolute left-5 top-5 text-zinc-300 text-4xl cursor-pointer`}
+              onClick={() => {
+                changeStyle();
+                setOpen(false);
+              }}></CloseIcon>
+          )}
+          {open ? (
+            <div className={style}>
+              <SidenavFieldList isSidenavOpen={open} />
+            </div>
+          ) : !open && !isMobile ? (
+            <div className={style}>
+              <SidenavFieldList isSidenavOpen={open} />
+            </div>
+          ) : (
+            <div className={style}></div>
+          )}
+        </div>
+      </UserContextProvider>
     );
   }
 }
