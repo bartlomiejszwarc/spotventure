@@ -27,7 +27,7 @@ export default function Page() {
         {userFavorites.map((post) => (
           <>
             <PostPreviewCard
-              id={post.id}
+              id={post?.id}
               uid={post.uid}
               imageUrl={post.imageUrl}
               location={post.location}

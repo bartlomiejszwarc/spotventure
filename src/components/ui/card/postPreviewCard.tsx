@@ -13,7 +13,7 @@ import {useState, useEffect} from 'react';
 import {useUserData} from '@/hooks/user/useUserData';
 
 interface IPostPreview {
-  id: string;
+  id: string | undefined;
   uid: string;
   imageUrl: string;
   location: string;
@@ -81,7 +81,7 @@ function PostPreviewCard({
           {name}
         </Link>
         <div className='flex space-x-1 items-center'>
-          {user?.likedPosts?.includes(id) ? (
+          {user?.likedPosts?.includes(id as string) ? (
             <FavoriteIcon className='text-xl text-rose-600' />
           ) : (
             <FavoriteBorderIcon className='text-xl text-rose-600' />
