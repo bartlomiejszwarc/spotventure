@@ -84,7 +84,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
           category: postCategory,
           visitDate: postDate,
           location: postLocation,
-          likesCount: 0,
+          likedByIds: [],
           free: postIsFree,
           disabilityFriendly: postIsDisabilityFriendly,
           parkingAvailable: postIsParkingAvailable,

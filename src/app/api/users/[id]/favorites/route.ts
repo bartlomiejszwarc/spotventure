@@ -14,10 +14,40 @@ export async function POST(req: Request, context: any) {
       },
     });
     if (!user) NextResponse.json({success: false});
+    if (user?.likedPosts.includes(body.id)) return NextResponse.json({success: false});
+
     await prisma.user.update({
       data: {
         likedPosts: {
-          push: body.id,
+          push: [body.id],
+        },
+      },
+      where: {uid: user!.uid},
+    });
+    return NextResponse.json({success: true});
+  } catch (e) {
+    return NextResponse.json({success: false, message: e});
+  }
+}
+export async function PUT(req: Request, context: any) {
+  try {
+    const {params} = context;
+    const id = params.id;
+    const body = await req.json();
+    if (!id) return new NextResponse('No ID provided');
+    const user = await prisma.user.findUnique({
+      where: {
+        uid: id,
+      },
+    });
+    if (!user) NextResponse.json({success: false});
+    if (user?.likedPosts.includes(id)) return NextResponse.json({success: false});
+    await prisma.user.update({
+      data: {
+        likedPosts: {
+          set: user!.likedPosts.filter((postId) => {
+            postId !== body.id;
+          }),
         },
       },
       where: {uid: user!.uid},

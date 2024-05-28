@@ -27,7 +27,7 @@ model Post {
   visitDate          DateTime  @default(now())
   imageUrl           String
   location           String
-  likesCount         Int       @default(0)
+  likedByIds         String[]  @default([])
   createdAt          DateTime? @default(now())
   free               Boolean   @default(false)
   disabilityFriendly Boolean   @default(false)

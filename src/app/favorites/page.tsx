@@ -24,15 +24,16 @@ export default function Page() {
     }, [user]);
     return (
       <>
-        {userFavorites.map((post) => (
+        {userFavorites.map((post, idx) => (
           <>
             <PostPreviewCard
+              key={idx}
               id={post?.id}
               uid={post.uid}
               imageUrl={post.imageUrl}
               location={post.location}
               visitDate={post.visitDate}
-              likesCount={post.likesCount}
+              likedByIds={post.likedByIds}
             />
           </>
         ))}

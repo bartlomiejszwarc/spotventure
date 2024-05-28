@@ -7,7 +7,7 @@ export async function POST(req: Request, context: any) {
     const {params} = context;
     const id = params.id;
     if (!id) return new NextResponse('No ID provided');
-
+    const body = await req.json();
     const post = await prisma.post.findUnique({
       where: {
         id: id,
@@ -16,7 +16,7 @@ export async function POST(req: Request, context: any) {
     if (!post) NextResponse.json({success: false});
     await prisma.post.update({
       data: {
-        likesCount: post!.likesCount + 1,
+        likedByIds: {push: [body.uid]},
       },
       where: {
         id: id,
@@ -31,12 +31,12 @@ export async function POST(req: Request, context: any) {
   }
 }
 
-export async function DELETE(req: Request, context: any) {
+export async function PUT(req: Request, context: any) {
   try {
     const {params} = context;
     const id = params.id;
     if (!id) return new NextResponse('No ID provided');
-
+    const body = await req.json();
     const post = await prisma.post.findUnique({
       where: {
         id: id,
@@ -45,7 +45,11 @@ export async function DELETE(req: Request, context: any) {
     if (!post) NextResponse.json({success: false});
     await prisma.post.update({
       data: {
-        likesCount: post!.likesCount - 1,
+        likedByIds: {
+          set: post!.likedByIds.filter((userId) => {
+            userId !== body.uid;
+          }),
+        },
       },
       where: {
         id: id,

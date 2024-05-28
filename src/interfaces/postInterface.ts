@@ -6,7 +6,7 @@ export interface IPost {
   visitDate: Date | undefined;
   imageUrl: string;
   location: string;
-  likesCount: number;
+  likedByIds: string[];
   free?: boolean;
   disabilityFriendly?: boolean;
   parkingAvailable?: boolean;

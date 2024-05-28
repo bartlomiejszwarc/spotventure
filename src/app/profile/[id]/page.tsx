@@ -14,7 +14,6 @@ export default function Page({params}: {params: {id: string}}) {
   const {getUserData} = useUserData();
   const [posts, setPosts] = useState<IPost[]>([]);
   const [userData, setUserData] = useState<IUser>();
-  const {user} = useUserContext();
 
   useEffect(() => {
     const getPosts = async () => {
@@ -48,23 +47,32 @@ export default function Page({params}: {params: {id: string}}) {
         {posts.length > 0 && (
           <div className='flex flex-wrap gap-y-6 gap-x-10'>
             {posts.map((post, idx) => (
-              <>
-                <PostPreviewCard
-                  key={idx}
-                  id={post.id}
-                  uid={params.id}
-                  imageUrl={post.imageUrl}
-                  location={post.location}
-                  visitDate={post.visitDate}
-                  likesCount={post.likesCount}
-                  profileImageUrl={userData?.profileImageUrl}
-                  username={userData?.name}
-                />
-              </>
+              <PostPreviewCard
+                key={idx}
+                id={post.id}
+                uid={params.id}
+                imageUrl={post.imageUrl}
+                location={post.location}
+                visitDate={post.visitDate}
+                likedByIds={post.likedByIds}
+                profileImageUrl={userData?.profileImageUrl}
+                username={userData?.name}
+              />
             ))}
           </div>
         )}
       </div>
+    );
+  };
+
+  const EditProfileButton = () => {
+    const {user} = useUserContext();
+    return (
+      <>
+        {userData?.uid === user!?.uid && (
+          <button className='px-3 py-1 bg-zinc-300 text-zinc-800 rounded-lg text-sm mt-4'>Edit profile</button>
+        )}
+      </>
     );
   };
 
@@ -95,9 +103,7 @@ export default function Page({params}: {params: {id: string}}) {
                     {format(userData!.createdAt!?.toString(), 'LLLL yyyy')}
                   </time>
                 </span>
-                {userData?.uid === user!?.uid && (
-                  <button className='px-3 py-1 bg-zinc-300 text-zinc-800 rounded-lg text-sm mt-4'>Edit profile</button>
-                )}
+                <EditProfileButton />
               </div>
             </div>
           </div>
