@@ -53,10 +53,11 @@ function PostPreviewCard({
     const {addToFavorites} = useAddToFavorites();
     const {removeFromFavorites} = useRemoveFromFavorites();
     const [likedByIdsState, setLikedByIdsState] = useState<string[]>(likedByIds);
-    const [favoriteActionType, setFavoriteActionType] = useState<string>('');
+    const [favoriteActionType, setFavoriteActionType] = useState<number>(2);
 
     const addPostToFavorites = async () => {
-      if (user) {
+      if (user && !processing) {
+        setFavoriteActionType(0);
         dispatch({type: 'ADD_TO_USER_FAVORITES', payload: id});
         likedByIdsState.push(user.uid);
         if (!processing) {
@@ -64,21 +65,18 @@ function PostPreviewCard({
             setProcessing(true);
             const res = await addToFavorites(id as string, uid);
             if (res) {
-              window.setTimeout(() => {
-                setProcessing(false);
-              }, 1000);
+              setProcessing(false);
             }
           } catch (e) {
-            window.setTimeout(() => {
-              setProcessing(false);
-            }, 1000);
+            setProcessing(false);
           }
         }
       }
     };
 
     const removePostFromFavorites = async () => {
-      if (user) {
+      if (user && !processing) {
+        setFavoriteActionType(1);
         dispatch({type: 'REMOVE_FROM_USER_FAVORITES', payload: id});
         const updated = likedByIdsState.filter((userId) => userId !== user.uid);
         setLikedByIdsState(updated);
@@ -87,14 +85,10 @@ function PostPreviewCard({
             setProcessing(true);
             const res = await removeFromFavorites(id as string, uid);
             if (res) {
-              window.setTimeout(() => {
-                setProcessing(false);
-              }, 1000);
+              setProcessing(false);
             }
           } catch (e) {
-            window.setTimeout(() => {
-              setProcessing(false);
-            }, 1000);
+            setProcessing(false);
           }
         }
       }

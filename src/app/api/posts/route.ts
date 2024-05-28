@@ -19,10 +19,8 @@ export async function POST(req: Request, res: NextResponse) {
         anyTimeAvailable: data.anyTimeAvailable,
       },
     });
-    prisma.$disconnect;
     return NextResponse.json({success: true, post: post});
   } catch (error: any) {
-    prisma.$disconnect;
     return NextResponse.json({success: false, message: error.message});
   }
 }

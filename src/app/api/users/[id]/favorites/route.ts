@@ -3,6 +3,7 @@ import {PrismaClient} from '@prisma/client';
 const prisma = new PrismaClient({});
 
 export async function POST(req: Request, context: any) {
+  //bugged
   try {
     const {params} = context;
     const id = params.id;
@@ -13,17 +14,18 @@ export async function POST(req: Request, context: any) {
         uid: id,
       },
     });
-    if (!user) NextResponse.json({success: false});
+    if (!user) return NextResponse.json({success: false});
     if (user?.likedPosts.includes(body.id)) return NextResponse.json({success: false});
 
-    await prisma.user.update({
+    const userUpdated = await prisma.user.update({
       data: {
         likedPosts: {
-          push: [body.id],
+          set: [...user.likedPosts, body.id],
         },
       },
       where: {uid: user!.uid},
     });
+
     return NextResponse.json({success: true});
   } catch (e) {
     return NextResponse.json({success: false, message: e});
@@ -40,18 +42,17 @@ export async function PUT(req: Request, context: any) {
         uid: id,
       },
     });
-    if (!user) NextResponse.json({success: false});
-    if (user?.likedPosts.includes(id)) return NextResponse.json({success: false});
-    await prisma.user.update({
+    if (!user) return NextResponse.json({success: false});
+    const updatedUser = await prisma.user.update({
       data: {
         likedPosts: {
-          set: user!.likedPosts.filter((postId) => {
-            postId !== body.id;
-          }),
+          set: user!.likedPosts.filter((postId) => postId !== body.id),
         },
       },
+
       where: {uid: user!.uid},
     });
+
     return NextResponse.json({success: true});
   } catch (e) {
     return NextResponse.json({success: false, message: e});

@@ -24,12 +24,7 @@ async function handler(req: NextRequest, res: NextApiResponse) {
         }
       }
     }
-  } catch (error) {
-    prisma.$disconnect;
-  } finally {
-    prisma.$disconnect;
-  }
-  prisma.$disconnect;
+  } catch (error) {}
 }
 
 export {handler as GET, handler as POST};

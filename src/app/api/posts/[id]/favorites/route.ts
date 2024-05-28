@@ -13,7 +13,8 @@ export async function POST(req: Request, context: any) {
         id: id,
       },
     });
-    if (!post) NextResponse.json({success: false});
+    if (!post) return NextResponse.json({success: false});
+    if (post?.likedByIds.includes(body.uid)) return NextResponse.json({success: false});
     await prisma.post.update({
       data: {
         likedByIds: {push: [body.uid]},
@@ -23,10 +24,8 @@ export async function POST(req: Request, context: any) {
       },
     });
 
-    prisma.$disconnect;
     return NextResponse.json({success: true});
   } catch (e) {
-    prisma.$disconnect;
     return NextResponse.json({success: false, message: e});
   }
 }
@@ -56,10 +55,8 @@ export async function PUT(req: Request, context: any) {
       },
     });
 
-    prisma.$disconnect;
     return NextResponse.json({success: true});
   } catch (e) {
-    prisma.$disconnect;
     return NextResponse.json({success: false, message: e});
   }
 }
