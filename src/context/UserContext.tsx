@@ -32,6 +32,14 @@ export const userReducer = (state: IUserContextState, action: IUserAction): any 
   switch (action.type) {
     case 'SET_USER_DATA':
       return {...state, user: action.payload};
+    case 'ADD_TO_USER_FAVORTIES':
+      return;
+    case 'ADD_TO_USER_POSTS':
+      return;
+    case 'ADD':
+      return;
+    default:
+      return;
   }
 };
 

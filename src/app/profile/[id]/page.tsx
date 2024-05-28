@@ -29,6 +29,45 @@ export default function Page({params}: {params: {id: string}}) {
     getUserDetails();
   }, [params.id]);
 
+  const UserAvatar = () => {
+    return (
+      <Avatar className='h-24 w-24 lg:h-36 lg:w-36 absolute bottom-0 left-3 lg:left-10 translate-y-[50%] border-[5px] shadow-md border-zinc-50'>
+        {userData!?.profileImageUrl ? (
+          <AvatarImage src={userData!?.profileImageUrl} className='' />
+        ) : (
+          <AvatarImage src='https://firebasestorage.googleapis.com/v0/b/spotventure-bc5b2.appspot.com/o/360_F_353110097_nbpmfn9iHlxef4EDIhXB1tdTD0lcWhG9.jpg?alt=media&token=0a71dd9a-00e1-40fd-93c5-f0fc11fa9909' />
+        )}
+        <AvatarFallback className='text-3xl text-emerald-700 bg-zinc-50'>{userData?.name.slice(0, 1)}</AvatarFallback>
+      </Avatar>
+    );
+  };
+
+  const UserPosts = () => {
+    return (
+      <div className='w-full flex pb-12 '>
+        {posts.length > 0 && (
+          <div className='flex flex-wrap gap-y-6 gap-x-10'>
+            {posts.map((post, idx) => (
+              <>
+                <PostPreviewCard
+                  key={idx}
+                  id={post.id}
+                  uid={params.id}
+                  imageUrl={post.imageUrl}
+                  location={post.location}
+                  visitDate={post.visitDate}
+                  likesCount={post.likesCount}
+                  profileImageUrl={userData?.profileImageUrl}
+                  username={userData?.name}
+                />
+              </>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   if (userData) {
     return (
       <div className='w-full flex justify-center '>
@@ -36,19 +75,15 @@ export default function Page({params}: {params: {id: string}}) {
           <div className='w-full'>
             <div className='w-full flex space-x-16'>
               <div className='relative w-full'>
-                <img className='w-full bg-zinc-500 h-44 lg:h-72 object-cover' src={posts[1]!?.imageUrl} />
-                <Avatar className='h-24 w-24 lg:h-36 lg:w-36 absolute bottom-0 left-3 lg:left-10 translate-y-[50%] border-4 border-zinc-50'>
-                  {userData!?.profileImageUrl ? (
-                    <AvatarImage src={userData!?.profileImageUrl} />
-                  ) : (
-                    <AvatarImage src='https://github.com/shadcn.png' />
-                  )}
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
+                <img
+                  className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300'
+                  src={posts[0]!?.imageUrl}
+                />
+                <UserAvatar />
               </div>
             </div>
-            <div className='w-full  flex justify-end'>
-              <div className='w-64  flex flex-col items-end font-light font-manrope break-all text-right'>
+            <div className='w-full flex justify-end'>
+              <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
                 <span className='text-2xl font-semibold'>{userData?.name}</span>
                 <div className='flex space-x-3 font-medium'>
                   <span>{userData?.followers?.length} followers </span>
@@ -66,22 +101,9 @@ export default function Page({params}: {params: {id: string}}) {
               </div>
             </div>
           </div>
-          {posts.length > 0 && (
-            <div className='flex flex-wrap gap-4 justify-center md:justify-start'>
-              {posts.map((post, idx) => (
-                <PostPreviewCard
-                  key={idx}
-                  uid={params.id}
-                  imageUrl={post.imageUrl}
-                  location={post.location}
-                  visitDate={post.visitDate}
-                  likesCount={post.likesCount}
-                  profileImageUrl={userData?.profileImageUrl}
-                  username={userData?.name}
-                />
-              ))}
-            </div>
-          )}
+          <div className=''>
+            <UserPosts />
+          </div>
         </div>
       </div>
     );
