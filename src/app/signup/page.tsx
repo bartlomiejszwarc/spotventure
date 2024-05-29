@@ -5,13 +5,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {useEffect, useState} from 'react';
 import Link from 'next/link';
-import Logo from '@/components/ui/card/logo/logo';
-import LogoContainer from '@/components/ui/card/logo/logoContainer';
+import Logo from '@/components/ui/logo/logo';
+import LogoContainer from '@/components/ui/logo/logoContainer';
 import ErrorIcon from '@mui/icons-material/Error';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import {useCreateUser} from '@/hooks/user/useCreateUser';
 import {auth} from '@/firebase/config';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import MovingComponent from 'react-moving-text';
+import {useLogin} from '@/hooks/auth/useLogin';
 
 interface SignUpFormData {
   email: string;
@@ -21,6 +22,7 @@ interface SignUpFormData {
 }
 
 export default function Page() {
+  const [processing, setProcessing] = useState<boolean>(false);
   const SignUpImage = () => {
     return (
       <div className='hidden lg:flex lg:justify-center lg:items-center lg:w-1/2 h-full relative'>
@@ -34,6 +36,34 @@ export default function Page() {
     );
   };
 
+  const LoadingSignScreen = () => {
+    return (
+      <>
+        <div className='w-full h-full hidden lg:flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
+          <Logo size={100} />
+
+          <MovingComponent
+            sx={{color: 'white'}}
+            className='text-zinc-200'
+            type='typewriter'
+            duration='10000ms'
+            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
+          />
+        </div>
+        <div className='w-full h-full lg:hidden flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
+          <Logo size={70} />
+
+          <MovingComponent
+            sx={{color: 'white'}}
+            className='text-zinc-200'
+            type='typewriter'
+            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
+          />
+        </div>
+      </>
+    );
+  };
+
   const Inputs = () => {
     const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>('');
@@ -44,9 +74,12 @@ export default function Page() {
     const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
     const {createUser} = useCreateUser();
 
+    const {loginUser, processing: signupProcessing} = useLogin();
+
     const handleOnSubmitData = async () => {
       setErrorMessage(null);
       try {
+        setProcessing(true);
         if (!email || !name || !password || !repeatPassword) throw Error('All fields are required');
         if (password !== repeatPassword) throw Error('Passwords do not match');
         const res = await createUserWithEmailAndPassword(email, password);
@@ -58,96 +91,102 @@ export default function Page() {
           createdAt: new Date(),
         };
         await createUser(body);
+        await loginUser(email, password);
+        setProcessing(false);
       } catch (error: any) {
+        setProcessing(false);
         setErrorMessage(String(error.message));
       }
     };
-    return (
-      <>
-        <div className='flex flex-col leading-8 border-b-[1px] border-zinc-400'>
-          <span className='text-zinc-300 text-2xl pb-4'>Create your account</span>
-          <span className='text-zinc-200'>E-mail</span>
-          <input
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            type='text'
-            name='email'
-            placeholder='example@domain.com'
-            className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400'
-          />
-        </div>
-        <div className='flex flex-col leading-8 border-b-[1px] border-zinc-400'>
-          <span className='text-zinc-200'>Name</span>
-          <input
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-            name='name'
-            type='text'
-            placeholder='John Doe'
-            className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400'
-          />
-        </div>
-        <div className='flex flex-col leading-8 w-full '>
-          <span className='text-zinc-200'>Password</span>
-          <div className='w-full flex justify-between border-b-[1px] border-zinc-400'>
+    if (!processing && !signupProcessing) {
+      return (
+        <>
+          <div className='flex flex-col leading-8 border-b-[1px] border-zinc-400'>
+            <span className='text-zinc-300 text-2xl pb-4'>Create your account</span>
+            <span className='text-zinc-200'>E-mail</span>
             <input
               onChange={(e) => {
-                setPassword(e.target.value);
+                setEmail(e.target.value);
               }}
-              name='password'
-              type={passwordVisible ? 'text' : 'password'}
-              placeholder='Password'
-              className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400 w-full'
+              type='text'
+              name='email'
+              placeholder='example@domain.com'
+              className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400'
             />
-            {passwordVisible ? (
-              <VisibilityOffIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(false)} />
-            ) : (
-              <VisibilityIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(true)} />
-            )}
           </div>
-        </div>
-        <div className='flex flex-col leading-8 w-full '>
-          <span className='text-zinc-200'>Repeat password</span>
-          <div className='w-full flex justify-between border-b-[1px] border-zinc-400'>
+          <div className='flex flex-col leading-8 border-b-[1px] border-zinc-400'>
+            <span className='text-zinc-200'>Name</span>
             <input
               onChange={(e) => {
-                setRepeatPassword(e.target.value);
+                setName(e.target.value);
               }}
-              name='repeatPassword'
-              type={passwordVisible ? 'text' : 'password'}
-              placeholder='Repeat password'
-              className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400 w-full'
+              name='name'
+              type='text'
+              placeholder='John Doe'
+              className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400'
             />
-            {passwordVisible ? (
-              <VisibilityOffIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(false)} />
-            ) : (
-              <VisibilityIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(true)} />
-            )}
           </div>
-          <div className='w-full h-8 bg-transparent text-sm text-red-500 flex space-x-1 items-center'>
-            {errorMessage ? (
-              <>
-                <ErrorIcon style={{fontSize: 15}} />
-                <span>{errorMessage}</span>
-              </>
-            ) : null}
+          <div className='flex flex-col leading-8 w-full '>
+            <span className='text-zinc-200'>Password</span>
+            <div className='w-full flex justify-between border-b-[1px] border-zinc-400'>
+              <input
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                name='password'
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder='Password'
+                className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400 w-full'
+              />
+              {passwordVisible ? (
+                <VisibilityOffIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(false)} />
+              ) : (
+                <VisibilityIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(true)} />
+              )}
+            </div>
           </div>
-        </div>
-        <div className='flex flex-col space-y-3 items-center'>
-          <div className='w-full' onClick={handleOnSubmitData}>
-            <ButtonConfirm text='Sign up!' />
+          <div className='flex flex-col leading-8 w-full '>
+            <span className='text-zinc-200'>Repeat password</span>
+            <div className='w-full flex justify-between border-b-[1px] border-zinc-400'>
+              <input
+                onChange={(e) => {
+                  setRepeatPassword(e.target.value);
+                }}
+                name='repeatPassword'
+                type={passwordVisible ? 'text' : 'password'}
+                placeholder='Repeat password'
+                className='py-1 outline-none bg-transparent  text-zinc-100 placeholder:text-zinc-400 w-full'
+              />
+              {passwordVisible ? (
+                <VisibilityOffIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(false)} />
+              ) : (
+                <VisibilityIcon className='text-zinc-400 cursor-pointer' onClick={() => setPasswordVisible(true)} />
+              )}
+            </div>
+            <div className='w-full h-8 bg-transparent text-sm text-red-500 flex space-x-1 items-center'>
+              {errorMessage ? (
+                <>
+                  <ErrorIcon style={{fontSize: 15}} />
+                  <span>{errorMessage}</span>
+                </>
+              ) : null}
+            </div>
           </div>
-          <span className='text-zinc-300'>
-            Already have an account?{' '}
-            <Link href='/signin' className='font-semibold text-fuchsia-400'>
-              Sign in
-            </Link>
-          </span>
-        </div>
-      </>
-    );
+          <div className='flex flex-col space-y-3 items-center'>
+            <div className='w-full' onClick={handleOnSubmitData}>
+              <ButtonConfirm text='Sign up!' />
+            </div>
+            <span className='text-zinc-300'>
+              Already have an account?{' '}
+              <Link href='/signin' className='font-semibold text-fuchsia-400'>
+                Sign in
+              </Link>
+            </span>
+          </div>
+        </>
+      );
+    }
+    if (processing) return <LoadingSignScreen />;
   };
 
   return (
@@ -156,9 +195,12 @@ export default function Page() {
       <div className='flex justify-center w-full lg:w-1/2'>
         <div className=' flex flex-col justify-center w-full items-center'>
           <div className='w-10/12 flex flex-col space-y-10 md:space-y-4'>
-            <LogoContainer>
-              <Logo size={36} />
-            </LogoContainer>
+            {!processing && (
+              <LogoContainer>
+                <Logo size={36} />
+              </LogoContainer>
+            )}
+
             <Inputs />
           </div>
         </div>

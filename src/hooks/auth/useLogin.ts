@@ -9,7 +9,7 @@ import {auth} from '@/firebase/config';
 export const useLogin = () => {
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
-  const [processing, setProcessing] = useState(false);
+  const [processing, setProcessing] = useState<boolean>(false);
   const loginUser = async (email: string, password: string) => {
     try {
       setProcessing(true);
@@ -19,10 +19,10 @@ export const useLogin = () => {
         throw Error('Invalid credentials');
       }
       setProcessing(false);
-
       router.push('/home');
       return res;
     } catch (error) {
+      setProcessing(false);
       throw Error('Invalid credentials');
     }
   };
