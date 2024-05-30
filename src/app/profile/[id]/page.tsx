@@ -9,6 +9,7 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {format} from 'date-fns';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useFollowUser} from '@/hooks/user/follow/useFollowUser';
+import LayoutPosts from '@/layouts/layoutPosts';
 export default function Page({params}: {params: {id: string}}) {
   const {getUserPosts} = useGetUserPosts();
   const {getUserData} = useUserData();
@@ -43,27 +44,25 @@ export default function Page({params}: {params: {id: string}}) {
   };
 
   const UserPosts = () => {
-    return (
-      <div className='w-full flex pb-12 '>
-        {posts.length > 0 && (
-          <div className='flex flex-wrap gap-y-6 gap-x-10'>
-            {posts.map((post, idx) => (
-              <PostPreviewCard
-                key={idx}
-                id={post.id}
-                uid={params.id}
-                imageUrl={post.imageUrl}
-                location={post.location}
-                visitDate={post.visitDate}
-                likedByIds={post.likedByIds}
-                profileImageUrl={userData?.profileImageUrl}
-                username={userData?.name}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    );
+    if (posts.length > 0) {
+      return (
+        <LayoutPosts>
+          {posts.map((post, idx) => (
+            <PostPreviewCard
+              key={idx}
+              id={post.id}
+              uid={params.id}
+              imageUrl={post.imageUrl}
+              location={post.location}
+              visitDate={post.visitDate}
+              likedByIds={post.likedByIds}
+              profileImageUrl={userData?.profileImageUrl}
+              username={userData?.name}
+            />
+          ))}
+        </LayoutPosts>
+      );
+    }
   };
 
   const EditProfileButton = () => {
@@ -167,9 +166,8 @@ export default function Page({params}: {params: {id: string}}) {
               </div>
             </div>
           </div>
-          <div className=''>
-            <UserPosts />
-          </div>
+
+          <UserPosts />
         </div>
       </div>
     );
