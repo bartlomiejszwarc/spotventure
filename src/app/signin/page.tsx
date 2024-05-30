@@ -3,17 +3,17 @@ import LayoutSign from '@/layouts/layoutSign';
 import ButtonConfirm from '@/components/ui/button/buttonConfirm';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {useState, FormEvent, useRef, useEffect} from 'react';
+import {useState} from 'react';
 import LogoContainer from '@/components/ui/logo/logoContainer';
 import Link from 'next/link';
 import Logo from '@/components/ui/logo/logo';
 import ErrorIcon from '@mui/icons-material/Error';
 import {useLogin} from '@/hooks/auth/useLogin';
-import MovingComponent from 'react-moving-text';
+import LoadingSignScreen from '@/components/ui/loading-sign-screen';
 
 export default function Page() {
-  const {loginUser, processing: loginProcessing} = useLogin();
   const [processing, setProcessing] = useState<boolean>(false);
+  const [processingEnded, setProcessingEnded] = useState<boolean>(false);
 
   const SignInImage = () => {
     return (
@@ -23,35 +23,9 @@ export default function Page() {
       </div>
     );
   };
-  const LoadingSignScreen = () => {
-    return (
-      <>
-        <div className='w-full h-full hidden lg:flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
-          <Logo size={100} />
-
-          <MovingComponent
-            sx={{color: 'white'}}
-            className='text-zinc-200'
-            type='typewriter'
-            duration='10000ms'
-            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
-          />
-        </div>
-        <div className='w-full h-full lg:hidden flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
-          <Logo size={70} />
-
-          <MovingComponent
-            sx={{color: 'white'}}
-            className='text-zinc-200'
-            type='typewriter'
-            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
-          />
-        </div>
-      </>
-    );
-  };
 
   const Inputs = () => {
+    const {loginUser} = useLogin();
     const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string | null>('');
     const [email, setEmail] = useState<string>('');
@@ -65,8 +39,10 @@ export default function Page() {
         const res = await loginUser(email, password);
         if (!res) throw Error('Invalid credentials');
         setProcessing(false);
+        setProcessingEnded(true);
       } catch (error: any) {
         setProcessing(false);
+        setProcessingEnded(true);
         setErrorMessage(error.message);
       }
     };
@@ -131,7 +107,7 @@ export default function Page() {
 
   return (
     <LayoutSign>
-      {!processing && (
+      {!processing && !processingEnded ? (
         <>
           <div className='flex justify-center w-full lg:w-1/2'>
             <div className=' flex flex-col justify-center space-y-10 w-full items-center'>
@@ -145,9 +121,8 @@ export default function Page() {
           </div>
           <SignInImage />
         </>
-      )}
-      {processing && (
-        <div className='w-full min-h-screen flex items-center justify-center'>
+      ) : (
+        <div className='w-full h-full flex items-center justify-center'>
           <LoadingSignScreen />
         </div>
       )}

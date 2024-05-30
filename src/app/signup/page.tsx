@@ -3,7 +3,7 @@ import LayoutSign from '@/layouts/layoutSign';
 import ButtonConfirm from '@/components/ui/button/buttonConfirm';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Link from 'next/link';
 import Logo from '@/components/ui/logo/logo';
 import LogoContainer from '@/components/ui/logo/logoContainer';
@@ -11,15 +11,8 @@ import ErrorIcon from '@mui/icons-material/Error';
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth';
 import {useCreateUser} from '@/hooks/user/useCreateUser';
 import {auth} from '@/firebase/config';
-import MovingComponent from 'react-moving-text';
 import {useLogin} from '@/hooks/auth/useLogin';
-
-interface SignUpFormData {
-  email: string;
-  name: string;
-  password: string;
-  repeatPassword: string;
-}
+import LoadingSignScreen from '@/components/ui/loading-sign-screen';
 
 export default function Page() {
   const [processing, setProcessing] = useState<boolean>(false);
@@ -33,34 +26,6 @@ export default function Page() {
           className='object-cover h-full rounded-r-lg opacity-75 transform -scale-x-100'
         />
       </div>
-    );
-  };
-
-  const LoadingSignScreen = () => {
-    return (
-      <>
-        <div className='w-full h-full hidden lg:flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
-          <Logo size={100} />
-
-          <MovingComponent
-            sx={{color: 'white'}}
-            className='text-zinc-200'
-            type='typewriter'
-            duration='10000ms'
-            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
-          />
-        </div>
-        <div className='w-full h-full lg:hidden flex flex-col items-center justify-center space-y-10 text-zinc-200 font-thin text-xl'>
-          <Logo size={70} />
-
-          <MovingComponent
-            sx={{color: 'white'}}
-            className='text-zinc-200'
-            type='typewriter'
-            dataText={['Signing in...', '[elevator music]', 'Just count to 10.', 'Granting wishes...']}
-          />
-        </div>
-      </>
     );
   };
 
@@ -185,8 +150,7 @@ export default function Page() {
           </div>
         </>
       );
-    }
-    if (processing) return <LoadingSignScreen />;
+    } else return <LoadingSignScreen />;
   };
 
   return (
