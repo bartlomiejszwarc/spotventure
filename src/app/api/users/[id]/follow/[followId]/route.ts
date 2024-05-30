@@ -6,8 +6,10 @@ export async function POST(req: Request, context: any) {
   try {
     const {params} = context;
     const id = params.id;
+    const followId = params.followId;
     const body = await req.json();
     if (!id) return new NextResponse('No ID provided');
+    if (!followId) return new NextResponse('No ID provided');
     const user = await prisma.user.findUnique({
       where: {
         uid: id,
@@ -16,13 +18,29 @@ export async function POST(req: Request, context: any) {
     if (!user) return NextResponse.json({success: false});
     if (user?.likedPosts.includes(body.id)) return NextResponse.json({success: false});
 
-    const userUpdated = await prisma.user.update({
+    await prisma.user.update({
       data: {
-        likedPosts: {
-          set: [...user.likedPosts, body.id],
+        following: {
+          set: [...user.following, followId],
         },
       },
       where: {uid: user!.uid},
+    });
+
+    const userToFollow = await prisma.user.findUnique({
+      where: {
+        uid: followId,
+      },
+    });
+    if (!userToFollow) return NextResponse.json({success: false});
+
+    await prisma.user.update({
+      data: {
+        followers: {
+          set: [...userToFollow.followers, id],
+        },
+      },
+      where: {uid: userToFollow!.uid},
     });
 
     return NextResponse.json({success: true});
@@ -30,26 +48,48 @@ export async function POST(req: Request, context: any) {
     return NextResponse.json({success: false, message: e});
   }
 }
+
 export async function PUT(req: Request, context: any) {
   try {
     const {params} = context;
     const id = params.id;
+    const followId = params.followId;
     const body = await req.json();
     if (!id) return new NextResponse('No ID provided');
+    if (!followId) return new NextResponse('No ID provided');
+
     const user = await prisma.user.findUnique({
       where: {
         uid: id,
       },
     });
+
+    const userToUnfollow = await prisma.user.findUnique({
+      where: {
+        uid: followId,
+      },
+    });
     if (!user) return NextResponse.json({success: false});
-    const updatedUser = await prisma.user.update({
+    if (!userToUnfollow) return NextResponse.json({success: false});
+
+    await prisma.user.update({
       data: {
-        likedPosts: {
-          set: user!.likedPosts.filter((postId) => postId !== body.id),
+        following: {
+          set: user!.following.filter((userId) => userId !== followId),
         },
       },
 
       where: {uid: user!.uid},
+    });
+
+    await prisma.user.update({
+      data: {
+        followers: {
+          set: user!.followers.filter((userId) => userId !== id),
+        },
+      },
+
+      where: {uid: userToUnfollow!.uid},
     });
 
     return NextResponse.json({success: true});

@@ -8,7 +8,7 @@ import {IUser} from '@/database/actions/userAction';
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 import {format} from 'date-fns';
 import {useUserContext} from '@/hooks/context/useUserContext';
-
+import {useFollowUser} from '@/hooks/user/follow/useFollowUser';
 export default function Page({params}: {params: {id: string}}) {
   const {getUserPosts} = useGetUserPosts();
   const {getUserData} = useUserData();
@@ -78,14 +78,17 @@ export default function Page({params}: {params: {id: string}}) {
 
   const FollowButton = () => {
     const {user, dispatch} = useUserContext();
+    const {followUser, unfollowUser} = useFollowUser();
     const [hover, setHover] = useState<boolean>(false);
-    const addToFollowing = () => {
+    const addToFollowing = async () => {
       dispatch({type: 'ADD_TO_FOLLOWING', payload: userData!?.uid});
       setHover(false);
+      if (user!.uid && userData!.uid) await followUser(user!.uid, userData!.uid as string);
     };
 
-    const removeFromFollowing = () => {
+    const removeFromFollowing = async () => {
       dispatch({type: 'REMOVE_FROM_FOLLOWING', payload: userData!?.uid});
+      if (user!.uid && userData!.uid) await unfollowUser(user!.uid, userData!.uid as string);
     };
     return (
       <>
