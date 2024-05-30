@@ -76,6 +76,42 @@ export default function Page({params}: {params: {id: string}}) {
     );
   };
 
+  const FollowButton = () => {
+    const {user, dispatch} = useUserContext();
+    const [hover, setHover] = useState<boolean>(false);
+    const addToFollowing = () => {
+      dispatch({type: 'ADD_TO_FOLLOWING', payload: userData!?.uid});
+      setHover(false);
+    };
+
+    const removeFromFollowing = () => {
+      dispatch({type: 'REMOVE_FROM_FOLLOWING', payload: userData!?.uid});
+    };
+    return (
+      <>
+        {user?.uid !== userData!?.uid && (
+          <>
+            {!user?.following?.includes(userData!?.uid) ? (
+              <button
+                className='py-2 w-28 bg-emerald-500 text-zinc-200 font-medium rounded-full text-base mt-4 border-2 border-transparent'
+                onClick={addToFollowing}>
+                Follow
+              </button>
+            ) : (
+              <button
+                className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
+                onClick={removeFromFollowing}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}>
+                {hover ? 'Unfollow' : 'Following'}
+              </button>
+            )}
+          </>
+        )}
+      </>
+    );
+  };
+
   if (userData) {
     return (
       <div className='w-full flex justify-center '>
@@ -104,6 +140,7 @@ export default function Page({params}: {params: {id: string}}) {
                   </time>
                 </span>
                 <EditProfileButton />
+                <FollowButton />
               </div>
             </div>
           </div>

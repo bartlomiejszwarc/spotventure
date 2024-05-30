@@ -48,8 +48,20 @@ export const userReducer = (state: IUserContextState, action: IUserAction): any 
           likedPosts: state?.user?.likedPosts?.filter((id) => id !== action.payload),
         },
       };
-    case 'ADD':
-      return state;
+    case 'ADD_TO_FOLLOWING':
+      return {
+        ...state,
+        user: {...state.user, following: [...(state.user?.following || []), action.payload]},
+      };
+    case 'REMOVE_FROM_FOLLOWING':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          following: state?.user?.following?.filter((id) => id !== action.payload),
+        },
+      };
+
     default:
       return state;
   }
