@@ -20,12 +20,12 @@ function SearchBar() {
       className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 border-zinc-300 flex items-center justify-between pr-4 pl-6 ${
         focused ? 'focused-full-width lg:w-full' : 'unfocused'
       }`}
-      onClick={handleFocus}
-      onMouseOut={handleOutOfFocus}>
+      onClick={handleFocus}>
       <input
         type='text'
         className='w-full bg-transparent h-[70%] placeholder:text-lg outline-none'
         placeholder='Explore'
+        onBlur={handleOutOfFocus}
       />
       <SearchIcon className='text-zinc-600' />
     </div>

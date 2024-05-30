@@ -23,6 +23,7 @@ export default function Page({params}: {params: {id: string}}) {
     const getUserDetails = async () => {
       const res = await getUserData(params.id);
       if (res) setUserData(res.data.user);
+      const followers = res?.data.user.followers;
     };
     getPosts();
     getUserDetails();
@@ -76,41 +77,70 @@ export default function Page({params}: {params: {id: string}}) {
     );
   };
 
-  const FollowButton = () => {
-    const {user, dispatch} = useUserContext();
-    const {followUser, unfollowUser} = useFollowUser();
-    const [hover, setHover] = useState<boolean>(false);
-    const addToFollowing = async () => {
-      dispatch({type: 'ADD_TO_FOLLOWING', payload: userData!?.uid});
-      setHover(false);
-      if (user!.uid && userData!.uid) await followUser(user!.uid, userData!.uid as string);
+  const Follows = () => {
+    const [followersNumber, setFollowersNumber] = useState<number>(0);
+
+    useEffect(() => {
+      setFollowersNumber(userData!?.followers!?.length as number);
+    }, [userData]);
+
+    const FollowButton = () => {
+      const {user, dispatch} = useUserContext();
+      const {followUser, unfollowUser} = useFollowUser();
+      const [hover, setHover] = useState<boolean>(false);
+      const addToFollowing = async () => {
+        dispatch({type: 'ADD_TO_FOLLOWING', payload: userData!?.uid});
+        setFollowersNumber((prev) => prev + 1);
+        setHover(false);
+        if (user!.uid && userData!.uid) await followUser(user!.uid, userData!.uid as string);
+      };
+
+      const removeFromFollowing = async () => {
+        dispatch({type: 'REMOVE_FROM_FOLLOWING', payload: userData!?.uid});
+        setFollowersNumber((prev) => prev - 1);
+        if (user!.uid && userData!.uid) await unfollowUser(user!.uid, userData!.uid as string);
+      };
+      return (
+        <>
+          {user?.uid !== userData!?.uid && (
+            <>
+              {!user?.following?.includes(userData!?.uid) ? (
+                <button
+                  className='py-2 w-28 bg-emerald-500 text-zinc-200 font-medium rounded-full text-base mt-4 border-2 border-transparent'
+                  onClick={addToFollowing}>
+                  Follow
+                </button>
+              ) : (
+                <button
+                  className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
+                  onClick={removeFromFollowing}
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}>
+                  {hover ? 'Unfollow' : 'Following'}
+                </button>
+              )}
+            </>
+          )}
+        </>
+      );
     };
 
-    const removeFromFollowing = async () => {
-      dispatch({type: 'REMOVE_FROM_FOLLOWING', payload: userData!?.uid});
-      if (user!.uid && userData!.uid) await unfollowUser(user!.uid, userData!.uid as string);
-    };
     return (
       <>
-        {user?.uid !== userData!?.uid && (
-          <>
-            {!user?.following?.includes(userData!?.uid) ? (
-              <button
-                className='py-2 w-28 bg-emerald-500 text-zinc-200 font-medium rounded-full text-base mt-4 border-2 border-transparent'
-                onClick={addToFollowing}>
-                Follow
-              </button>
-            ) : (
-              <button
-                className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
-                onClick={removeFromFollowing}
-                onMouseEnter={() => setHover(true)}
-                onMouseLeave={() => setHover(false)}>
-                {hover ? 'Unfollow' : 'Following'}
-              </button>
-            )}
-          </>
-        )}
+        <div className='flex space-x-3 font-medium'>
+          <span>
+            {followersNumber + ' '}
+            {followersNumber === 1 ? 'follower' : 'followers'}{' '}
+          </span>
+          <span>{userData?.following?.length} following </span>
+        </div>
+        <span className='font-light text-xs lg:text-sm'>
+          Member since{' '}
+          <time dateTime={userData!.createdAt!?.toString()}>
+            {format(userData!.createdAt!?.toString(), 'LLLL yyyy')}
+          </time>
+        </span>
+        <FollowButton />
       </>
     );
   };
@@ -132,18 +162,8 @@ export default function Page({params}: {params: {id: string}}) {
             <div className='w-full flex justify-end'>
               <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
                 <span className='text-2xl font-semibold'>{userData?.name}</span>
-                <div className='flex space-x-3 font-medium'>
-                  <span>{userData?.followers?.length} followers </span>
-                  <span>{userData?.following?.length} following </span>
-                </div>
-                <span className='font-light text-xs lg:text-sm'>
-                  Member since{' '}
-                  <time dateTime={userData!.createdAt!?.toString()}>
-                    {format(userData!.createdAt!?.toString(), 'LLLL yyyy')}
-                  </time>
-                </span>
+                <Follows />
                 <EditProfileButton />
-                <FollowButton />
               </div>
             </div>
           </div>
