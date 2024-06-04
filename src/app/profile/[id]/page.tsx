@@ -156,8 +156,8 @@ export default function Page({params}: {params: {id: string}}) {
 
   if (userData) {
     return (
-      <div className='w-full flex justify-center '>
-        <div className='flex flex-col items-center w-full lg:w-3/4 space-y-12 lg:space-y-24 '>
+      <div className='w-full flex justify-center pb-6'>
+        <div className='flex flex-col items-center w-full lg:w-3/4 space-y-12 '>
           <div className='w-full'>
             <div className='w-full flex space-x-16'>
               <div className='relative w-full'>

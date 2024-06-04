@@ -5,7 +5,7 @@ export const useAddToFavorites = () => {
       const headers = {
         'Content-Type': 'application/json',
       };
-      await axios.post(`/api/users/${userId}/favorites`, {id: id}, {headers: headers}); //bug: ids are not added sometimes
+      await axios.post(`/api/users/${userId}/favorites`, {id: id}, {headers: headers});
       await axios.post(`/api/posts/${id}/favorites`, {uid: userId}, {headers: headers});
       return true;
     } catch (error) {

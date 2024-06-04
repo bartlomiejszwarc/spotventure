@@ -5,7 +5,7 @@ function SvgImage() {
       <g id='SVGRepo_tracerCarrier' strokeLinecap='round' strokeLinejoin='round'></g>
       <g id='SVGRepo_iconCarrier'>
         <defs>
-          <style>{`.b{fill:none;stroke:#3f3f46;stroke-linecap:round;stroke-linejoin:round;}`}</style>
+          <style>{`.b{fill:none;stroke:#3f3f46;strokeLinecap:round;strokeLinejoin:round;}`}</style>
         </defs>
         <path
           className='b'

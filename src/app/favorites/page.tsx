@@ -6,16 +6,17 @@ import {useState, useEffect} from 'react';
 import {IPost} from '@/interfaces/postInterface';
 export default function Page() {
   const {getPostData} = useGetPostData();
-  const {user} = useUserContext();
+
   const Favorites = () => {
     const [userFavorites, setUserFavorites] = useState<IPost[]>([]);
-
+    const {user} = useUserContext();
     useEffect(() => {
       if (user?.likedPosts!?.length > 0) {
         const getFavorites = async () => {
           const favoritesPromises = user!?.likedPosts!?.map((postId) => getPostData(postId));
           const favorites = await Promise.all(favoritesPromises);
-          setUserFavorites(favorites);
+          const favoritesReversed = favorites.reverse();
+          setUserFavorites(favoritesReversed);
         };
         getFavorites();
       }

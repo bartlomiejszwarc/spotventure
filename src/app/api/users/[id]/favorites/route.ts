@@ -13,8 +13,9 @@ export async function POST(req: Request, context: any) {
         uid: id,
       },
     });
-    if (!user) return NextResponse.json({success: false});
-    if (user?.likedPosts.includes(body.id)) return NextResponse.json({success: false});
+    if (!user) return NextResponse.json({success: false, message: 'User not found'});
+
+    if (user?.likedPosts.includes(body.id)) return NextResponse.json({success: false, message: 'User already liked'});
 
     const userUpdated = await prisma.user.update({
       data: {
@@ -26,8 +27,8 @@ export async function POST(req: Request, context: any) {
     });
 
     return NextResponse.json({success: true});
-  } catch (e) {
-    return NextResponse.json({success: false, message: e});
+  } catch (e: any) {
+    return NextResponse.json({success: false, message: e.message});
   }
 }
 export async function PUT(req: Request, context: any) {

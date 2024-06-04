@@ -65,7 +65,7 @@ function PostPreviewCard({
         if (!processing) {
           try {
             setProcessing(true);
-            const res = await addToFavorites(id as string, uid);
+            const res = await addToFavorites(id as string, user.uid);
             if (res) {
               setProcessing(false);
             }
@@ -85,7 +85,7 @@ function PostPreviewCard({
         if (!processing) {
           try {
             setProcessing(true);
-            const res = await removeFromFavorites(id as string, uid);
+            const res = await removeFromFavorites(id as string, user.uid);
             if (res) {
               setProcessing(false);
             }
