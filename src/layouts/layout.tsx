@@ -17,7 +17,7 @@ export default function Layout({
   if (path !== '/signin' && path !== '/signup')
     return (
       <UserContextProvider>
-        <div className='flex min-h-screen'>
+        <div className='flex min-h-screen font-manrope'>
           <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
         </div>
       </UserContextProvider>
@@ -25,7 +25,7 @@ export default function Layout({
   else {
     return (
       <UserContextProvider>
-        <div className='flex min-h-screen'>{children}</div>
+        <div className='flex min-h-screen font-manrope'>{children}</div>
       </UserContextProvider>
     );
   }

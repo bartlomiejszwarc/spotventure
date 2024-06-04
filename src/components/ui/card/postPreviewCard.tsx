@@ -35,6 +35,7 @@ function PostPreviewCard({
   username,
 }: IPostPreview) {
   const [name, setName] = useState<string>('');
+  const [userProfileImageUrl, setUserProfileImageUrl] = useState<string | null>();
 
   const {getUserData} = useUserData();
 
@@ -42,6 +43,7 @@ function PostPreviewCard({
     const getUserDataFromUid = async () => {
       const res = await getUserData(uid);
       if (res) setName(res.data.user.name);
+      if (!profileImageUrl) setUserProfileImageUrl(res?.data.user.profileImageUrl);
     };
 
     getUserDataFromUid();
@@ -109,7 +111,11 @@ function PostPreviewCard({
   const UserProfileImage = () => {
     return (
       <Avatar>
-        {profileImageUrl ? <AvatarImage src={profileImageUrl} /> : <AvatarImage src='https://github.com/shadcn.png' />}
+        {userProfileImageUrl ? (
+          <AvatarImage src={userProfileImageUrl} />
+        ) : (
+          <AvatarImage src='https://github.com/shadcn.png' />
+        )}
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     );

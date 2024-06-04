@@ -15,8 +15,10 @@ export default function Page({params}: {params: {id: string}}) {
   const {getUserData} = useUserData();
   const [posts, setPosts] = useState<IPost[]>([]);
   const [userData, setUserData] = useState<IUser>();
+  const [processed, setProcessed] = useState<boolean>(false);
 
   useEffect(() => {
+    setProcessed(false);
     const getPosts = async () => {
       const res = await getUserPosts(params.id);
       if (res) setPosts(res);
@@ -25,6 +27,7 @@ export default function Page({params}: {params: {id: string}}) {
       const res = await getUserData(params.id);
       if (res) setUserData(res.data.user);
       const followers = res?.data.user.followers;
+      setProcessed(true);
     };
     getPosts();
     getUserDetails();
@@ -61,6 +64,13 @@ export default function Page({params}: {params: {id: string}}) {
             />
           ))}
         </LayoutPosts>
+      );
+    }
+    if (posts.length === 0 && processed) {
+      return (
+        <div>
+          <span className='text-2xl font-light'>This user has not add any posts yet</span>
+        </div>
       );
     }
   };
@@ -158,9 +168,9 @@ export default function Page({params}: {params: {id: string}}) {
                 <UserAvatar />
               </div>
             </div>
-            <div className='w-full flex justify-end'>
+            <div className='w-full flex justify-end pt-2'>
               <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
-                <span className='text-2xl font-semibold'>{userData?.name}</span>
+                <span className='text-2xl font-semibold line-clamp-2 hover:line-clamp-none'>{userData?.name}</span>
                 <Follows />
                 <EditProfileButton />
               </div>

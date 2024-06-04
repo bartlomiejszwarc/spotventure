@@ -7,25 +7,53 @@ import {useSearchByKeyword} from '@/hooks/search/useSearchByKeyword';
 import {IPost} from '@/interfaces/postInterface';
 import {IUser} from '@/database/actions/userAction';
 import LayoutPosts from '@/layouts/layoutPosts';
-import {memo} from 'react';
+import NothingFoundIcon from '@/components/ui/icons/nothing-found-icon';
+import UserPreviewCard from '@/components/ui/card/userPreviewCard';
+import {useUserContext} from '@/hooks/context/useUserContext';
+
 export default function Page() {
   const {searchPostsByKeyword, searchUsersByKeyword} = useSearchByKeyword();
-
   const [posts, setPosts] = useState<IPost[] | null>([]);
   const [users, setUsers] = useState<IUser[] | null>([]);
-
+  const [searchKeyword, setSearchKeyword] = useState<string | null>();
+  const [processed, setProcessed] = useState<boolean>(false);
+  const {user} = useUserContext();
   const handleOnSearch = async (keyword: string) => {
-    const resPosts = await searchPostsByKeyword(keyword);
-    setPosts(resPosts);
-    const resUsers = await searchUsersByKeyword(keyword);
-    setUsers(resUsers);
+    try {
+      setProcessed(false);
+      setSearchKeyword(keyword);
+      const resPosts = await searchPostsByKeyword(keyword);
+      setPosts(resPosts);
+      const resUsers = await searchUsersByKeyword(keyword);
+      const resUsersUpdated = resUsers.filter((userObj: {uid: string}) => {
+        return userObj.uid !== user!.uid;
+      });
+      setUsers(resUsersUpdated);
+      setProcessed(true);
+    } catch (error) {
+      setProcessed(true);
+    }
+  };
+
+  interface NoResultsProps {
+    type: string;
+  }
+  const NoResults = ({type}: NoResultsProps) => {
+    return (
+      <div className='flex flex-col w-full pt-8 lg:pt-16 items-center justify-center space-y-6'>
+        <NothingFoundIcon />
+        <span className='text-xl font-light'>
+          No {type === 'posts' ? 'spots' : 'users'} found for <span className='font-medium'>{searchKeyword}</span>
+        </span>
+      </div>
+    );
   };
 
   const PostsResults = () => {
-    return (
-      <LayoutPosts>
-        {posts?.map((post, idx) => (
-          <>
+    if (posts!.length > 0 && searchKeyword) {
+      return (
+        <LayoutPosts>
+          {posts?.map((post, idx) => (
             <PostPreviewCard
               key={idx}
               id={post.id}
@@ -35,10 +63,27 @@ export default function Page() {
               visitDate={post.visitDate}
               likedByIds={post.likedByIds}
             />
-          </>
-        ))}
-      </LayoutPosts>
-    );
+          ))}
+        </LayoutPosts>
+      );
+    }
+    if (posts!.length === 0 && searchKeyword && processed) {
+      return <NoResults type={'posts'} />;
+    }
+  };
+
+  const UsersResults = () => {
+    if (users!.length > 0 && searchKeyword)
+      return (
+        <div className='pt-8 flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:gap-6 flex-wrap '>
+          {users?.map((user, idx) => (
+            <UserPreviewCard key={idx} uid={user.uid} name={user.name} profileImageUrl={user.profileImageUrl} />
+          ))}
+        </div>
+      );
+    if (users!.length === 0 && searchKeyword && processed) {
+      return <NoResults type={'users'} />;
+    }
   };
 
   return (
@@ -55,7 +100,9 @@ export default function Page() {
           <TabsContent value='spots'>
             <PostsResults />
           </TabsContent>
-          <TabsContent value='people'>People here.</TabsContent>
+          <TabsContent value='people'>
+            <UsersResults />
+          </TabsContent>
         </Tabs>
       </div>
     </div>

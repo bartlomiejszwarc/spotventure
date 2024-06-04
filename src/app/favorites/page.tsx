@@ -2,12 +2,10 @@
 import PostPreviewCard from '@/components/ui/card/postPreviewCard';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
 import {useUserContext} from '@/hooks/context/useUserContext';
-import {useUserData} from '@/hooks/user/useUserData';
 import {useState, useEffect} from 'react';
 import {IPost} from '@/interfaces/postInterface';
 export default function Page() {
   const {getPostData} = useGetPostData();
-  const {getUserData} = useUserData();
   const {user} = useUserContext();
   const Favorites = () => {
     const [userFavorites, setUserFavorites] = useState<IPost[]>([]);
@@ -25,17 +23,15 @@ export default function Page() {
     return (
       <>
         {userFavorites.map((post, idx) => (
-          <>
-            <PostPreviewCard
-              key={idx}
-              id={post?.id}
-              uid={post.uid}
-              imageUrl={post.imageUrl}
-              location={post.location}
-              visitDate={post.visitDate}
-              likedByIds={post.likedByIds}
-            />
-          </>
+          <PostPreviewCard
+            key={idx}
+            id={post?.id}
+            uid={post.uid}
+            imageUrl={post.imageUrl}
+            location={post.location}
+            visitDate={post.visitDate}
+            likedByIds={post.likedByIds}
+          />
         ))}
       </>
     );

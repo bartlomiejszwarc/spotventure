@@ -95,7 +95,6 @@ function CreatePostDialog({isSidenavOpen}: Props) {
         setSuccess(true);
       } catch (error) {
         setProcessing(false);
-        console.log(error);
       }
     };
 

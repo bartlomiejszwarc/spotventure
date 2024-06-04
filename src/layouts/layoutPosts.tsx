@@ -3,9 +3,5 @@ export default function LayoutPosts({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <div className='w-full flex pb-12 '>
-      <div className='flex flex-wrap gap-y-6 gap-x-10'>{children}</div>
-    </div>
-  );
+  return <div className='w-full flex flex-wrap gap-4 justify-center md:justify-start'>{children}</div>;
 }
