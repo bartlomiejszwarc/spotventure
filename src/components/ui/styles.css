@@ -11,17 +11,4 @@
       width: 100%;
     }
   }
-
-  .unfocused {
-    animation: smooth-resize-back 500ms ease;
-  }
-
-  @keyframes smooth-resize-back {
-    0% {
-      width: 100%;
-    }
-    100% {
-      width: 24rem;
-    }
-  }
 }

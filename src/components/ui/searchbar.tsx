@@ -16,7 +16,7 @@ function SearchBar({onSearch}: Props) {
   return (
     <div
       className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 border-zinc-300 flex items-center justify-between pr-4 pl-6  ${
-        focused ? 'focused-full-width lg:w-full' : 'unfocused'
+        focused ? 'focused-full-width lg:w-full' : ''
       }`}>
       <input
         onFocus={() => setFocused(true)}

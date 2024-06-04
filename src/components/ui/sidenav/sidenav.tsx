@@ -25,13 +25,7 @@ function SideNav() {
       setStyle('closed-sidenav-initial-mobile');
       setOpen(false);
     }
-  }, [width, path]);
-
-  useEffect(() => {
-    if (!open) {
-      setStyle('closed-sidenav');
-    }
-  }, [open]);
+  }, [width]);
 
   const changeStyle = () => {
     if (open) {
