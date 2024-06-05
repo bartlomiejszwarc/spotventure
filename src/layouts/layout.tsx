@@ -5,6 +5,7 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import {useUserData} from '@/hooks/user/useUserData';
 import {useEffect} from 'react';
 import {UserContextProvider} from '@/context/UserContext';
+import {ProfileFollowersProvider} from '@/context/ProfileFollowersContext';
 
 export default function Layout({
   children,
@@ -17,9 +18,11 @@ export default function Layout({
   if (path !== '/signin' && path !== '/signup')
     return (
       <UserContextProvider>
-        <div className='flex min-h-screen font-manrope'>
-          <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
-        </div>
+        <ProfileFollowersProvider>
+          <div className='flex min-h-screen font-manrope'>
+            <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
+          </div>
+        </ProfileFollowersProvider>
       </UserContextProvider>
     );
   else {
