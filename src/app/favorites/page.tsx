@@ -1,5 +1,5 @@
 'use client';
-import PostPreviewCard from '@/components/ui/card/postPreviewCard';
+import PostPreviewCard from '@/components/ui/card/post/postPreviewCard';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useEffect, useState} from 'react';

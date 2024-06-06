@@ -17,6 +17,7 @@ model User {
   followers       String[]
   following       String[]
   likedPosts      String[]
+  notifications   String[]
 }
 
 model Post {
@@ -33,4 +34,13 @@ model Post {
   disabilityFriendly Boolean   @default(false)
   parkingAvailable   Boolean   @default(false)
   anyTimeAvailable   Boolean   @default(false)
+}
+
+model Notification {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  receiverId String
+  senderId   String
+  sourceId   String
+  type       String
+  createdAt  DateTime? @default(now())
 }

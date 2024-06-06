@@ -1,6 +1,6 @@
 import {IPost} from '@/interfaces/postInterface';
 import LayoutPosts from '@/layouts/layoutPosts';
-import PostPreviewCard from '../ui/card/postPreviewCard';
+import PostPreviewCard from '../ui/card/post/postPreviewCard';
 
 interface Props {
   posts: IPost[];

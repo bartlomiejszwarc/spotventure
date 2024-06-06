@@ -1,15 +1,9 @@
 'use client';
 import {useGetUserPosts} from '@/hooks/post/useGetUserPosts';
 import {useEffect, useState} from 'react';
-import PostPreviewCard from '@/components/ui/card/postPreviewCard';
 import {IPost} from './../../../interfaces/postInterface';
 import {useUserData} from '@/hooks/user/useUserData';
 import {IUser} from '@/database/actions/userAction';
-import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import {format} from 'date-fns';
-import {useUserContext} from '@/hooks/context/useUserContext';
-import {useFollowUser} from '@/hooks/user/follow/useFollowUser';
-import LayoutPosts from '@/layouts/layoutPosts';
 import EditProfileButton from '@/components/profile/edit-profile-button';
 import Followers from '@/components/profile/followers/followers';
 import FollowButton from '@/components/profile/followers/follow-button';
@@ -54,7 +48,11 @@ export default function Page({params}: {params: {id: string}}) {
                   className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300'
                   src={posts[0]!?.imageUrl}
                 />
-                <UserAvatar profileImageUrl={userData!.profileImageUrl} name={userData.name} />
+                <UserAvatar
+                  profileImageUrl={userData!.profileImageUrl}
+                  name={userData.name}
+                  className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16 border-zinc-50 border-[5px]'
+                />
               </div>
             </div>
             <div className='w-full flex justify-end pt-2'>

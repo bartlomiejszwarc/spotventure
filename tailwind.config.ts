@@ -9,9 +9,10 @@ const config = {
       xs: '500px',
       sm: '640px',
       md: '768px',
-      lg: '1024px',
+      lg: '1224px',
       xl: '1280px',
-      '2xl': '1536px',
+      '2xl': '1800px',
+      '3xl': '1921px',
     },
     container: {
       center: true,

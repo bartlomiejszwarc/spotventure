@@ -2,10 +2,11 @@ import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
 interface Props {
   profileImageUrl: string | undefined;
   name: string;
+  className?: string;
 }
-export default function UserAvatar({profileImageUrl, name}: Props) {
+export default function UserAvatar({profileImageUrl, name, className}: Props) {
   return (
-    <Avatar className='h-24 w-24 lg:h-36 lg:w-36 absolute bottom-0 left-3 lg:left-10 translate-y-[50%] border-[5px] shadow-md border-zinc-50'>
+    <Avatar className={className}>
       {profileImageUrl ? (
         <AvatarImage src={profileImageUrl} className='' />
       ) : (

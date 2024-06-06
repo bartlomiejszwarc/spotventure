@@ -12,6 +12,7 @@ export interface IUser {
   followers?: string[];
   following?: string[];
   likedPosts?: string[];
+  notifications?: string[];
 }
 
 const addUser = async ({uid, email, name}: IUser) => {

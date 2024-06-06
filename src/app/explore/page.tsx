@@ -1,7 +1,7 @@
 'use client';
 import SearchBar from '@/components/ui/searchbar';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useSearchByKeyword} from '@/hooks/search/useSearchByKeyword';
 import {IPost} from '@/interfaces/postInterface';
 import {IUser} from '@/database/actions/userAction';
@@ -19,7 +19,7 @@ export default function Page() {
 
   const handleOnSearch = async (keyword: string) => {
     try {
-      if (keyword.length < 3) return;
+      if (keyword.length < 1) return;
       setProcessed(false);
       setSearchKeyword(keyword);
       const resPosts = await searchPostsByKeyword(keyword);
@@ -37,21 +37,23 @@ export default function Page() {
   };
 
   return (
-    <div className='w-full flex flex-col space-y-6'>
-      <SearchBar onSearch={handleOnSearch} />
-      <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
-        <Tabs defaultValue='spots' className='w-full'>
-          <TabsList>
-            <TabsTrigger value='spots'>Spots</TabsTrigger>
-            <TabsTrigger value='people'>People</TabsTrigger>
-          </TabsList>
-          <TabsContent value='spots'>
-            <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
-          </TabsContent>
-          <TabsContent value='people'>
-            <ResultsUsers users={users} keyword={searchKeyword as string} processed={processed} />
-          </TabsContent>
-        </Tabs>
+    <div className='w-full flex justify-center'>
+      <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
+        <SearchBar onSearch={handleOnSearch} />
+        <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
+          <Tabs defaultValue='spots' className='w-full'>
+            <TabsList>
+              <TabsTrigger value='spots'>Spots</TabsTrigger>
+              <TabsTrigger value='people'>People</TabsTrigger>
+            </TabsList>
+            <TabsContent value='spots'>
+              <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
+            </TabsContent>
+            <TabsContent value='people'>
+              <ResultsUsers users={users} keyword={searchKeyword as string} processed={processed} />
+            </TabsContent>
+          </Tabs>
+        </div>
       </div>
     </div>
   );
