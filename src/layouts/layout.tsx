@@ -5,6 +5,7 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import {useUserData} from '@/hooks/user/useUserData';
 import {useEffect} from 'react';
 import {UserContextProvider} from '@/context/UserContext';
+import {PostContextProvider} from '@/context/PostContext';
 import {ProfileFollowersProvider} from '@/context/ProfileFollowersContext';
 
 export default function Layout({
@@ -19,9 +20,11 @@ export default function Layout({
     return (
       <UserContextProvider>
         <ProfileFollowersProvider>
-          <div className='flex min-h-screen font-manrope'>
-            <div className='bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
-          </div>
+          <PostContextProvider>
+            <div className='flex min-h-screen font-manrope'>
+              <div className='bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
+            </div>
+          </PostContextProvider>
         </ProfileFollowersProvider>
       </UserContextProvider>
     );

@@ -3,13 +3,7 @@ import Image from 'next/image';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
 import {IPost} from '@/interfaces/postInterface';
 import {useEffect, useState} from 'react';
-import PaidIcon from '@mui/icons-material/Paid';
-import AccessibleIcon from '@mui/icons-material/Accessible';
-import LocalParkingIcon from '@mui/icons-material/LocalParking';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import PlaceIcon from '@mui/icons-material/Place';
 import {formatDate} from 'date-fns';
-import {Accordion, AccordionContent, AccordionItem, AccordionTrigger} from '@/components/ui/accordion';
 import PostDescription from '@/components/ui/post/post-description';
 import PostUserInfo from '@/components/ui/post/post-user-info';
 import {useUserData} from '@/hooks/user/useUserData';
@@ -23,6 +17,7 @@ export default function Page({params}: {params: {id: string}}) {
   const [post, setPost] = useState<IPost | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const {user: currentUser} = useUserContext();
+
   useEffect(() => {
     const getPostDetails = async () => {
       try {

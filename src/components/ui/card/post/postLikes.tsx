@@ -5,6 +5,7 @@ import {useAddToFavorites} from '@/hooks/user/favorites/useAddToFavorites';
 import {useRemoveFromFavorites} from '@/hooks/user/favorites/useRemoveFromFavorites';
 import {INotification} from '@/interfaces/notificationInterface';
 import {useState} from 'react';
+import {usePostContext} from '@/hooks/context/usePostContext';
 
 interface Props {
   id: string;
@@ -19,10 +20,12 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, iconFo
   const {addToFavorites} = useAddToFavorites();
   const {removeFromFavorites} = useRemoveFromFavorites();
   const [likedByIdsState, setLikedByIdsState] = useState<string[]>(likedByIds);
+  const {likesCount, dispatch: postDispatch} = usePostContext();
 
   const addPostToFavorites = async () => {
     if (user && !processing) {
       dispatch({type: 'ADD_TO_USER_FAVORITES', payload: id});
+      postDispatch({type: 'INCREASE_LIKES_COUNT', payload: null});
       likedByIdsState.push(user.uid);
       if (!processing) {
         try {
@@ -48,6 +51,7 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, iconFo
   const removePostFromFavorites = async () => {
     if (user && !processing) {
       dispatch({type: 'REMOVE_FROM_USER_FAVORITES', payload: id});
+      postDispatch({type: 'DECREASE_LIKES_COUNT', payload: null});
       const updated = likedByIdsState.filter((userId) => userId !== user.uid);
       setLikedByIdsState(updated);
       if (!processing) {
