@@ -20,7 +20,7 @@ export default function Layout({
       <UserContextProvider>
         <ProfileFollowersProvider>
           <div className='flex min-h-screen font-manrope'>
-            <div className='pt-24 md:pt-6 bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
+            <div className='bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
           </div>
         </ProfileFollowersProvider>
       </UserContextProvider>

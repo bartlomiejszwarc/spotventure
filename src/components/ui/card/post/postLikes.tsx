@@ -10,8 +10,10 @@ interface Props {
   id: string;
   likedByIds: string[];
   uid: string;
+  likesCountHidden: boolean;
+  iconFontSize?: string;
 }
-export default function PostLikes({id, likedByIds, uid}: Props) {
+export default function PostLikes({id, likedByIds, uid, likesCountHidden, iconFontSize}: Props) {
   const {user, dispatch} = useUserContext();
   const [processing, setProcessing] = useState<boolean>(false);
   const {addToFavorites} = useAddToFavorites();
@@ -65,11 +67,19 @@ export default function PostLikes({id, likedByIds, uid}: Props) {
   return (
     <div className='flex space-x-1 items-center'>
       {user?.likedPosts?.includes(id as string) ? (
-        <FavoriteIcon className='text-xl text-rose-600 cursor-pointer' onClick={removePostFromFavorites} />
+        <FavoriteIcon
+          className={`text-xl text-rose-600 cursor-pointer `}
+          style={{fontSize: iconFontSize}}
+          onClick={removePostFromFavorites}
+        />
       ) : (
-        <FavoriteBorderIcon className='text-xl text-rose-600 cursor-pointer' onClick={addPostToFavorites} />
+        <FavoriteBorderIcon
+          className={`text-xl text-rose-600 cursor-pointer `}
+          style={{fontSize: iconFontSize}}
+          onClick={addPostToFavorites}
+        />
       )}
-      <span className='font-medium'>{likedByIdsState.length}</span>
+      {!likesCountHidden ? <span className='font-medium'>{likedByIdsState.length}</span> : null}
     </div>
   );
 }

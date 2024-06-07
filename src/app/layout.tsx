@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <div className='min-h-screen font-roboto'>
+        <div className='min-h-screen  font-roboto'>
           <div className='fixed z-30'>
             <SideNav />
           </div>

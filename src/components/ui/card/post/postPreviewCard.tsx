@@ -82,7 +82,7 @@ function PostPreviewCard({
           </div>
           <div className='flex flex-col items-center pt-6 overflow-hidden absolute z-30'>
             <UsernameLink uid={uid} name={name} />
-            <PostLikes id={id as string} likedByIds={likedByIds} uid={uid} />
+            <PostLikes id={id as string} likedByIds={likedByIds} uid={uid} likesCountHidden={false} />
           </div>
         </div>
       </div>
