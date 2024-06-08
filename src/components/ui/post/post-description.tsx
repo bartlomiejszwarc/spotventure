@@ -18,8 +18,8 @@ interface Props {
 }
 export default function PostDescription({name, description, location, date, post}: Props) {
   return (
-    <ScrollArea className='p-3 text-sm border-b-[1px] border-zinc-300 flex flex-col' style={{maxHeight: '33%'}}>
-      <div className='flex justify-between pb-2'>
+    <ScrollArea className='p-3 text-sm border-b-[1px] border-zinc-300 flex flex-col' style={{maxHeight: '150px'}}>
+      <div className='flex justify-between pb-2 font-light'>
         <span>
           {date}
           {', '} {location}

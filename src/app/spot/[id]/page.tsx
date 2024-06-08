@@ -11,16 +11,17 @@ import {IUser} from '@/database/actions/userAction';
 import PostActions from '@/components/ui/post/post-actions';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import PostReplies from '@/components/ui/post/post-replies';
-import {usePostContext} from '@/hooks/context/usePostContext';
 import {useReply} from '@/hooks/reply/useReply';
+import {IReply} from '@/interfaces/replyInterface';
 
 export default function Page({params}: {params: {id: string}}) {
   const {getPostData} = useGetPostData();
   const {getUserData} = useUserData();
   const [post, setPost] = useState<IPost | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
+  const [replies, setReplies] = useState<IReply[] | []>([]);
   const {user: currentUser} = useUserContext();
-  const {dispatch} = usePostContext();
+
   const {getReplies} = useReply();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function Page({params}: {params: {id: string}}) {
         const res = await getPostData(params.id);
         const replies = await getReplies(params.id);
         setPost(res);
-        dispatch({type: 'SET_POST_REPLIES', payload: replies});
+        setReplies(replies);
       } catch (error) {
         console.log(error);
       }
@@ -55,17 +56,20 @@ export default function Page({params}: {params: {id: string}}) {
         <div className='relative h-[50rem] w-[40rem] border-[1px]  border-zinc-300 flex items-center justify-center bg-zinc-100 shadow-md'>
           <Image fill={true} src={post.imageUrl} alt={'Spot image'} className='object-contain' />
         </div>
-        <div className='relative h-[50rem] w-[25rem] border-[1px] border-l-0 border-zinc-300 bg-zinc-100 flex flex-col shadow-md '>
-          <PostUserInfo uid={post.uid} name={user!.name} profilePictureUrl={user?.profileImageUrl} />
-          <PostDescription
-            post={post}
-            name={user!.name}
-            description={post.description}
-            location={post.location}
-            date={formatDate(post.visitDate as Date, 'LLLL dd yyyy')}
-          />
-          <PostReplies />
-          <div className='absolute bottom-0 w-full'>
+        <div className=' relative h-[50rem] w-[25rem] border-[1px] border-l-0 border-zinc-300 flex flex-col shadow-md bg-zinc-100 '>
+          <div>
+            <PostUserInfo uid={post.uid} name={user!.name} profilePictureUrl={user?.profileImageUrl} />
+            <PostDescription
+              post={post}
+              name={user!.name}
+              description={post.description}
+              location={post.location}
+              date={formatDate(post.visitDate as Date, 'LLLL dd yyyy')}
+            />
+          </div>
+          <PostReplies postReplies={replies} />
+
+          <div className='w-full bg-zinc-100'>
             <PostActions
               uid={currentUser!.uid}
               id={post.id as string}
