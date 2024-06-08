@@ -4,10 +4,9 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {useState, useEffect} from 'react';
 import {useUserData} from '@/hooks/user/useUserData';
 import UserAvatar from '../../user-avatar';
-import PostLikes from './postLikes';
-import UsernameLink from './usernameLink';
-import convertDate from '@/utils/convertDate';
-import Link from 'next/link';
+import PostLikes from './post-likes';
+import UsernameLink from './username-link';
+import convertDate from '@/utils/convert-date';
 import {useRouter} from 'next/navigation';
 
 interface IPostPreview {

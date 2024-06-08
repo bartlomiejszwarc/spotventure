@@ -4,9 +4,9 @@ import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useUserData} from '@/hooks/user/useUserData';
 import {useEffect} from 'react';
-import {UserContextProvider} from '@/context/UserContext';
-import {PostContextProvider} from '@/context/PostContext';
-import {ProfileFollowersProvider} from '@/context/ProfileFollowersContext';
+import {UserContextProvider} from '@/context/user-context';
+import {PostContextProvider} from '@/context/post-context';
+import {ProfileFollowersProvider} from '@/context/profile-followers-context';
 
 export default function Layout({
   children,

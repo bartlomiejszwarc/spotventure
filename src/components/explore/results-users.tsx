@@ -1,5 +1,5 @@
-import {IUser} from '@/database/actions/userAction';
-import UserPreviewCard from '../ui/card/userPreviewCard';
+import {IUser} from '@/interfaces/user-interface';
+import UserPreviewCard from '../ui/card/user-preview-card';
 import NoResults from './no-results';
 
 interface Props {

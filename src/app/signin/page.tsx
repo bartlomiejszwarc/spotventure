@@ -1,10 +1,10 @@
 'use client';
-import LayoutSign from '@/layouts/layoutSign';
-import ButtonConfirm from '@/components/ui/button/buttonConfirm';
+import LayoutSign from '@/layouts/layout-sign';
+import ButtonConfirm from '@/components/ui/button/button-confirm';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import {useState} from 'react';
-import LogoContainer from '@/components/ui/logo/logoContainer';
+import LogoContainer from '@/components/ui/logo/logo-container';
 import Link from 'next/link';
 import Logo from '@/components/ui/logo/logo';
 import ErrorIcon from '@mui/icons-material/Error';

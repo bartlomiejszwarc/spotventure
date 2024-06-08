@@ -1,4 +1,4 @@
-import {INotification} from '@/interfaces/notificationInterface';
+import {INotification} from '@/interfaces/notification-interface';
 import axios from 'axios';
 export const useAddToFavorites = () => {
   const addToFavorites = async (id: string, userId: string, body?: INotification) => {

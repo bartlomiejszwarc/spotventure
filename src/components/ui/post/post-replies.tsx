@@ -3,7 +3,7 @@ import {usePostContext} from '@/hooks/context/usePostContext';
 import PostReply from './post-reply';
 import {ScrollArea} from '../scroll-area';
 import {useEffect} from 'react';
-import {IReply} from '@/interfaces/replyInterface';
+import {IReply} from '@/interfaces/reply-interface';
 interface Props {
   postReplies: IReply[];
 }

@@ -1,5 +1,5 @@
 'use client';
-import {INotification} from '@/interfaces/notificationInterface';
+import {INotification} from '@/interfaces/notification-interface';
 import Notification from './notification';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useEffect, useState} from 'react';

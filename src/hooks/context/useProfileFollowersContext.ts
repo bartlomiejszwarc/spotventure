@@ -1,4 +1,4 @@
-import {ProfileFollowersContext} from '@/context/ProfileFollowersContext';
+import {ProfileFollowersContext} from '@/context/profile-followers-context';
 import {useContext} from 'react';
 
 export const useProfileFollowersContext = () => {

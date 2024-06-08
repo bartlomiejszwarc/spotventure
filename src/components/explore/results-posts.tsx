@@ -1,8 +1,7 @@
-import {IPost} from '@/interfaces/postInterface';
-import LayoutPosts from '@/layouts/layoutPosts';
-import PostPreviewCard from '../ui/card/post/postPreviewCard';
+import {IPost} from '@/interfaces/post-interface';
+import LayoutPosts from '@/layouts/layout-posts';
+import PostPreviewCard from '../ui/card/post/post-preview-card';
 import NoResults from './no-results';
-import {useEffect} from 'react';
 
 interface Props {
   posts: IPost[] | null;

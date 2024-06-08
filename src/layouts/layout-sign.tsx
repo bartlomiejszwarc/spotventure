@@ -3,7 +3,6 @@ import {auth} from '@/firebase/config';
 import Logo from '@/components/ui/logo/logo';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import MovingComponent from 'react-moving-text';
-import {useEffect} from 'react';
 
 export default function LayoutSign({
   children,

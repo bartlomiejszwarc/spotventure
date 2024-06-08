@@ -1,5 +1,5 @@
 'use client';
-import {IUser} from '../database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import {createContext, useReducer, useState, useEffect} from 'react';
 import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IPost} from './../../interfaces/postInterface';
+import {IPost} from '../../interfaces/post-interface';
 
 export const useCreatePost = () => {
   const createPost = async (data: IPost) => {

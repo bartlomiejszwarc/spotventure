@@ -1,6 +1,6 @@
 'use client';
 import MovingText from 'react-moving-text';
-import SvgDone from './svgDone';
+import SvgDone from './svg-done';
 
 function CreatePostDialogSuccess() {
   return (

@@ -1,13 +1,13 @@
 'use client';
-import SidenavField from './sidenavField';
-import {ISidenavField} from './sidenavField';
+import SidenavField from './sidenav-field';
+import {ISidenavField} from './sidenav-field';
 import HomeIcon from '@mui/icons-material/Home';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ExploreIcon from '@mui/icons-material/Explore';
-import CreatePostDialog from '../post/dialog/createPostDialog';
+import CreatePostDialog from '../post/dialog/create-post-dialog';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useLogout} from '@/hooks/auth/useLogout';
@@ -19,9 +19,6 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
   const {user} = useUserContext();
   const {logoutUser} = useLogout();
 
-  const onLogout = () => {
-    logoutUser();
-  };
   const fieldList: ISidenavField[] = [
     {icon: <HomeIcon className='text-3xl' />, title: 'Home', route: '/home', iconOnly: isSidenavOpen},
     {icon: <ExploreIcon className='text-3xl' />, title: 'Explore', route: '/explore', iconOnly: isSidenavOpen},

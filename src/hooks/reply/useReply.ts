@@ -1,5 +1,5 @@
 'use client';
-import {IReply} from '@/interfaces/replyInterface';
+import {IReply} from '@/interfaces/reply-interface';
 import axios from 'axios';
 import {useState} from 'react';
 

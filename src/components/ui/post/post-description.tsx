@@ -3,7 +3,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import AccessibleIcon from '@mui/icons-material/Accessible';
 import LocalParkingIcon from '@mui/icons-material/LocalParking';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import {IPost} from '@/interfaces/postInterface';
+import {IPost} from '@/interfaces/post-interface';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import NotAccessibleIcon from '@mui/icons-material/NotAccessible';
 import BedtimeOffIcon from '@mui/icons-material/BedtimeOff';

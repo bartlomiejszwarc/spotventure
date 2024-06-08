@@ -1,14 +1,13 @@
 'use client';
-import PostLikes from '../card/post/postLikes';
+import PostLikes from '../card/post/post-likes';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import UserAvatar from '../user-avatar';
 import {TextareaAutosize} from '@mui/base/TextareaAutosize';
-import {ScrollArea} from '../scroll-area';
 import {useEffect, useRef, useState} from 'react';
 import {usePostContext} from '@/hooks/context/usePostContext';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@/utils/convert-date';
 import SendIcon from '@mui/icons-material/Send';
-import {IReply} from '@/interfaces/replyInterface';
+import {IReply} from '@/interfaces/reply-interface';
 import {useReply} from '@/hooks/reply/useReply';
 
 interface Props {

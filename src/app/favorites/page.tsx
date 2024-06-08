@@ -1,9 +1,9 @@
 'use client';
-import PostPreviewCard from '@/components/ui/card/post/postPreviewCard';
+import PostPreviewCard from '@/components/ui/card/post/post-preview-card';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useEffect, useState} from 'react';
-import {IPost} from '@/interfaces/postInterface';
+import {IPost} from '@/interfaces/post-interface';
 
 export default function Page() {
   const {getPostData} = useGetPostData();
@@ -17,7 +17,7 @@ export default function Page() {
       const fetchUserFavorites = async () => {
         try {
           if (user?.likedPosts!?.length > 0) {
-            const favoritesPromises = user!.likedPosts!.map((postId) => getPostData(postId));
+            const favoritesPromises = user!.likedPosts!.map((postId: string) => getPostData(postId));
             const favorites = await Promise.all(favoritesPromises);
             const favoritesReversed = favorites.reverse();
             setUserFavorites(favoritesReversed);

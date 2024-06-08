@@ -1,18 +1,18 @@
 'use client';
 import Image from 'next/image';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
-import {IPost} from '@/interfaces/postInterface';
+import {IPost} from '@/interfaces/post-interface';
 import {useEffect, useState} from 'react';
 import {formatDate} from 'date-fns';
 import PostDescription from '@/components/ui/post/post-description';
 import PostUserInfo from '@/components/ui/post/post-user-info';
 import {useUserData} from '@/hooks/user/useUserData';
-import {IUser} from '@/database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import PostActions from '@/components/ui/post/post-actions';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import PostReplies from '@/components/ui/post/post-replies';
 import {useReply} from '@/hooks/reply/useReply';
-import {IReply} from '@/interfaces/replyInterface';
+import {IReply} from '@/interfaces/reply-interface';
 
 export default function Page({params}: {params: {id: string}}) {
   const {getPostData} = useGetPostData();

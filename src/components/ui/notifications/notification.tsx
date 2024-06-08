@@ -1,10 +1,10 @@
 import {Avatar, AvatarFallback, AvatarImage} from '@/components/ui/avatar';
-import {INotification} from '@/interfaces/notificationInterface';
+import {INotification} from '@/interfaces/notification-interface';
 import {useUserData} from '@/hooks/user/useUserData';
 import {useEffect, useState} from 'react';
-import {IUser} from '@/database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import UserAvatar from '@/components/ui/user-avatar';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@/utils/convert-date';
 import NotificationDescription from './notification-description';
 
 function Notification(notification: INotification) {

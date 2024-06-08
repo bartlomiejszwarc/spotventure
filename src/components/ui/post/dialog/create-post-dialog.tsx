@@ -1,14 +1,14 @@
 'use client';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog';
-import SidenavField from '../../sidenav/sidenavField';
+import SidenavField from '../../sidenav/sidenav-field';
 import AddIcon from '@mui/icons-material/Add';
 import {useRef, useState, useEffect} from 'react';
-import CreatePostDialogHeader from './createPostDialogHeader';
-import SvgImage from './svgImage';
+import CreatePostDialogHeader from './create-post-dialog-header';
+import SvgImage from './svg-image';
 import {ScrollArea} from '@/components/ui/scroll-area';
 import ClearIcon from '@mui/icons-material/Clear';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
-import categories from '@/data/postCategories';
+import categories from '@/data/post-categories';
 import {Button} from '@/components/ui/button';
 import {Calendar} from '@/components/ui/calendar';
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
@@ -28,8 +28,8 @@ import {uploadImage} from '@/firebase/storage';
 import {IImage} from '@/firebase/storage';
 import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import CreatePostDialogSpinner from './createPostDialogSpinner';
-import CreatePostDialogSuccess from './createPostDialogSuccess';
+import CreatePostDialogSpinner from './create-post-dialog-spinner';
+import CreatePostDialogSuccess from './create-post-dialog-success';
 
 interface Props {
   isSidenavOpen: boolean;

@@ -1,5 +1,5 @@
 'use client';
-import {IUser} from './../../database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import axios from 'axios';
 import {useState} from 'react';
 

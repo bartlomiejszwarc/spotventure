@@ -1,9 +1,9 @@
 'use client';
 import {useGetUserPosts} from '@/hooks/post/useGetUserPosts';
 import {useEffect, useState} from 'react';
-import {IPost} from './../../../interfaces/postInterface';
+import {IPost} from '../../../interfaces/post-interface';
 import {useUserData} from '@/hooks/user/useUserData';
-import {IUser} from '@/database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import EditProfileButton from '@/components/profile/edit-profile-button';
 import Followers from '@/components/profile/followers/followers';
 import FollowButton from '@/components/profile/followers/follow-button';

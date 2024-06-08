@@ -4,9 +4,9 @@ import './styles.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import useWindowDimensions from '../../../hooks/useWindowDimensions';
-import SidenavFieldList from './sidenavFieldList';
+import SidenavFieldList from './sidenav-field-list';
 import {usePathname} from 'next/navigation';
-import {UserContextProvider} from '@/context/UserContext';
+import {UserContextProvider} from '@/context/user-context';
 
 function SideNav() {
   const [isMobile, setIsMobile] = useState<boolean>(true);

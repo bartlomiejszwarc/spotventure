@@ -1,10 +1,10 @@
 'use client';
-import {IUser} from '@/database/actions/userAction';
+import {IUser} from '@/interfaces/user-interface';
 import {useUserData} from '@/hooks/user/useUserData';
-import {IReply} from '@/interfaces/replyInterface';
+import {IReply} from '@/interfaces/reply-interface';
 import {useEffect, useState} from 'react';
 import UserAvatar from '../user-avatar';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@/utils/convert-date';
 
 export default function PostReply(reply: IReply) {
   const [user, setUser] = useState<IUser | null>(null);

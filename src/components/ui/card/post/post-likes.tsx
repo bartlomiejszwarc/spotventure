@@ -3,7 +3,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useAddToFavorites} from '@/hooks/user/favorites/useAddToFavorites';
 import {useRemoveFromFavorites} from '@/hooks/user/favorites/useRemoveFromFavorites';
-import {INotification} from '@/interfaces/notificationInterface';
+import {INotification} from '@/interfaces/notification-interface';
 import {useState} from 'react';
 import {usePostContext} from '@/hooks/context/usePostContext';
 
