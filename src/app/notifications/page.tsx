@@ -1,4 +1,4 @@
-import NotificationList from '@/components/ui/notifications/notificationList';
+import NotificationList from '@/components/ui/notifications/notification-list';
 function Page() {
   return <NotificationList />;
 }

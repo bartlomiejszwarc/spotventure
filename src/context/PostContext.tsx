@@ -1,4 +1,5 @@
 'use client';
+import {IReply} from '@/interfaces/replyInterface';
 import {createContext, useReducer, useState, useEffect} from 'react';
 
 interface Props {
@@ -7,6 +8,7 @@ interface Props {
 
 interface IPost {
   likesCount: number;
+  replies: IReply[];
 }
 interface IPostAction {
   type: string;
@@ -22,12 +24,17 @@ export const userReducer = (state: IPostState, action: IPostAction): any => {
   switch (action.type) {
     case 'SET_POST_LIKES_COUNT':
       return {...state, likesCount: action.payload};
-
     case 'INCREASE_LIKES_COUNT': {
       return {...state, likesCount: state.likesCount + 1};
     }
     case 'DECREASE_LIKES_COUNT': {
       return {...state, likesCount: state.likesCount - 1};
+    }
+    case 'SET_POST_REPLIES': {
+      return {...state, replies: action.payload};
+    }
+    case 'ADD_REPLY': {
+      return {...state, replies: [...state.replies, action.payload]};
     }
 
     default:
@@ -36,7 +43,7 @@ export const userReducer = (state: IPostState, action: IPostAction): any => {
 };
 
 export const PostContextProvider = ({children}: Props) => {
-  const [state, dispatch] = useReducer(userReducer, {likesCount: null});
+  const [state, dispatch] = useReducer(userReducer, {likesCount: null, replies: []});
 
   return <PostContext.Provider value={{...state, dispatch}}>{children}</PostContext.Provider>;
 };

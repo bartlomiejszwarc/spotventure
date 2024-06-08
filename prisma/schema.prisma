@@ -34,6 +34,7 @@ model Post {
   disabilityFriendly Boolean   @default(false)
   parkingAvailable   Boolean   @default(false)
   anyTimeAvailable   Boolean   @default(false)
+  replies            String[]  @default([])
 }
 
 model Notification {
@@ -42,5 +43,14 @@ model Notification {
   senderId   String
   sourceId   String
   type       String
+  createdAt  DateTime? @default(now())
+}
+
+model Reply {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  uid        String
+  sourceId   String
+  text       String
+  likedByIds String[]  @default([])
   createdAt  DateTime? @default(now())
 }

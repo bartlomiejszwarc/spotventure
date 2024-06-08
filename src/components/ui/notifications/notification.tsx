@@ -5,7 +5,7 @@ import {useEffect, useState} from 'react';
 import {IUser} from '@/database/actions/userAction';
 import UserAvatar from '@/components/ui/user-avatar';
 import convertDate from '@/utils/convertDate';
-import NotificationDescription from './notificationDescription';
+import NotificationDescription from './notification-description';
 
 function Notification(notification: INotification) {
   const {getUserData} = useUserData();

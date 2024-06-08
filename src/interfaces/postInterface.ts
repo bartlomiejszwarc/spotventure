@@ -7,7 +7,9 @@ export interface IPost {
   imageUrl: string;
   location: string;
   likedByIds: string[];
+  replies?: string[];
   free?: boolean;
+  createdAt?: Date;
   disabilityFriendly?: boolean;
   parkingAvailable?: boolean;
   anyTimeAvailable?: boolean;

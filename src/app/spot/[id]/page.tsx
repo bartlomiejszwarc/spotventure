@@ -10,6 +10,9 @@ import {useUserData} from '@/hooks/user/useUserData';
 import {IUser} from '@/database/actions/userAction';
 import PostActions from '@/components/ui/post/post-actions';
 import {useUserContext} from '@/hooks/context/useUserContext';
+import PostReplies from '@/components/ui/post/post-replies';
+import {usePostContext} from '@/hooks/context/usePostContext';
+import {useReply} from '@/hooks/reply/useReply';
 
 export default function Page({params}: {params: {id: string}}) {
   const {getPostData} = useGetPostData();
@@ -17,17 +20,20 @@ export default function Page({params}: {params: {id: string}}) {
   const [post, setPost] = useState<IPost | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const {user: currentUser} = useUserContext();
+  const {dispatch} = usePostContext();
+  const {getReplies} = useReply();
 
   useEffect(() => {
     const getPostDetails = async () => {
       try {
         const res = await getPostData(params.id);
+        const replies = await getReplies(params.id);
         setPost(res);
+        dispatch({type: 'SET_POST_REPLIES', payload: replies});
       } catch (error) {
         console.log(error);
       }
     };
-
     getPostDetails();
   }, [params.id]);
 
@@ -58,6 +64,7 @@ export default function Page({params}: {params: {id: string}}) {
             location={post.location}
             date={formatDate(post.visitDate as Date, 'LLLL dd yyyy')}
           />
+          <PostReplies />
           <div className='absolute bottom-0 w-full'>
             <PostActions
               uid={currentUser!.uid}
@@ -65,6 +72,7 @@ export default function Page({params}: {params: {id: string}}) {
               likedByIds={post.likedByIds}
               profileImageUrl={currentUser?.profileImageUrl}
               name={currentUser?.name as string}
+              createdAt={post.createdAt as Date}
             />
           </div>
         </div>

@@ -15,7 +15,7 @@ export default function NotificationDescription({type, uid, name, subjectId}: Pr
           {name}
         </Link>{' '}
         liked your{' '}
-        <Link href='' className='font-medium'>
+        <Link href={`/spot/${subjectId}`} className='font-medium'>
           spot
         </Link>
         {'.'}
@@ -41,7 +41,7 @@ export default function NotificationDescription({type, uid, name, subjectId}: Pr
         <Link className='font-medium' href={`profile/${uid}`}>
           {name}
         </Link>{' '}
-        replied to your <Link href=''>spot</Link>
+        replied to your <Link href={`/spot/${subjectId}`}>spot</Link>
       </span>
     );
   }
