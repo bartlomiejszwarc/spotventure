@@ -3,7 +3,6 @@ import {IUser} from '@/interfaces/user-interface';
 import {createContext, useReducer, useState, useEffect} from 'react';
 import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import {redirect} from 'next/navigation';
 import {useUserData} from '@/hooks/user/useUserData';
 
 interface Props {
@@ -46,6 +45,22 @@ export const userReducer = (state: IUserContextState, action: IUserAction): any 
         user: {
           ...state.user,
           likedPosts: state?.user?.likedPosts?.filter((id) => id !== action.payload),
+        },
+      };
+    case 'ADD_TO_USER_LIKED_REPLIES':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          likedReplies: [...(state.user?.likedReplies || []), action.payload],
+        },
+      };
+    case 'REMOVE_FROM_USER_LIKED_REPLIES':
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          likedReplies: state?.user?.likedReplies?.filter((id) => id !== action.payload),
         },
       };
     case 'ADD_TO_FOLLOWING':

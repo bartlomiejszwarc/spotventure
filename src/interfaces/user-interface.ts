@@ -8,5 +8,6 @@ export interface IUser {
   followers?: string[];
   following?: string[];
   likedPosts?: string[];
+  likedReplies?: string[];
   notifications?: string[];
 }

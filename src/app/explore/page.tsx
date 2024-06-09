@@ -37,7 +37,7 @@ export default function Page() {
   };
 
   return (
-    <div className='w-full flex justify-center'>
+    <div className='w-full flex justify-center pt-16'>
       <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
         <SearchBar onSearch={handleOnSearch} />
         <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>

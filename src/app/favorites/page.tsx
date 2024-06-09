@@ -4,6 +4,7 @@ import {useGetPostData} from '@/hooks/post/useGetPostData';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useEffect, useState} from 'react';
 import {IPost} from '@/interfaces/post-interface';
+import LayoutPosts from '@/layouts/layout-posts';
 
 export default function Page() {
   const {getPostData} = useGetPostData();
@@ -32,20 +33,20 @@ export default function Page() {
   }, [user]);
 
   return (
-    <div className='flex flex-col space-y-6'>
-      <div className='w-full flex flex-wrap gap-4 justify-center md:justify-start '>
+    <div className='pt-16 lg:pt-6'>
+      <LayoutPosts>
         {userFavorites.map((post, idx) => (
           <PostPreviewCard
             key={idx}
             id={post?.id}
-            uid={post.uid}
-            imageUrl={post.imageUrl}
-            location={post.location}
-            visitDate={post.visitDate}
-            likedByIds={post.likedByIds}
+            uid={post?.uid}
+            imageUrl={post?.imageUrl}
+            location={post?.location}
+            visitDate={post?.visitDate}
+            likedByIds={post?.likedByIds}
           />
         ))}
-      </div>
+      </LayoutPosts>
     </div>
   );
 }

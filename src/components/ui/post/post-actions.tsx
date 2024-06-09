@@ -9,8 +9,11 @@ import convertDate from '@/utils/convert-date';
 import SendIcon from '@mui/icons-material/Send';
 import {IReply} from '@/interfaces/reply-interface';
 import {useReply} from '@/hooks/reply/useReply';
+import {INotification} from '@/interfaces/notification-interface';
+import {useUserContext} from '@/hooks/context/useUserContext';
 
 interface Props {
+  postAuthorId: string;
   uid: string;
   id: string;
   likedByIds: string[];
@@ -18,10 +21,11 @@ interface Props {
   name: string;
   createdAt: Date;
 }
-export default function PostActions({id, uid, likedByIds, profileImageUrl, name, createdAt}: Props) {
+export default function PostActions({postAuthorId, id, uid, likedByIds, profileImageUrl, name, createdAt}: Props) {
   const [textareaAutofocus, setTextAreaAutofocus] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const {likesCount, dispatch} = usePostContext();
+  const {user} = useUserContext();
   const [replyValue, setReplyValue] = useState<string>('');
   const {sendReply} = useReply();
   const MAX_REPLY_LENGTH = 150;
@@ -37,15 +41,23 @@ export default function PostActions({id, uid, likedByIds, profileImageUrl, name,
   }, [textareaAutofocus]);
 
   const addReply = async () => {
-    const body: IReply = {
-      uid: uid,
-      sourceId: id,
-      text: replyValue,
-    };
-    const res = await sendReply(body);
-    dispatch({type: 'ADD_REPLY', payload: res});
-    setReplyValue('');
     try {
+      if (user) {
+        const data: IReply = {
+          uid: uid,
+          sourceId: id,
+          text: replyValue,
+        };
+        const body: INotification = {
+          receiverId: postAuthorId,
+          senderId: user.uid,
+          sourceId: id,
+          type: 'reply',
+        };
+        const res = await sendReply(data, user.uid, body);
+        dispatch({type: 'ADD_REPLY', payload: res});
+        setReplyValue('');
+      }
     } catch (error) {}
   };
 

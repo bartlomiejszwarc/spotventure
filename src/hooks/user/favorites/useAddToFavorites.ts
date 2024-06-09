@@ -14,6 +14,14 @@ export const useAddToFavorites = () => {
       return false;
     }
   };
+  const likeReply = async (id: string, uid: string) => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      await axios.post(`/api/users/${uid}/favorites/replies`, {id: id}, {headers: headers});
+    } catch (error) {}
+  };
 
-  return {addToFavorites};
+  return {addToFavorites, likeReply};
 };

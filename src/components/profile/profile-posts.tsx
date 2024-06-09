@@ -1,6 +1,6 @@
 import {IPost} from '@/interfaces/post-interface';
-import LayoutPosts from '@/layouts/layout-posts';
 import PostPreviewCard from '../ui/card/post/post-preview-card';
+import LayoutPostsProfile from '@/layouts/layout-posts-profile';
 
 interface Props {
   posts: IPost[];
@@ -12,7 +12,7 @@ interface Props {
 export default function ProfilePosts({posts, uid, profileImageUrl, name, processed}: Props) {
   if (posts!.length > 0) {
     return (
-      <LayoutPosts>
+      <LayoutPostsProfile>
         {posts.map((post, idx) => (
           <PostPreviewCard
             key={idx}
@@ -26,7 +26,7 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
             username={name}
           />
         ))}
-      </LayoutPosts>
+      </LayoutPostsProfile>
     );
   }
   if (posts.length === 0 && processed) {

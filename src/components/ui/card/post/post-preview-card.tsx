@@ -37,9 +37,11 @@ function PostPreviewCard({
 
   useEffect(() => {
     const getUserDataFromUid = async () => {
-      const res = await getUserData(uid);
-      if (res) setName(res.data.user.name);
-      if (!profileImageUrl) setUserProfileImageUrl(res?.data.user.profileImageUrl);
+      if (uid) {
+        const res = await getUserData(uid);
+        if (res) setName(res.data.user.name);
+        if (!profileImageUrl) setUserProfileImageUrl(res?.data.user.profileImageUrl);
+      }
     };
 
     getUserDataFromUid();
@@ -49,11 +51,11 @@ function PostPreviewCard({
     return (
       <div className='relative h-[12rem] lg:h-[17rem]'>
         <div
-          className=' h-[12rem] lg:h-[17rem] rounded-xl relative bg-zinc-100 shadow-lg shadow-zinc-300 '
+          className='cursor-pointer h-[12rem] lg:h-[17rem] rounded-xl relative bg-zinc-100 shadow-lg shadow-zinc-300 '
           onClick={() => router.push(`/spot/${id}`)}>
           <div className='h-3/5 lg:h-[70%] relative'>
-            <div className='absolute inset-0'>
-              <Image className='rounded-t-xl' layout='fill' objectFit='cover' src={imageUrl} alt='Place' />
+            <div className='w-full '>
+              <Image className='rounded-t-xl object-cover' fill={true} src={imageUrl} alt='Place' />
             </div>
             <div className='absolute flex w-full h-full items-end justify-between px-3 pb-1 opacity-80'>
               <div className='flex space-x-1 bg-zinc-600/80 text-zinc-300 pr-[7px] pl-2 rounded-full bg-opacity-60 py-[2px]'>
@@ -71,8 +73,8 @@ function PostPreviewCard({
             </div>
           </div>
         </div>
-        <div className='w-full absolute top-0 translate-y-[7.2rem] lg:translate-y-[11.9rem] z-30 flex flex-col items-center bg-red-500'>
-          <div className='flex flex-col absolute translate-y-[-50%] items-center z-30'>
+        <div className='w-full absolute top-0 translate-y-[7.2rem] lg:translate-y-[11.9rem] z-20 flex flex-col items-center bg-red-500'>
+          <div className='flex flex-col absolute translate-y-[-50%] items-center z-20'>
             <UserAvatar
               profileImageUrl={userProfileImageUrl ? (userProfileImageUrl as string) : profileImageUrl}
               name={name}

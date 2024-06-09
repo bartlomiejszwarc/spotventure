@@ -13,5 +13,11 @@ export const useRemoveFromFavorites = () => {
     }
   };
 
-  return {removeFromFavorites};
+  const dislikeReply = async (id: string, uid: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+    await axios.put(`/api/users/${uid}/favorites/replies`, {id: id}, {headers: headers});
+  };
+  return {removeFromFavorites, dislikeReply};
 };

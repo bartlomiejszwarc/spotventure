@@ -14,10 +14,11 @@ model User {
   name            String
   createdAt       DateTime @default(now())
   profileImageUrl String?  @default("")
-  followers       String[]
-  following       String[]
-  likedPosts      String[]
-  notifications   String[]
+  followers       String[] @default([])
+  following       String[] @default([])
+  likedPosts      String[] @default([])
+  likedReplies    String[] @default([])
+  notifications   String[] @default([])
 }
 
 model Post {

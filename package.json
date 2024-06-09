@@ -46,6 +46,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-moving-text": "^0.0.7",
     "react-spinners": "^0.13.8",
+    "react-time-ago": "^7.3.3",
     "styled-components": "^6.1.11",
     "tailwind-merge": "^2.3.0"
   },

@@ -31,9 +31,7 @@ export default function Page({params}: {params: {id: string}}) {
         const replies = await getReplies(params.id);
         setPost(res);
         setReplies(replies);
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     };
     getPostDetails();
   }, [params.id]);
@@ -50,7 +48,7 @@ export default function Page({params}: {params: {id: string}}) {
     }
   }, [post]);
 
-  if (post && user) {
+  if (post && user && currentUser) {
     return (
       <div className='w-full flex lg:justify-center lg:items-center min-h-screen h-screen'>
         <div className='relative h-[50rem] w-[40rem] border-[1px]  border-zinc-300 flex items-center justify-center bg-zinc-100 shadow-md'>
@@ -71,6 +69,7 @@ export default function Page({params}: {params: {id: string}}) {
 
           <div className='w-full bg-zinc-100'>
             <PostActions
+              postAuthorId={post.uid}
               uid={currentUser!.uid}
               id={post.id as string}
               likedByIds={post.likedByIds}

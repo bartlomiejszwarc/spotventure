@@ -11,6 +11,7 @@ import MemberSince from '@/components/profile/member-since';
 import UserAvatar from '@/components/ui/user-avatar';
 import ProfilePosts from '@/components/profile/profile-posts';
 import {useProfileFollowersContext} from '@/hooks/context/useProfileFollowersContext';
+import Image from 'next/image';
 export default function Page({params}: {params: {id: string}}) {
   const {getUserPosts} = useGetUserPosts();
   const {dispatch} = useProfileFollowersContext();
@@ -44,10 +45,16 @@ export default function Page({params}: {params: {id: string}}) {
           <div className='w-full'>
             <div className='w-full flex space-x-16'>
               <div className='relative w-full'>
-                <img
-                  className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300'
-                  src={posts[0]!?.imageUrl}
-                />
+                <div className='w-full h-44 lg:h-72 bg-zinc-500'>
+                  <Image
+                    quality={100}
+                    fill={true}
+                    alt='Background'
+                    className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300'
+                    src={posts[0]!?.imageUrl}
+                  />
+                </div>
+
                 <UserAvatar
                   profileImageUrl={userData!.profileImageUrl}
                   name={userData.name}
