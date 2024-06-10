@@ -6,6 +6,7 @@ export interface IPost {
   visitDate: Date | undefined;
   imageUrl: string;
   location: string;
+  likesCount: number;
   likedByIds: string[];
   replies?: string[];
   free?: boolean;

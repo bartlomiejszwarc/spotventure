@@ -10,6 +10,15 @@ function SearchBar() {
   const {replace} = useRouter();
   const [inputValue, setInputValue] = useState<string>('');
   const [focused, setFocused] = useState<boolean>(false);
+  const handleSearchOnKeyDown = (event?: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event?.key === 'Enter') {
+      const params = new URLSearchParams(searchParams);
+      if (inputValue) {
+        params.set('search', inputValue);
+        replace(`${pathname}?${params.toString()}`);
+      }
+    }
+  };
   const handleSearch = () => {
     const params = new URLSearchParams(searchParams);
     if (inputValue) {
@@ -29,6 +38,7 @@ function SearchBar() {
         type='text'
         className='w-full bg-transparent h-[70%] placeholder:text-lg outline-none'
         placeholder='Explore'
+        onKeyDown={(e) => handleSearchOnKeyDown(e)}
         onChange={(e) => {
           setInputValue(e.target.value);
         }}></input>

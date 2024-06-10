@@ -18,6 +18,7 @@ export async function POST(req: Request, context: any) {
     await prisma.post.update({
       data: {
         likedByIds: {push: [body.uid]},
+        likesCount: post.likesCount + 1,
       },
       where: {
         id: id,
@@ -41,7 +42,7 @@ export async function PUT(req: Request, context: any) {
         id: id,
       },
     });
-    if (!post) NextResponse.json({success: false});
+    if (!post) return NextResponse.json({success: false});
     await prisma.post.update({
       data: {
         likedByIds: {
@@ -49,6 +50,7 @@ export async function PUT(req: Request, context: any) {
             userId !== body.uid;
           }),
         },
+        likesCount: post.likesCount - 1,
       },
       where: {
         id: id,

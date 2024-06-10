@@ -10,13 +10,16 @@ import {useSearchParams} from 'next/navigation';
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {useEffect, useState} from 'react';
+import Sort from '@/components/explore/sort';
 
+type Order = 'asc' | 'desc';
 export default function SearchPage() {
   const {searchPostsByKeyword, searchUsersByKeyword} = useSearchByKeyword();
   const [tab, setActiveTab] = useState('spots');
 
   const [posts, setPosts] = useState<IPost[] | null>([]);
   const [users, setUsers] = useState<IUser[] | null>([]);
+
   const [searchKeyword, setSearchKeyword] = useState<string | null>();
   const [processed, setProcessed] = useState<boolean>(false);
   const {user} = useUserContext();
@@ -24,6 +27,8 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
 
   const search = searchParams.get('search');
+  const orderBy = searchParams.get('orderBy');
+  const order = searchParams.get('order');
 
   useEffect(() => {
     if (search) {
@@ -32,7 +37,7 @@ export default function SearchPage() {
           if (search.length < 1) return;
           setProcessed(false);
           setSearchKeyword(search);
-          const resPosts = await searchPostsByKeyword(search);
+          const resPosts = await searchPostsByKeyword(search, orderBy ? orderBy : 'createdAt', order ? order : 'desc');
           setPosts(resPosts);
           const resUsers = await searchUsersByKeyword(search);
           const resUsersUpdated = resUsers.filter((userObj: {uid: string}) => {
@@ -47,18 +52,24 @@ export default function SearchPage() {
       };
       handleSearch();
     }
-  }, [search]);
+  }, [search, orderBy, order]);
 
   return (
     <div className='w-full flex justify-center pt-16'>
       <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
         <SearchBar />
+
         <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
           <Tabs defaultValue='spots' className='w-full' value={tab} onValueChange={setActiveTab}>
             <TabsList>
               <TabsTrigger value='spots'>Spots</TabsTrigger>
               <TabsTrigger value='people'>People</TabsTrigger>
             </TabsList>
+            {tab === 'spots' && (
+              <div className='py-4'>
+                <Sort />
+              </div>
+            )}
             <TabsContent value='spots' forceMount={true} hidden={'spots' !== tab}>
               <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
             </TabsContent>

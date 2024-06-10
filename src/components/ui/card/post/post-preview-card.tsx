@@ -15,6 +15,7 @@ interface IPostPreview {
   imageUrl: string;
   location: string;
   visitDate: Date | undefined;
+  likesCount: number;
   likedByIds: string[];
   profileImageUrl?: string | undefined;
   username?: string;
@@ -26,6 +27,7 @@ function PostPreviewCard({
   imageUrl,
   location,
   visitDate,
+  likesCount,
   likedByIds,
   profileImageUrl,
   username,
@@ -83,7 +85,13 @@ function PostPreviewCard({
           </div>
           <div className='flex flex-col items-center pt-6 overflow-hidden absolute z-30'>
             <UsernameLink uid={uid} name={name} />
-            <PostLikes id={id as string} likedByIds={likedByIds} uid={uid} likesCountHidden={false} />
+            <PostLikes
+              id={id as string}
+              likedByIds={likedByIds}
+              likesCount={likesCount}
+              uid={uid}
+              likesCountHidden={false}
+            />
           </div>
         </div>
       </div>

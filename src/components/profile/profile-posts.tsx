@@ -10,7 +10,7 @@ interface Props {
   processed: boolean;
 }
 export default function ProfilePosts({posts, uid, profileImageUrl, name, processed}: Props) {
-  if (posts!.length > 0) {
+  if (posts!?.length > 0) {
     return (
       <LayoutPostsProfile>
         {posts.map((post, idx) => (
@@ -21,6 +21,7 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
             imageUrl={post.imageUrl}
             location={post.location}
             visitDate={post.visitDate}
+            likesCount={post.likesCount}
             likedByIds={post.likedByIds}
             profileImageUrl={profileImageUrl}
             username={name}

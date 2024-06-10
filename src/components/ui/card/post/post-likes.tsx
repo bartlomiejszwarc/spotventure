@@ -10,17 +10,18 @@ import {usePostContext} from '@/hooks/context/usePostContext';
 interface Props {
   id: string;
   likedByIds: string[];
+  likesCount: number;
   uid: string;
   likesCountHidden: boolean;
   iconFontSize?: string;
 }
-export default function PostLikes({id, likedByIds, uid, likesCountHidden, iconFontSize}: Props) {
+export default function PostLikes({id, likedByIds, likesCount, uid, likesCountHidden, iconFontSize}: Props) {
   const {user, dispatch} = useUserContext();
   const [processing, setProcessing] = useState<boolean>(false);
   const {addToFavorites} = useAddToFavorites();
   const {removeFromFavorites} = useRemoveFromFavorites();
   const [likedByIdsState, setLikedByIdsState] = useState<string[]>(likedByIds);
-  const {likesCount, dispatch: postDispatch} = usePostContext();
+  const {dispatch: postDispatch} = usePostContext();
 
   const addPostToFavorites = async () => {
     if (user && !processing) {
@@ -83,7 +84,7 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, iconFo
           onClick={addPostToFavorites}
         />
       )}
-      {!likesCountHidden ? <span className='font-medium'>{likedByIdsState.length}</span> : null}
+      {!likesCountHidden ? <span className='font-medium'>{likesCount}</span> : null}
     </div>
   );
 }

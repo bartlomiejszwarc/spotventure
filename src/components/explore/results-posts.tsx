@@ -9,7 +9,7 @@ interface Props {
   processed: boolean;
 }
 export default function ResultsPosts({posts, keyword, processed}: Props) {
-  if (posts!.length > 0 && keyword) {
+  if (posts!?.length > 0 && keyword) {
     return (
       <LayoutPosts>
         {posts?.map((post, idx) => (
@@ -17,6 +17,7 @@ export default function ResultsPosts({posts, keyword, processed}: Props) {
             key={idx}
             id={post.id}
             uid={post.uid}
+            likesCount={post.likesCount}
             imageUrl={post.imageUrl}
             location={post.location}
             visitDate={post.visitDate}
@@ -26,7 +27,7 @@ export default function ResultsPosts({posts, keyword, processed}: Props) {
       </LayoutPosts>
     );
   }
-  if (posts!.length === 0 && keyword && processed) {
+  if (posts!?.length === 0 && keyword && processed) {
     return <NoResults type={'posts'} keyword={keyword} />;
   }
 }

@@ -1,3 +1,4 @@
+'use client';
 import Background from '@/components/ui/background/background';
 import {auth} from '@/firebase/config';
 import Logo from '@/components/ui/logo/logo';
