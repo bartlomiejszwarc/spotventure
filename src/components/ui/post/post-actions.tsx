@@ -62,12 +62,11 @@ export default function PostActions({postAuthorId, id, uid, likedByIds, profileI
   };
 
   return (
-    <div className='p-3 w-full border-t-[1px] border-zinc-300 flex flex-col space-y-1'>
+    <div className='p-3 w-full border-t-[1px] border-zinc-300 flex flex-col md:space-y-1'>
       <div className='  flex space-x-4 items-end '>
         <PostLikes id={id} uid={uid} likedByIds={likedByIds} likesCountHidden={true} iconFontSize={'30px'} />
         <ChatBubbleOutlineIcon
-          className='hover:opacity-70 cursor-pointer text-zinc-800'
-          style={{fontSize: '28px'}}
+          className='hover:opacity-70 cursor-pointer text-zinc-800 text-[28px]'
           onClick={() => {
             setTextAreaAutofocus(true);
           }}

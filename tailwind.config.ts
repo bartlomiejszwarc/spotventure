@@ -9,6 +9,7 @@ const config = {
       xs: '500px',
       sm: '640px',
       md: '768px',
+      mdplus: '1000px',
       lg: '1224px',
       xl: '1280px',
       '2xl': '1800px',

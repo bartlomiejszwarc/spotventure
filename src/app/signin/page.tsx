@@ -49,7 +49,9 @@ export default function Page() {
     return (
       <>
         <div className='flex flex-col leading-8 border-b-[1px] border-zinc-400'>
-          <span className='text-zinc-300 text-2xl font-manrope tracking-wide pb-4'>Sign in</span>
+          <span className='tracking-wide text-2xl pb-4 inline-block bg-gradient-to-r from-zinc-200  to-zinc-500 text-transparent bg-clip-text'>
+            Sign in
+          </span>
           <span className='text-zinc-200'>E-mail</span>
           <input
             onChange={(e) => {
@@ -96,7 +98,9 @@ export default function Page() {
           </div>
           <span className='text-zinc-300'>
             Don&apos;t have an account?{' '}
-            <Link href='/signup' className='font-semibold text-fuchsia-400'>
+            <Link
+              href='/signup'
+              className='font-semibold  inline-block bg-gradient-to-r from-fuchsia-500 via-fuchsia-400  to-fuchsia-500 text-transparent bg-clip-text'>
               Sign up here
             </Link>
           </span>

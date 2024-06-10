@@ -143,7 +143,9 @@ export default function Page() {
             </div>
             <span className='text-zinc-300'>
               Already have an account?{' '}
-              <Link href='/signin' className='font-semibold text-fuchsia-400'>
+              <Link
+                href='/signin'
+                className='font-semibold inline-block bg-gradient-to-r from-fuchsia-500 via-fuchsia-400  to-fuchsia-500 text-transparent bg-clip-text'>
                 Sign in
               </Link>
             </span>

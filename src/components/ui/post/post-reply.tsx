@@ -4,12 +4,11 @@ import {useUserData} from '@/hooks/user/useUserData';
 import {IReply} from '@/interfaces/reply-interface';
 import {useEffect, useState} from 'react';
 import UserAvatar from '../user-avatar';
-import convertDate from '@/utils/convert-date';
 import TimeAgo from 'javascript-time-ago';
 import ReactTimeAgo from 'react-time-ago';
 import en from 'javascript-time-ago/locale/en';
 import PostReplyLikes from './post-reply-likes';
-import {useUserContext} from '@/hooks/context/useUserContext';
+import convertLikesCount from '@/utils/convertLikesCount';
 TimeAgo.addLocale(en);
 
 export default function PostReply(reply: IReply) {
@@ -35,8 +34,8 @@ export default function PostReply(reply: IReply) {
           <div className='flex justify-between '>
             <UserAvatar profileImageUrl={user?.profileImageUrl} name={user?.name as string} />
           </div>
-          <div className='flex flex-col leading-none pl-4 '>
-            <div className='leading-tight'>
+          <div className='flex flex-col leading-none w-full pl-4 '>
+            <div className='leading-tight w-full '>
               <span className='text-sm font-semibold'>{user!.name} </span>
               <span className='text-sm'>
                 {reply.text} {reply.text} {reply.text} {reply.text} {reply.text} {reply.text}
@@ -45,9 +44,14 @@ export default function PostReply(reply: IReply) {
                 {reply.text}{' '}
               </span>
             </div>
-            <div>
+            <div className='flex space-x-2 pt-[3px]'>
               <span className='font-light text-xs'>
-                <ReactTimeAgo date={reply.createdAt as Date} locale='en-US' timeStyle='round' />
+                <ReactTimeAgo date={reply.createdAt as Date} locale='en-US' timeStyle='mini-now' />
+              </span>
+              <span className='font-medium text-xs'>
+                {reply.likedByIds?.length === 1
+                  ? `${convertLikesCount(reply.likedByIds?.length)} like`
+                  : `${convertLikesCount(reply.likedByIds?.length as number)} likes`}
               </span>
             </div>
           </div>

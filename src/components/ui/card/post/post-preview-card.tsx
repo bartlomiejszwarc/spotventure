@@ -45,7 +45,7 @@ function PostPreviewCard({
     };
 
     getUserDataFromUid();
-  }, [uid]);
+  }, []);
 
   if (name) {
     return (

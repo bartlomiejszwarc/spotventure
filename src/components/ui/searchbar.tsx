@@ -1,16 +1,21 @@
 'use client';
 import './styles.css';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
-interface Props {
-  onSearch: any;
-}
-function SearchBar({onSearch}: Props) {
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
+
+function SearchBar() {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const {replace} = useRouter();
   const [inputValue, setInputValue] = useState<string>('');
   const [focused, setFocused] = useState<boolean>(false);
-
   const handleSearch = () => {
-    onSearch(inputValue);
+    const params = new URLSearchParams(searchParams);
+    if (inputValue) {
+      params.set('search', inputValue);
+      replace(`${pathname}?${params.toString()}`);
+    }
   };
 
   return (
@@ -19,6 +24,7 @@ function SearchBar({onSearch}: Props) {
         focused ? 'focused-full-width lg:w-full' : ''
       }`}>
       <input
+        defaultValue={searchParams.get('search') ? (searchParams.get('search') as string) : ''}
         onFocus={() => setFocused(true)}
         type='text'
         className='w-full bg-transparent h-[70%] placeholder:text-lg outline-none'
