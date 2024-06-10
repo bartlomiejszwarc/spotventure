@@ -15,6 +15,10 @@ function SearchBar() {
       const params = new URLSearchParams(searchParams);
       if (inputValue) {
         params.set('search', inputValue);
+        if (params.get('orderBy') === '' || params.get('orderBy') === null) {
+          params.set('orderBy', 'popularity');
+          params.set('order', 'desc');
+        }
         replace(`${pathname}?${params.toString()}`);
       }
     }
@@ -23,6 +27,10 @@ function SearchBar() {
     const params = new URLSearchParams(searchParams);
     if (inputValue) {
       params.set('search', inputValue);
+      if (params.get('orderBy') === '' || params.get('orderBy') === null) {
+        params.set('orderBy', 'popularity');
+        params.set('order', 'desc');
+      }
       replace(`${pathname}?${params.toString()}`);
     }
   };
