@@ -26,6 +26,7 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesC
     if (user && !processing) {
       dispatch({type: 'ADD_TO_USER_FAVORITES', payload: id});
       likedByIdsState.push(user.uid);
+      setCurrentLikesCount((prev) => prev + 1);
       if (!processing) {
         try {
           if (id === undefined || !id) throw Error('Missing post ID');
@@ -52,6 +53,7 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesC
       dispatch({type: 'REMOVE_FROM_USER_FAVORITES', payload: id});
       const updated = likedByIdsState.filter((userId) => userId !== user.uid);
       setLikedByIdsState(updated);
+      setCurrentLikesCount((prev) => prev - 1);
       if (!processing) {
         try {
           setProcessing(true);
