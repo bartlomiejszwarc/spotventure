@@ -56,7 +56,7 @@ function PostPreviewCard({
     return (
       <div className='relative h-[12rem] lg:h-[17rem]'>
         <div
-          className='cursor-pointer h-[12rem] lg:h-[17rem] rounded-xl relative bg-zinc-100 shadow-lg shadow-zinc-300 '
+          className='cursor-pointer h-[12rem] lg:h-[17rem] rounded-xl relative bg-zinc-100 dark:bg-zinc-900 shadow-lg shadow-zinc-300 dark:shadow-zinc-900/80 '
           onClick={() => router.push(`/spot/${id}`)}>
           <div className='h-3/5 lg:h-[70%] relative'>
             <div className='w-full '>

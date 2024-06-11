@@ -8,7 +8,9 @@ export default function EditProfileButton({uid}: Props) {
   return (
     <>
       {uid === user!?.uid && (
-        <button className='px-3 py-1 bg-zinc-300 text-zinc-800 rounded-lg text-sm mt-4'>Edit profile</button>
+        <button className='px-3 py-1 bg-zinc-300 dark:bg-zinc-600 text-zinc-800  dark:text-zinc-300 rounded-lg text-sm mt-4'>
+          Edit profile
+        </button>
       )}
     </>
   );

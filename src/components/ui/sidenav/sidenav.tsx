@@ -42,7 +42,7 @@ function SideNav() {
           {!open ? (
             <MenuIcon
               className={`absolute left-5 top-5  ${
-                !isMobile ? 'text-zinc-300' : 'text-zinc-800'
+                !isMobile ? 'text-zinc-300' : 'text-zinc-800 dark:text-zinc-300'
               }   text-4xl cursor-pointer`}
               onClick={() => {
                 changeStyle();

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useGetPostData} from '@/hooks/post/useGetPostData';
@@ -43,7 +44,7 @@ export default function FavoritesList() {
             imageUrl={post?.imageUrl}
             location={post?.location}
             visitDate={post?.visitDate}
-            likesCount={post.likesCount}
+            likesCount={post?.likesCount}
             likedByIds={post?.likedByIds}
           />
         ))}

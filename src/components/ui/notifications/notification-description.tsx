@@ -9,7 +9,7 @@ interface Props {
 export default function NotificationDescription({type, uid, name, subjectId}: Props) {
   if (type === 'like') {
     return (
-      <span className='font-manrope'>
+      <span className='font-manrope text-zinc-800 dark:text-zinc-300'>
         {' '}
         <Link className='font-medium' href={`profile/${uid}`}>
           {name}
@@ -25,7 +25,7 @@ export default function NotificationDescription({type, uid, name, subjectId}: Pr
 
   if (type === 'follow') {
     return (
-      <span className='font-manrope'>
+      <span className='font-manrope text-zinc-800 dark:text-zinc-300'>
         {' '}
         <Link className='font-medium' href={`profile/${uid}`}>
           {name}
@@ -36,7 +36,7 @@ export default function NotificationDescription({type, uid, name, subjectId}: Pr
   }
   if (type === 'reply') {
     return (
-      <span className='font-manrope'>
+      <span className='font-manrope text-zinc-800 dark:text-zinc-300'>
         {' '}
         <Link className='font-medium' href={`profile/${uid}`}>
           {name}

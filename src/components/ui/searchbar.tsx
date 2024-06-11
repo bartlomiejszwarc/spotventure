@@ -37,7 +37,7 @@ function SearchBar() {
 
   return (
     <div
-      className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 border-zinc-300 flex items-center justify-between pr-4 pl-6  ${
+      className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 dark:bg-zinc-600 border-zinc-300 dark:border-zinc-700 flex items-center justify-between pr-4 pl-6  ${
         focused ? 'focused-full-width lg:w-full' : ''
       }`}>
       <input
@@ -51,7 +51,7 @@ function SearchBar() {
           setInputValue(e.target.value);
         }}></input>
       <button onClick={handleSearch}>
-        <SearchIcon className='text-zinc-600' />
+        <SearchIcon className='text-zinc-600 dark:text-zinc-300' />
       </button>
     </div>
   );

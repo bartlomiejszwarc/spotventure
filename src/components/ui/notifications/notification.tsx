@@ -27,8 +27,8 @@ function Notification(notification: INotification) {
   if (user && notification) {
     return (
       <>
-        <div className='relative w-full h-24 flex flex-row items-center px-0 lg:px-6 space-x-4 bg-zinc-100 rounded-sm'>
-          <span className='absolute top-2 right-4 text-sm text-zinc-500'>
+        <div className='relative w-full h-24 flex flex-row items-center px-0 lg:px-6 space-x-4 bg-zinc-100 dark:bg-zinc-900 rounded-sm dark:font-light'>
+          <span className='absolute top-2 right-4 text-sm text-zinc-500 dark:text-zinc-300'>
             {convertDate(notification.createdAt, 'LLLL d, yyyy')}
           </span>
           <UserAvatar profileImageUrl={user.profileImageUrl} name={user.name} className='w-14 h-14' />

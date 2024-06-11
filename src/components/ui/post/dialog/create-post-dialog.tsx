@@ -85,6 +85,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
           visitDate: postDate,
           location: postLocation,
           likedByIds: [],
+          likesCount: 0,
           free: postIsFree,
           disabilityFriendly: postIsDisabilityFriendly,
           parkingAvailable: postIsParkingAvailable,
@@ -102,7 +103,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
       return (
         <Select onValueChange={setPostCategory} defaultValue={postCategory ? postCategory : ''}>
           <SelectTrigger className='w-full shadow-sm'>
-            <SelectValue placeholder='Category' className='capitalize' />
+            <SelectValue placeholder='Category' className='capitalize ' />
           </SelectTrigger>
           <SelectContent>
             {categories.map((category, idx) => (
@@ -122,7 +123,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
             <Button
               variant={'outline'}
               className={cn(
-                'w-full shadow-sm justify-start text-left font-normal',
+                'w-full shadow-sm justify-start text-left font-normal bg-background dark:bg-zinc-800',
                 !postDate && 'text-muted-foreground',
               )}>
               <EventIcon className='mr-2 h-4 w-4' />
@@ -181,12 +182,12 @@ function CreatePostDialog({isSidenavOpen}: Props) {
               <div className='w-32'>
                 <SvgImage />
               </div>
-              <span className='text-xl font-light'>Add image to create new post.</span>
+              <span className='text-xl font-light text-zinc-700 dark:text-zinc-300'>Add image to create new post.</span>
             </div>
             <button
               onClick={handleOnChooseButtonClick}
-              className='px-8 py-2 bg-emerald-500 text-zinc-100 text-base rounded-lg'>
-              <span>Choose from device</span>
+              className='px-8 py-2 bg-emerald-500 dark:bg-emerald-700 text-zinc-100 text-base rounded-lg'>
+              <span className='text-zinc-300'>Choose from device</span>
               <input
                 type='file'
                 className='hidden'
@@ -251,7 +252,9 @@ function CreatePostDialog({isSidenavOpen}: Props) {
               </div>
             </ScrollArea>
 
-            <button onClick={handleOnSubmit} className='px-8 py-2 bg-emerald-500 text-zinc-100 text-base rounded-lg '>
+            <button
+              onClick={handleOnSubmit}
+              className='px-8 py-2 bg-emerald-500 dark:bg-emerald-700 text-zinc-100 text-base rounded-lg '>
               <span className=''>Share your spot</span>
             </button>
           </>

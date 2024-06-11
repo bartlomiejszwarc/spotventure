@@ -59,10 +59,10 @@ export default function PostDetails({id}: Props) {
   if (post && user && currentUser) {
     return (
       <div className='flex flex-col lg:flex-row '>
-        <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] border-zinc-300 flex items-center justify-center bg-zinc-100 shadow-md '>
+        <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] sm:border-b-0 lg:border-b-[1px] lg:border-r-0 border-zinc-300 dark:border-zinc-700 flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-md '>
           <Image fill={true} src={post.imageUrl} alt={'Spot image'} className='object-contain' />
         </div>
-        <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 flex flex-col shadow-md bg-zinc-100 '>
+        <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 dark:border-zinc-700 flex flex-col shadow-md bg-zinc-100 dark:bg-zinc-900 '>
           <div>
             <PostUserInfo uid={post.uid} name={user!.name} profilePictureUrl={user?.profileImageUrl} />
             <PostDescription
@@ -75,7 +75,7 @@ export default function PostDetails({id}: Props) {
           </div>
           <PostReplies postReplies={replies} />
 
-          <div className='w-full bg-zinc-100'>
+          <div className='w-full bg-zinc-100 dark:bg-zinc-900'>
             <PostActions
               postAuthorId={post.uid}
               uid={currentUser!.uid}

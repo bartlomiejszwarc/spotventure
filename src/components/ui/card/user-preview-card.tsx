@@ -53,12 +53,12 @@ export default function UserPreviewCard({uid, name, profileImageUrl}: Props) {
       )}
       <Link
         href={`profile/${uid}`}
-        className='relative h-24 w-full lg:h-48 lg:w-48 bg-zinc-50 flex items-center lg:justify-center px-6 lg:px-0 rounded-lg shadow-md shadow-zinc-300'>
+        className='relative h-24 w-full lg:h-48 lg:w-48 bg-zinc-100 dark:bg-zinc-900 flex items-center lg:justify-center px-6 lg:px-0 rounded-lg shadow-md shadow-zinc-300 dark:shadow-zinc-900/80'>
         <div className='flex flex-row lg:flex-col items-center h-full w-full space-x-3 lg:space-x-0'>
           <div className='lg:h-3/5 lg:w-full flex items-center lg:justify-center '>
             <UserAvatar />
           </div>
-          <span className='lg:w-3/4 font-manrope font-medium tracking-wider lg:text-center line-clamp-2 text-ellipsis overflow-hidden'>
+          <span className='lg:w-3/4 font-manrope font-medium dark:font-light tracking-wider lg:text-center line-clamp-2 text-ellipsis overflow-hidden text-zinc-800 dark:text-zinc-300'>
             {name}
           </span>
         </div>

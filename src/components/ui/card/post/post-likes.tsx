@@ -81,7 +81,9 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesC
           onClick={addPostToFavorites}
         />
       )}
-      {!likesCountHidden ? <span className='font-medium'>{currentLikesCount}</span> : null}
+      {!likesCountHidden ? (
+        <span className='font-medium text-zinc-800 dark:text-zinc-300'>{currentLikesCount}</span>
+      ) : null}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import {useGetUserPosts} from '@/hooks/post/useGetUserPosts';
 import {useEffect, useState} from 'react';
@@ -51,7 +52,7 @@ export default function ProfilePage({id}: Props) {
                     quality={100}
                     fill={true}
                     alt='Background'
-                    className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300'
+                    className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300 dark:shadow-zinc-950/30'
                     src={posts[0]!?.imageUrl}
                   />
                 </div>
@@ -59,13 +60,15 @@ export default function ProfilePage({id}: Props) {
                 <UserAvatar
                   profileImageUrl={userData!.profileImageUrl}
                   name={userData.name}
-                  className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16 border-zinc-50 border-[5px]'
+                  className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16 border-zinc-50 dark:border-zinc-300 border-[5px]'
                 />
               </div>
             </div>
             <div className='w-full flex justify-end pt-2'>
               <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
-                <span className='text-2xl font-semibold line-clamp-2 hover:line-clamp-none'>{userData?.name}</span>
+                <span className='text-2xl font-semibold line-clamp-2 hover:line-clamp-none text-zinc-800 dark:text-zinc-300'>
+                  {userData?.name}
+                </span>
                 <Followers />
                 <MemberSince date={userData!.createdAt} />
                 <EditProfileButton uid={userData.uid} />

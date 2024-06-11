@@ -31,7 +31,7 @@ export default function PostReply(reply: IReply) {
 
   if (reply && user)
     return (
-      <div className='flex flex-col'>
+      <div className='flex flex-col text-zinc-800 dark:text-zinc-300'>
         <div className='flex space-x-0'>
           <div className='flex justify-between '>
             <UserAvatar profileImageUrl={user?.profileImageUrl} name={user?.name as string} />
