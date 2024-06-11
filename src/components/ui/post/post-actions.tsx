@@ -4,7 +4,6 @@ import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import UserAvatar from '../user-avatar';
 import {TextareaAutosize} from '@mui/base/TextareaAutosize';
 import {useEffect, useRef, useState} from 'react';
-import {usePostContext} from '@/hooks/context/usePostContext';
 import convertDate from '@/utils/convert-date';
 import SendIcon from '@mui/icons-material/Send';
 import {IReply} from '@/interfaces/reply-interface';
@@ -17,22 +16,30 @@ interface Props {
   uid: string;
   id: string;
   likedByIds: string[];
+  likesCount: number;
   profileImageUrl: string | undefined;
   name: string;
   createdAt: Date;
+  onAddReply: any;
 }
-export default function PostActions({postAuthorId, id, uid, likedByIds, profileImageUrl, name, createdAt}: Props) {
+export default function PostActions({
+  postAuthorId,
+  id,
+  uid,
+  likedByIds,
+  likesCount,
+  profileImageUrl,
+  name,
+  createdAt,
+  onAddReply,
+}: Props) {
   const [textareaAutofocus, setTextAreaAutofocus] = useState<boolean>(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const {likesCount, dispatch} = usePostContext();
   const {user} = useUserContext();
   const [replyValue, setReplyValue] = useState<string>('');
   const {sendReply} = useReply();
   const MAX_REPLY_LENGTH = 150;
 
-  useEffect(() => {
-    dispatch({type: 'SET_POST_LIKES_COUNT', payload: likedByIds.length ? likedByIds.length : 0});
-  }, [likedByIds]);
   useEffect(() => {
     if (textareaAutofocus && textareaRef.current) {
       textareaRef.current.focus();
@@ -47,7 +54,10 @@ export default function PostActions({postAuthorId, id, uid, likedByIds, profileI
           uid: uid,
           sourceId: id,
           text: replyValue,
+          createdAt: new Date(),
+          likedByIds: [],
         };
+
         const body: INotification = {
           receiverId: postAuthorId,
           senderId: user.uid,
@@ -55,7 +65,7 @@ export default function PostActions({postAuthorId, id, uid, likedByIds, profileI
           type: 'reply',
         };
         const res = await sendReply(data, user.uid, body);
-        dispatch({type: 'ADD_REPLY', payload: res});
+        onAddReply(data);
         setReplyValue('');
       }
     } catch (error) {}
@@ -64,7 +74,14 @@ export default function PostActions({postAuthorId, id, uid, likedByIds, profileI
   return (
     <div className='p-3 w-full border-t-[1px] border-zinc-300 flex flex-col md:space-y-1'>
       <div className='  flex space-x-4 items-end '>
-        <PostLikes id={id} uid={uid} likedByIds={likedByIds} likesCountHidden={true} iconFontSize={'30px'} />
+        <PostLikes
+          id={id}
+          uid={uid}
+          likedByIds={likedByIds}
+          likesCount={likesCount}
+          likesCountHidden={true}
+          iconFontSize={'30px'}
+        />
         <ChatBubbleOutlineIcon
           className='hover:opacity-70 cursor-pointer text-zinc-800 text-[28px]'
           onClick={() => {

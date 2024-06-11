@@ -4,29 +4,27 @@ import {useUserContext} from '@/hooks/context/useUserContext';
 import {useAddToFavorites} from '@/hooks/user/favorites/useAddToFavorites';
 import {useRemoveFromFavorites} from '@/hooks/user/favorites/useRemoveFromFavorites';
 import {INotification} from '@/interfaces/notification-interface';
-import {useState} from 'react';
-import {usePostContext} from '@/hooks/context/usePostContext';
+import {useEffect, useState} from 'react';
 
 interface Props {
   id: string;
   likedByIds: string[];
-  likesCount: number;
   uid: string;
   likesCountHidden: boolean;
   iconFontSize?: string;
+  likesCount: number;
 }
-export default function PostLikes({id, likedByIds, likesCount, uid, likesCountHidden, iconFontSize}: Props) {
+export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesCount, iconFontSize}: Props) {
   const {user, dispatch} = useUserContext();
   const [processing, setProcessing] = useState<boolean>(false);
   const {addToFavorites} = useAddToFavorites();
   const {removeFromFavorites} = useRemoveFromFavorites();
   const [likedByIdsState, setLikedByIdsState] = useState<string[]>(likedByIds);
-  const {dispatch: postDispatch} = usePostContext();
+  const [currentLikesCount, setCurrentLikesCount] = useState<number>(likesCount);
 
   const addPostToFavorites = async () => {
     if (user && !processing) {
       dispatch({type: 'ADD_TO_USER_FAVORITES', payload: id});
-      postDispatch({type: 'INCREASE_LIKES_COUNT', payload: null});
       likedByIdsState.push(user.uid);
       if (!processing) {
         try {
@@ -52,7 +50,6 @@ export default function PostLikes({id, likedByIds, likesCount, uid, likesCountHi
   const removePostFromFavorites = async () => {
     if (user && !processing) {
       dispatch({type: 'REMOVE_FROM_USER_FAVORITES', payload: id});
-      postDispatch({type: 'DECREASE_LIKES_COUNT', payload: null});
       const updated = likedByIdsState.filter((userId) => userId !== user.uid);
       setLikedByIdsState(updated);
       if (!processing) {
@@ -84,7 +81,7 @@ export default function PostLikes({id, likedByIds, likesCount, uid, likesCountHi
           onClick={addPostToFavorites}
         />
       )}
-      {!likesCountHidden ? <span className='font-medium'>{likesCount}</span> : null}
+      {!likesCountHidden ? <span className='font-medium'>{currentLikesCount}</span> : null}
     </div>
   );
 }

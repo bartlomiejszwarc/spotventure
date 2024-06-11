@@ -13,6 +13,7 @@ TimeAgo.addLocale(en);
 
 export default function PostReply(reply: IReply) {
   const [user, setUser] = useState<IUser | null>(null);
+  const [currentLikesCount, setCurrentLikesCount] = useState<number>(reply!?.likedByIds!?.length);
   const {getUserData} = useUserData();
 
   useEffect(() => {
@@ -37,26 +38,27 @@ export default function PostReply(reply: IReply) {
           <div className='flex flex-col leading-none w-full pl-4 '>
             <div className='leading-tight w-full '>
               <span className='text-sm font-semibold'>{user!.name} </span>
-              <span className='text-sm'>
-                {reply.text} {reply.text} {reply.text} {reply.text} {reply.text} {reply.text}
-                {reply.text}
-                {reply.text}
-                {reply.text}{' '}
-              </span>
+              <span className='text-sm'>{reply.text}</span>
             </div>
             <div className='flex space-x-2 pt-[3px]'>
-              <span className='font-light text-xs'>
+              <span className='font-light text-xs w-6'>
                 <ReactTimeAgo date={reply.createdAt as Date} locale='en-US' timeStyle='mini-now' />
               </span>
               <span className='font-medium text-xs'>
-                {reply.likedByIds?.length === 1
-                  ? `${convertLikesCount(reply.likedByIds?.length)} like`
-                  : `${convertLikesCount(reply.likedByIds?.length as number)} likes`}
+                {currentLikesCount === 1
+                  ? `${convertLikesCount(currentLikesCount)} like`
+                  : `${convertLikesCount(currentLikesCount)} likes`}
               </span>
             </div>
           </div>
           <div className='w-auto '>
-            <PostReplyLikes id={reply.id as string} uid={user.uid} />
+            <PostReplyLikes
+              id={reply.id as string}
+              uid={user.uid}
+              onAddLike={(value: number) => {
+                setCurrentLikesCount((prev) => prev + value);
+              }}
+            />
           </div>
         </div>
       </div>

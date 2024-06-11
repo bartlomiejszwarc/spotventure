@@ -8,8 +8,9 @@ import {useState} from 'react';
 interface Props {
   id: string;
   uid: string;
+  onAddLike: any;
 }
-export default function PostReplyLikes({id, uid}: Props) {
+export default function PostReplyLikes({id, uid, onAddLike}: Props) {
   const [processing, setProcessing] = useState<boolean>(false);
   const {user, dispatch} = useUserContext();
   const {likeReply} = useAddToFavorites();
@@ -19,6 +20,7 @@ export default function PostReplyLikes({id, uid}: Props) {
     if (!processing) {
       if (user?.likedReplies!.includes(id)) {
         try {
+          onAddLike(-1);
           dispatch({type: 'REMOVE_FROM_USER_LIKED_REPLIES', payload: id});
           await dislikeReply(id, uid);
           setProcessing(false);
@@ -27,6 +29,7 @@ export default function PostReplyLikes({id, uid}: Props) {
         }
       } else {
         try {
+          onAddLike(1);
           dispatch({type: 'ADD_TO_USER_LIKED_REPLIES', payload: id});
           await likeReply(id, uid);
           setProcessing(false);

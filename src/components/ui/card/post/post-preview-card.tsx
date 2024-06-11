@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Image from 'next/image';
 import PlaceIcon from '@mui/icons-material/Place';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -8,6 +9,7 @@ import PostLikes from './post-likes';
 import UsernameLink from './username-link';
 import convertDate from '@/utils/convert-date';
 import {useRouter} from 'next/navigation';
+import {Skeleton} from '@/components/ui/skeleton';
 
 interface IPostPreview {
   id: string | undefined;
@@ -33,6 +35,7 @@ function PostPreviewCard({
   username,
 }: IPostPreview) {
   const [name, setName] = useState<string>('');
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const [userProfileImageUrl, setUserProfileImageUrl] = useState<string | null>();
   const router = useRouter();
   const {getUserData} = useUserData();
@@ -57,7 +60,13 @@ function PostPreviewCard({
           onClick={() => router.push(`/spot/${id}`)}>
           <div className='h-3/5 lg:h-[70%] relative'>
             <div className='w-full '>
-              <Image className='rounded-t-xl object-cover' fill={true} src={imageUrl} alt='Place' />
+              <Image
+                className='rounded-t-xl object-cover'
+                fill={true}
+                src={imageUrl}
+                alt='Place'
+                onLoadingComplete={() => setImageLoaded(true)}
+              />
             </div>
             <div className='absolute flex w-full h-full items-end justify-between px-3 pb-1 opacity-80'>
               <div className='flex space-x-1 bg-zinc-600/80 text-zinc-300 pr-[7px] pl-2 rounded-full bg-opacity-60 py-[2px]'>

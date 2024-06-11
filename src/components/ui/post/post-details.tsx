@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import Image from 'next/image';
 import {formatDate} from 'date-fns';
@@ -50,13 +51,18 @@ export default function PostDetails({id}: Props) {
       getUserDetails();
     }
   }, [post]);
+
+  const handleAddReply = (reply: IReply) => {
+    setReplies((prev) => [...prev, reply]);
+  };
+
   if (post && user && currentUser) {
     return (
-      <>
-        <div className='relative h-[50rem] w-full md:w-[40rem] md:border-[1px]  border-zinc-300 flex items-center justify-center bg-zinc-100 shadow-md'>
+      <div className='flex flex-col lg:flex-row '>
+        <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] border-zinc-300 flex items-center justify-center bg-zinc-100 shadow-md '>
           <Image fill={true} src={post.imageUrl} alt={'Spot image'} className='object-contain' />
         </div>
-        <div className=' relative w-full h-[35rem] mdplus:h-[50rem] md:w-[40rem] mdplus:w-[25rem] md:border-[1px] border-l-0 border-zinc-300 flex flex-col shadow-md bg-zinc-100 '>
+        <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 flex flex-col shadow-md bg-zinc-100 '>
           <div>
             <PostUserInfo uid={post.uid} name={user!.name} profilePictureUrl={user?.profileImageUrl} />
             <PostDescription
@@ -74,14 +80,16 @@ export default function PostDetails({id}: Props) {
               postAuthorId={post.uid}
               uid={currentUser!.uid}
               id={post.id as string}
+              likesCount={post.likesCount}
               likedByIds={post.likedByIds}
               profileImageUrl={currentUser?.profileImageUrl}
               name={currentUser?.name as string}
               createdAt={post.createdAt as Date}
+              onAddReply={handleAddReply}
             />
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }
