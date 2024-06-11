@@ -34,7 +34,7 @@ export default function Sort() {
   };
   return (
     <Select onValueChange={handleOnValueChange} defaultValue='popularity'>
-      <SelectTrigger className='w-full xs:w-64 outline-none '>
+      <SelectTrigger className='w-full xs:w-64 outline-none bg-zinc-100'>
         <SelectValue placeholder='Sort' />
       </SelectTrigger>
       <SelectContent>

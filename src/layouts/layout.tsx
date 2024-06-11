@@ -22,7 +22,7 @@ export default function Layout({
         <ProfileFollowersProvider>
           <PostContextProvider>
             <div className='flex min-h-screen font-manrope'>
-              <div className='bg-zinc-200 md:pl-24 px-4 w-full'>{children}</div>
+              <div className='bg-zinc-200 dark:bg-zinc-800 md:pl-24 px-[24px] w-full'>{children}</div>
             </div>
           </PostContextProvider>
         </ProfileFollowersProvider>

@@ -3,6 +3,7 @@ import {Inter} from 'next/font/google';
 import './globals.css';
 import SideNav from '../components/ui/sidenav/sidenav';
 import Layout from '@/layouts/layout';
+import {ThemeProvider} from 'next-themes';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -17,14 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html>
+    <html suppressHydrationWarning>
       <body>
-        <div className='min-h-screen  font-roboto'>
-          <div className='fixed z-30'>
-            <SideNav />
+        <ThemeProvider attribute='class'>
+          <div className='min-h-screen font-manrope'>
+            <div className='fixed z-30'>
+              <SideNav />
+            </div>
+            <Layout>{children}</Layout>
           </div>
-          <Layout>{children}</Layout>
-        </div>
+        </ThemeProvider>
       </body>
     </html>
   );

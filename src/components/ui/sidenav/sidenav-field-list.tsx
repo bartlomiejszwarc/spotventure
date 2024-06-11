@@ -11,11 +11,15 @@ import CreatePostDialog from '../post/dialog/create-post-dialog';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useLogout} from '@/hooks/auth/useLogout';
+import {useTheme} from 'next-themes';
+import {Switch} from '../switch';
+import {ThemeSwitch} from '../theme-switch';
 interface ISidenavFieldListProps {
   isSidenavOpen: boolean;
 }
 
 function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
+  const {theme, setTheme} = useTheme();
   const {user} = useUserContext();
   const {logoutUser} = useLogout();
 
@@ -45,8 +49,13 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
         ))}
         <CreatePostDialog isSidenavOpen={isSidenavOpen} />
       </div>
-      <div className='pl-4 pb-4 cursor-pointer' onClick={logoutUser}>
-        <SidenavField icon={<LogoutIcon />} title={'Logout'} iconOnly={!isSidenavOpen} />
+      <div className='w-full flex flex-col space-y-6'>
+        <div className='pl-3'>
+          <ThemeSwitch />
+        </div>
+        <div className='pl-4 pb-4 cursor-pointer' onClick={logoutUser}>
+          <SidenavField icon={<LogoutIcon className='text-3xl p-1' />} title={'Logout'} iconOnly={!isSidenavOpen} />
+        </div>
       </div>
     </div>
   );

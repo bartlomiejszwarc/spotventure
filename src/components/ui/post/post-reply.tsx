@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import {IUser} from '@/interfaces/user-interface';
 import {useUserData} from '@/hooks/user/useUserData';

@@ -1,7 +1,5 @@
+import SettingsPage from './settings-page';
+
 export default function Page() {
-  return (
-    <div className='flex flex-col'>
-      <span>Settings</span>
-    </div>
-  );
+  return <SettingsPage />;
 }

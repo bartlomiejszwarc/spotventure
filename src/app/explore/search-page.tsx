@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 import ResultsPosts from '@/components/explore/results-posts';
 import ResultsUsers from '@/components/explore/results-users';
