@@ -7,8 +7,10 @@ import {IUpdate, IUser, IUserProfileUpdate} from '@/interfaces/user-interface';
 import useUpdateProfile from '@/hooks/user/settings/useUpdateProfile';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {IImage, uploadImage} from '@/firebase/storage';
+import {useToast} from '@/components/ui/use-toast';
 
 export default function SettingsPageAccount() {
+  const {toast} = useToast();
   const {user, dispatch} = useUserContext();
   const {updateProfile} = useUpdateProfile();
   const [updateData, setUpdateData] = useState<IUpdate>();
@@ -44,6 +46,9 @@ export default function SettingsPageAccount() {
         const userUpdated: Partial<IUser> = {
           ...res,
         };
+        toast({
+          description: 'Your profile has been updated',
+        });
         dispatch({type: 'SET_USER_DATA', payload: {...user, ...userUpdated}});
       } catch (error) {}
     }
