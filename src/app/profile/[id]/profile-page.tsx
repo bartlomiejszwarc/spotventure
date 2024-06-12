@@ -48,13 +48,15 @@ export default function ProfilePage({id}: Props) {
             <div className='w-full flex space-x-16'>
               <div className='relative w-full'>
                 <div className='w-full h-44 lg:h-72 bg-zinc-500'>
-                  <Image
-                    quality={100}
-                    fill={true}
-                    alt='Background'
-                    className='w-full bg-zinc-500 h-44 lg:h-72 object-cover shadow-md shadow-zinc-300 dark:shadow-zinc-950/30'
-                    src={posts[0]!?.imageUrl}
-                  />
+                  {userData!?.backgroundImageUrl && (
+                    <Image
+                      quality={100}
+                      fill={true}
+                      alt='Background'
+                      className='w-full bg-zinc-500 h-44 lg:h-72 object-cover object-center shadow-md shadow-zinc-300 dark:shadow-zinc-950/30'
+                      src={userData!?.backgroundImageUrl}
+                    />
+                  )}
                 </div>
 
                 <UserAvatar

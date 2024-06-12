@@ -11,8 +11,11 @@ import en from 'javascript-time-ago/locale/en';
 import PostReplyLikes from './post-reply-likes';
 import convertLikesCount from '@/utils/convertLikesCount';
 TimeAgo.addLocale(en);
-
-export default function PostReply(reply: IReply) {
+interface Props {
+  reply: IReply;
+  isLast: boolean;
+}
+export default function PostReply({reply, isLast}: Props) {
   const [user, setUser] = useState<IUser | null>(null);
   const [currentLikesCount, setCurrentLikesCount] = useState<number>(reply!?.likedByIds!?.length);
   const {getUserData} = useUserData();
@@ -36,13 +39,13 @@ export default function PostReply(reply: IReply) {
           <div className='flex justify-between '>
             <UserAvatar profileImageUrl={user?.profileImageUrl} name={user?.name as string} />
           </div>
-          <div className='flex flex-col leading-none w-full pl-4 '>
+          <div className='flex flex-col leading-none w-full pl-4 pb-3  '>
             <div className='leading-tight w-full '>
               <span className='text-sm font-semibold'>{user!.name} </span>
               <span className='text-sm'>{reply.text}</span>
             </div>
             <div className='flex space-x-2 pt-[3px]'>
-              <span className='font-light text-xs w-6'>
+              <span className='font-light text-xs w-4'>
                 <ReactTimeAgo date={reply.createdAt as Date} locale='en-US' timeStyle='mini-now' />
               </span>
               <span className='font-medium text-xs'>
@@ -51,6 +54,7 @@ export default function PostReply(reply: IReply) {
                   : `${convertLikesCount(currentLikesCount)} likes`}
               </span>
             </div>
+            {!isLast && <div className='h-[1px] w-full bg-zinc-200 dark:bg-zinc-800 mt-4'></div>}
           </div>
           <div className='w-auto '>
             <PostReplyLikes

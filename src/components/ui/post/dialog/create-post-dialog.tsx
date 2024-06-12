@@ -186,7 +186,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
             </div>
             <button
               onClick={handleOnChooseButtonClick}
-              className='px-8 py-2 bg-emerald-500 dark:bg-emerald-700 text-zinc-100 text-base rounded-lg'>
+              className='px-8 py-2 bg-emerald-500 dark:bg-emerald-600 text-zinc-100 text-base rounded-lg'>
               <span className='text-zinc-300'>Choose from device</span>
               <input
                 type='file'

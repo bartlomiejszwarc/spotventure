@@ -2,12 +2,30 @@ export interface IUser {
   uid: string;
   email: string | null;
   name: string;
-  location?: string;
+  country?: string;
   createdAt: Date;
   profileImageUrl?: string;
+  backgroundImageUrl?: string;
   followers?: string[];
   following?: string[];
   likedPosts?: string[];
   likedReplies?: string[];
   notifications?: string[];
+}
+
+export interface IUserProfileUpdate {
+  name?: string;
+  country?: string;
+  profileImageUrl?: string;
+  prevProfileImageUrl?: string;
+  backgroundImageUrl?: string;
+  prevBackgroundImageUrl?: string;
+  password?: string;
+}
+
+export interface IUpdate {
+  name?: string;
+  country?: string;
+  profileImageFile?: File;
+  backgroundImageFile?: File;
 }

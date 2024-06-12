@@ -25,6 +25,7 @@ export default function RootLayout({
             <div className='fixed z-30'>
               <SideNav />
             </div>
+
             <Layout>{children}</Layout>
           </div>
         </ThemeProvider>

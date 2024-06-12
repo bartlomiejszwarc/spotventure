@@ -15,7 +15,9 @@ export default function PostReplies({postReplies}: Props) {
             <span className='dark:font-thin text-zinc-600 dark:text-zinc-400'>This spot has no replies yet</span>
           </div>
         )}
-        {postReplies?.map((reply, idx) => <PostReply key={idx} {...reply} />)}
+        {postReplies?.map((reply, idx) => (
+          <PostReply key={idx} isLast={idx === postReplies!?.length - 1} reply={reply} />
+        ))}
       </div>
     </ScrollArea>
   );

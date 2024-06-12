@@ -8,17 +8,21 @@ datasource db {
 }
 
 model User {
-  id              String   @id @default(auto()) @map("_id") @db.ObjectId
-  uid             String   @unique
-  email           String
-  name            String
-  createdAt       DateTime @default(now())
-  profileImageUrl String?  @default("")
-  followers       String[] @default([])
-  following       String[] @default([])
-  likedPosts      String[] @default([])
-  likedReplies    String[] @default([])
-  notifications   String[] @default([])
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  uid                    String   @unique
+  email                  String
+  name                   String
+  country                String?
+  createdAt              DateTime @default(now())
+  profileImageUrl        String?  @default("")
+  prevProfileImageUrl    String?  @default("")
+  backgroundImageUrl     String?  @default("")
+  prevBackgroundImageUrl String?  @default("")
+  followers              String[] @default([])
+  following              String[] @default([])
+  likedPosts             String[] @default([])
+  likedReplies           String[] @default([])
+  notifications          String[] @default([])
 }
 
 model Post {

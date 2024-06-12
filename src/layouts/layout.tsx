@@ -7,6 +7,7 @@ import {useEffect} from 'react';
 import {UserContextProvider} from '@/context/user-context';
 import {PostContextProvider} from '@/context/post-context';
 import {ProfileFollowersProvider} from '@/context/profile-followers-context';
+import {ThemeSwitch} from '@/components/ui/theme-switch';
 
 export default function Layout({
   children,

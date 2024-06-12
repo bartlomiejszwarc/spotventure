@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import SettingsTabsTrigger from './settings-tabs-trigger';
 import SettingsTabsContent from './settings-tabs-content';
-import SettingsPageAccount from '../settings-page-account';
+import SettingsPageAccount from '../account/settings-page-account';
 import {createContext} from 'react';
 import SettingsPagePassword from '../settings-page-password';
 
@@ -16,7 +16,7 @@ export default function SettingsTabs({onTabChange}: Props) {
   };
   return (
     <TabContext.Provider value={activeTab}>
-      <div className='flex space-x-5 w-full border-b-[1px] border-zinc-300 h-8'>
+      <div className='flex space-x-5 w-full border-b-[1px] border-zinc-300 dark:border-zinc-600 h-8'>
         <SettingsTabsTrigger value={'account'} name={'Account'} activeTab={activeTab} onTabChange={tabChange} />
         <SettingsTabsTrigger value={'password'} name={'Security'} activeTab={activeTab} onTabChange={tabChange} />
       </div>
