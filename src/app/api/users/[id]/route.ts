@@ -34,7 +34,7 @@ export async function PUT(req: Request, context: any) {
     const userUpdated = await prisma.user.update({
       data: {
         name: body.name ? body.name : userData.name,
-        country: body.country || null,
+        country: body.country ? body.country : userData.country,
         profileImageUrl: body.profileImageUrl ? body.profileImageUrl : userData.profileImageUrl,
         backgroundImageUrl: body.backgroundImageUrl ? body.backgroundImageUrl : userData.backgroundImageUrl,
       },

@@ -3,13 +3,13 @@ import {useState} from 'react';
 import ChangeBackgroundImage from './change-background-image';
 import ChangeDetailsInputs from './change-details-inputs';
 import ChangeProfileImage from './change-profile-image';
-import {IUpdate, IUserProfileUpdate} from '@/interfaces/user-interface';
+import {IUpdate, IUser, IUserProfileUpdate} from '@/interfaces/user-interface';
 import useUpdateProfile from '@/hooks/user/settings/useUpdateProfile';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {IImage, uploadImage} from '@/firebase/storage';
 
 export default function SettingsPageAccount() {
-  const {user} = useUserContext();
+  const {user, dispatch} = useUserContext();
   const {updateProfile} = useUpdateProfile();
   const [updateData, setUpdateData] = useState<IUpdate>();
 
@@ -40,7 +40,11 @@ export default function SettingsPageAccount() {
           backgroundImageUrl: firebaseBackgroundImageUrl ? firebaseBackgroundImageUrl : undefined,
         };
 
-        await updateProfile(user?.uid, body);
+        const res = await updateProfile(user?.uid, body);
+        const userUpdated: Partial<IUser> = {
+          ...res,
+        };
+        dispatch({type: 'SET_USER_DATA', payload: {...user, ...userUpdated}});
       } catch (error) {}
     }
   };

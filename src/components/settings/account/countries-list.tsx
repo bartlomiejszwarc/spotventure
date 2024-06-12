@@ -5,14 +5,24 @@ import {countries} from 'country-flags-svg';
 import Image from 'next/image';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {useUserContext} from '@/hooks/context/useUserContext';
+import {useEffect, useState} from 'react';
 
 interface Props {
   onChange: any;
 }
 export default function CountriesList({onChange}: Props) {
   const {user} = useUserContext();
+  const [country, setCountry] = useState<string | undefined>();
+  useEffect(() => {
+    if (user!?.country) setCountry(user.country);
+  }, [user]);
   return (
-    <Select onValueChange={(e) => onChange(e)} defaultValue={user!?.country ? user!?.country : ''}>
+    <Select
+      onValueChange={(value) => {
+        onChange(value);
+        setCountry(value);
+      }}
+      value={country}>
       <SelectTrigger className='w-full sm:w-96 outline-none dark:bg-zinc-900/20 border-[1px] border-zinc-300 dark:border-zinc-700 '>
         <SelectValue placeholder='Select country' />
       </SelectTrigger>

@@ -6,7 +6,8 @@ export default function useUpdateProfile() {
       const headers = {
         'Content-Type': 'application/json',
       };
-      await axios.put(`/api/users/${uid}`, body, {headers: headers});
+      const res = await axios.put(`/api/users/${uid}`, body, {headers: headers});
+      return res.data.user;
     } catch (error) {}
   };
   return {updateProfile};
