@@ -12,7 +12,6 @@ import LoadingSignScreen from '@/components/ui/loading-sign-screen';
 
 export default function SignInForm() {
   const [processing, setProcessing] = useState<boolean>(false);
-  const [processingEnded, setProcessingEnded] = useState<boolean>(false);
 
   const SignInImage = () => {
     return (
@@ -29,20 +28,23 @@ export default function SignInForm() {
     const [errorMessage, setErrorMessage] = useState<string | null>('');
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [checkingCredentials, setCheckingCredentials] = useState<boolean>(false);
 
     const handleOnSubmitData = async () => {
-      setErrorMessage(null);
       try {
-        setProcessing(true);
         if (!email || !password) throw Error('All fields are required');
+
+        setCheckingCredentials(true);
         const res = await loginUser(email, password);
         if (!res) throw Error('Invalid credentials');
-        setProcessing(false);
-        setProcessingEnded(true);
+
+        setProcessing(true);
       } catch (error: any) {
+        window.setTimeout(() => {
+          setCheckingCredentials(false);
+          setErrorMessage(error.message);
+        }, 500);
         setProcessing(false);
-        setProcessingEnded(true);
-        setErrorMessage(error.message);
       }
     };
     return (
@@ -92,9 +94,16 @@ export default function SignInForm() {
           </div>
         </div>
         <div className='flex flex-col space-y-3 items-center'>
-          <div className='w-full' onClick={handleOnSubmitData}>
-            <ButtonConfirm text='Sign in' />
-          </div>
+          {!checkingCredentials && (
+            <div className='w-full' onClick={handleOnSubmitData}>
+              <ButtonConfirm text='Sign in' />
+            </div>
+          )}
+          {checkingCredentials && (
+            <div className='w-full' onClick={handleOnSubmitData}>
+              <ButtonConfirm text='Checking credentials...' disabled={true} />
+            </div>
+          )}
           <span className='text-zinc-300'>
             Don&apos;t have an account?{' '}
             <Link
@@ -107,27 +116,27 @@ export default function SignInForm() {
       </>
     );
   };
-  return (
-    <>
-      {!processing && !processingEnded ? (
-        <>
-          <div className='flex justify-center w-full lg:w-1/2'>
-            <div className=' flex flex-col justify-center space-y-10 w-full items-center'>
-              <div className='w-10/12 flex flex-col space-y-8'>
-                <LogoContainer>
-                  <Logo size={64} />
-                </LogoContainer>
-                <Inputs />
-              </div>
+  if (!processing)
+    return (
+      <>
+        <div className='flex justify-center w-full lg:w-1/2'>
+          <div className=' flex flex-col justify-center space-y-10 w-full items-center'>
+            <div className='w-10/12 flex flex-col space-y-8'>
+              <LogoContainer>
+                <Logo size={64} />
+              </LogoContainer>
+              <Inputs />
             </div>
           </div>
-          <SignInImage />
-        </>
-      ) : (
-        <div className='w-full h-full flex items-center justify-center'>
-          <LoadingSignScreen />
         </div>
-      )}
-    </>
-  );
+        <SignInImage />
+      </>
+    );
+  if (processing) {
+    return (
+      <div className='w-full h-full flex items-center justify-center'>
+        <LoadingSignScreen />
+      </div>
+    );
+  }
 }

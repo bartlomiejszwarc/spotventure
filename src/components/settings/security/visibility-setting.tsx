@@ -2,8 +2,7 @@
 import {Switch} from '@/components/ui/switch';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import NoEncryptionGmailerrorredIcon from '@mui/icons-material/NoEncryptionGmailerrorred';
+import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import {useState} from 'react';
 export default function VisibilitySetting() {
   const {user} = useUserContext();
@@ -12,7 +11,7 @@ export default function VisibilitySetting() {
     <div className='flex flex-col space-y-1'>
       <div className='w-full md:w-96 flex justify-between'>
         <div className='flex space-x-1 items-center text-zinc-700 dark:text-zinc-400'>
-          {!postsVisible ? <LockIcon /> : <NoEncryptionGmailerrorredIcon />}
+          {!postsVisible ? <LockIcon /> : <TravelExploreIcon />}
           <span className='tracking-wide'>Posts visibility</span>
         </div>
         <Switch

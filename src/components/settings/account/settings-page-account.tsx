@@ -8,6 +8,7 @@ import useUpdateProfile from '@/hooks/user/settings/useUpdateProfile';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {IImage, uploadImage} from '@/firebase/storage';
 import {useToast} from '@/components/ui/use-toast';
+import CheckIcon from '@mui/icons-material/Check';
 
 export default function SettingsPageAccount() {
   const {toast} = useToast();
@@ -47,7 +48,12 @@ export default function SettingsPageAccount() {
           ...res,
         };
         toast({
-          description: 'Your profile has been updated',
+          action: (
+            <div className='w-full flex items-center justify-center'>
+              <span className='first-letter:capitalize mr-2'>Profile updated </span>
+              <CheckIcon className=' text-emerald-500' />
+            </div>
+          ),
         });
         dispatch({type: 'SET_USER_DATA', payload: {...user, ...userUpdated}});
       } catch (error) {}
