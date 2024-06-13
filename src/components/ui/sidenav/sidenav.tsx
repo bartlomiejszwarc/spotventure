@@ -14,16 +14,19 @@ function SideNav() {
   const [style, setStyle] = useState<string>('');
   const {width} = useWindowDimensions();
   const path = usePathname();
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (width && width > 768) {
       setIsMobile(false);
       setStyle('closed-sidenav-initial');
       setOpen(false);
+      setLoading(false);
     } else {
       setIsMobile(true);
       setStyle('closed-sidenav-initial-mobile');
       setOpen(false);
+      setLoading(false);
     }
   }, [width]);
 
@@ -35,22 +38,24 @@ function SideNav() {
     }
   };
 
-  if (path !== '/signup' && path !== '/signin') {
+  if (path !== '/signup' && path !== '/signin' && !loading) {
     return (
       <UserContextProvider>
         <div>
           {!open ? (
             <MenuIcon
+              style={{fontSize: '2.441rem'}}
               className={`absolute left-5 top-5  ${
-                !isMobile ? 'text-zinc-300' : 'text-zinc-800 dark:text-zinc-300'
-              }   text-4xl cursor-pointer`}
+                !isMobile ? 'text-zinc-300 dark:text-zinc-400' : 'text-zinc-800 dark:text-zinc-300'
+              }    cursor-pointer`}
               onClick={() => {
                 changeStyle();
                 setOpen(true);
               }}></MenuIcon>
           ) : (
             <CloseIcon
-              className={`absolute left-5 top-5 text-zinc-300 text-4xl cursor-pointer`}
+              style={{fontSize: '2.441rem'}}
+              className={` absolute left-5 top-5 text-zinc-300 dark:text-zinc-400  cursor-pointer`}
               onClick={() => {
                 changeStyle();
                 setOpen(false);

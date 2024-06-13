@@ -276,7 +276,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
   };
   return (
     <CreateDialog>
-      <SidenavField icon={<AddIcon className='text-3xl ' />} title={'New post'} iconOnly={!isSidenavOpen} />
+      <SidenavField icon={<AddIcon style={{fontSize: '1.953rem'}} />} title={'New post'} iconOnly={!isSidenavOpen} />
     </CreateDialog>
   );
 }

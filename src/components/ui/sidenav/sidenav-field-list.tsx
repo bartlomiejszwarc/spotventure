@@ -24,22 +24,37 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
   const {logoutUser} = useLogout();
 
   const fieldList: ISidenavField[] = [
-    {icon: <HomeIcon className='text-3xl' />, title: 'Home', route: '/home', iconOnly: isSidenavOpen},
-    {icon: <ExploreIcon className='text-3xl' />, title: 'Explore', route: '/explore', iconOnly: isSidenavOpen},
+    {icon: <HomeIcon style={{fontSize: '1.953rem'}} />, title: 'Home', route: '/home', iconOnly: isSidenavOpen},
     {
-      icon: <AccountCircleIcon className='text-3xl' />,
+      icon: <ExploreIcon style={{fontSize: '1.953rem'}} />,
+      title: 'Explore',
+      route: '/explore',
+      iconOnly: isSidenavOpen,
+    },
+    {
+      icon: <AccountCircleIcon style={{fontSize: '1.953rem'}} />,
       title: 'Profile',
       route: `${user ? '/profile/' + user!.uid : '/signin'}`,
       iconOnly: isSidenavOpen,
     },
-    {icon: <FavoriteIcon className='text-3xl' />, title: 'Favorites', route: '/favorites', iconOnly: isSidenavOpen},
     {
-      icon: <NotificationsIcon className='text-3xl' />,
+      icon: <FavoriteIcon style={{fontSize: '1.953rem'}} />,
+      title: 'Favorites',
+      route: '/favorites',
+      iconOnly: isSidenavOpen,
+    },
+    {
+      icon: <NotificationsIcon style={{fontSize: '1.953rem'}} />,
       title: 'Notifications',
       route: '/notifications',
       iconOnly: isSidenavOpen,
     },
-    {icon: <SettingsIcon className='text-3xl' />, title: 'Settings', route: '/settings', iconOnly: isSidenavOpen},
+    {
+      icon: <SettingsIcon style={{fontSize: '1.953rem'}} />,
+      title: 'Settings',
+      route: '/settings',
+      iconOnly: isSidenavOpen,
+    },
   ];
   return (
     <div className='flex flex-col justify-between h-full '>
@@ -54,7 +69,11 @@ function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
           <ThemeSwitch />
         </div>
         <div className='pl-4 pb-4 cursor-pointer' onClick={logoutUser}>
-          <SidenavField icon={<LogoutIcon className='text-3xl p-1' />} title={'Logout'} iconOnly={!isSidenavOpen} />
+          <SidenavField
+            icon={<LogoutIcon style={{fontSize: '1.953rem', padding: '0.25rem'}} />}
+            title={'Logout'}
+            iconOnly={!isSidenavOpen}
+          />
         </div>
       </div>
     </div>
