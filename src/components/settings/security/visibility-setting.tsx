@@ -1,12 +1,32 @@
 'use client';
 import {Switch} from '@/components/ui/switch';
 import {useUserContext} from '@/hooks/context/useUserContext';
+import useUpdateProfile from '@/hooks/user/settings/useUpdateProfile';
+import {IUser, IUserProfileUpdate} from '@/interfaces/user-interface';
 import LockIcon from '@mui/icons-material/Lock';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import {useState} from 'react';
+
 export default function VisibilitySetting() {
-  const {user} = useUserContext();
+  const {user, dispatch} = useUserContext();
+  const {updateProfile} = useUpdateProfile();
+
   const [postsVisible, setPostsVisible] = useState<boolean | undefined>(user?.postsVisible);
+
+  const changePostsVisibility = async (value: boolean) => {
+    try {
+      if (user) {
+        const body: IUserProfileUpdate = {
+          postsVisible: value,
+        };
+        const res = await updateProfile(user?.uid, body);
+        const userUpdated: Partial<IUser> = {
+          ...res,
+        };
+        dispatch({type: 'SET_USER_DATA', payload: {...user, ...userUpdated}});
+      }
+    } catch (error) {}
+  };
   return (
     <div className='flex flex-col space-y-1'>
       <div className='w-full md:w-96 flex justify-between'>
@@ -15,7 +35,10 @@ export default function VisibilitySetting() {
           <span className='tracking-wide'>Posts visibility</span>
         </div>
         <Switch
-          onCheckedChange={setPostsVisible}
+          onCheckedChange={(value) => {
+            setPostsVisible(value);
+            changePostsVisibility(value);
+          }}
           className='data-[state=checked]:bg-emerald-500 data-[state=unchecked]:bg-zinc-700'
           checked={postsVisible}
         />

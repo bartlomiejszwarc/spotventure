@@ -37,6 +37,7 @@ export async function PUT(req: Request, context: any) {
         country: body.country ? body.country : userData.country,
         profileImageUrl: body.profileImageUrl ? body.profileImageUrl : userData.profileImageUrl,
         backgroundImageUrl: body.backgroundImageUrl ? body.backgroundImageUrl : userData.backgroundImageUrl,
+        postsVisible: body.postsVisible ? body.postsVisible : null,
       },
       where: {uid: id},
     });
