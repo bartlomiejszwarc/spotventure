@@ -13,6 +13,7 @@ import UserAvatar from '@/components/ui/user-avatar';
 import ProfilePosts from '@/components/profile/profile-posts';
 import {useProfileFollowersContext} from '@/hooks/context/useProfileFollowersContext';
 import Image from 'next/image';
+import Nationality from '@/components/profile/nationality';
 interface Props {
   id: string;
 }
@@ -73,6 +74,7 @@ export default function ProfilePage({id}: Props) {
                 </span>
                 <Followers />
                 <MemberSince date={userData!.createdAt} />
+                <Nationality country={userData.country} />
                 <EditProfileButton uid={userData.uid} />
                 <FollowButton uid={userData.uid} />
               </div>
