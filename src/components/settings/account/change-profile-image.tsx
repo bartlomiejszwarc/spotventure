@@ -3,6 +3,7 @@ import PhotoIcon from '@mui/icons-material/Photo';
 import UserAvatar from '@/components/ui/user-avatar';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useRef, useState} from 'react';
+import Label from './label';
 
 interface Props {
   onImageChange: any;
@@ -29,9 +30,7 @@ export default function ChangeProfileImage({onImageChange}: Props) {
     return (
       <>
         <div className='flex flex-col w-32 space-y-2 relative '>
-          <span className='uppercase text-zinc-600 font-semibold dark:text-zinc-400 text-[15px] tracking-wide'>
-            Profile photo
-          </span>
+          <Label text={'Profile photo'} disabled={false} />
           <UserAvatar
             profileImageUrl={selectedImage ? selectedImage : user!?.profileImageUrl}
             name={user!?.name}

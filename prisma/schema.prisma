@@ -23,6 +23,7 @@ model User {
   likedPosts             String[] @default([])
   likedReplies           String[] @default([])
   notifications          String[] @default([])
+  postsVisible           Boolean? @default(true)
 }
 
 model Post {

@@ -8,9 +8,10 @@ interface Props {
   profileImageUrl: string | undefined;
   name: string;
   processed: boolean;
+  processing: boolean;
 }
-export default function ProfilePosts({posts, uid, profileImageUrl, name, processed}: Props) {
-  if (posts!?.length > 0) {
+export default function ProfilePosts({posts, uid, profileImageUrl, name, processed, processing}: Props) {
+  if (posts!?.length > 0 && processed) {
     return (
       <LayoutPostsProfile>
         {posts.map((post, idx) => (
@@ -30,7 +31,7 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
       </LayoutPostsProfile>
     );
   }
-  if (posts.length === 0 && processed) {
+  if (posts.length === 0 && processed && !processing) {
     return (
       <div>
         <span className='text-2xl font-light'>This user has not add any posts yet</span>

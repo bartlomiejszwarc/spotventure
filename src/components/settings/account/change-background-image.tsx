@@ -3,6 +3,7 @@ import PhotoIcon from '@mui/icons-material/Photo';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import {useRef, useState} from 'react';
 import Image from 'next/image';
+import Label from './label';
 interface Props {
   onImageChange: any;
 }
@@ -28,9 +29,7 @@ export default function ChangeBackgroundImage({onImageChange}: Props) {
     return (
       <>
         <div className='flex flex-col w-full sm:w-96 space-y-2 relative '>
-          <span className='uppercase text-zinc-600 font-semibold dark:text-zinc-400 text-[15px] tracking-wide'>
-            Background image
-          </span>
+          <Label text={'Background image'} disabled={false} />
           {!user.backgroundImageUrl && !selectedImage && (
             <div className='flex flex-col space-y-3 h-24 w-full sm:w-96'>
               <span className='text-sm dark:font-light'>You have not added a background photo yet</span>

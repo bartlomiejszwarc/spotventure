@@ -11,6 +11,7 @@ export interface IUser {
   likedPosts?: string[];
   likedReplies?: string[];
   notifications?: string[];
+  postsVisible?: boolean;
 }
 
 export interface IUserProfileUpdate {
@@ -21,6 +22,7 @@ export interface IUserProfileUpdate {
   backgroundImageUrl?: string;
   prevBackgroundImageUrl?: string;
   password?: string;
+  postsVisible?: boolean;
 }
 
 export interface IUpdate {

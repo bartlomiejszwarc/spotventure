@@ -24,7 +24,9 @@ export default function ProfilePage({id}: Props) {
   const [posts, setPosts] = useState<IPost[]>([]);
   const [userData, setUserData] = useState<IUser>();
   const [processed, setProcessed] = useState<boolean>(false);
+  const [processing, setProcessing] = useState<boolean>(true);
   useEffect(() => {
+    setProcessing(true);
     setProcessed(false);
     const getPosts = async () => {
       const res = await getUserPosts(id);
@@ -37,6 +39,7 @@ export default function ProfilePage({id}: Props) {
       const following = res?.data.user.following;
       dispatch({type: 'SET_PROFILE_FOLLOWERS', payload: {followers: followers, following: following}});
       setProcessed(true);
+      setProcessing(false);
     };
     getPosts();
     getUserDetails();
@@ -86,6 +89,7 @@ export default function ProfilePage({id}: Props) {
             profileImageUrl={userData.profileImageUrl}
             name={userData.name}
             processed={processed}
+            processing={processing}
           />
         </div>
       </div>

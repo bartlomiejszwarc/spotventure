@@ -11,6 +11,7 @@ import {UserContextProvider} from '@/context/user-context';
 function SideNav() {
   const [isMobile, setIsMobile] = useState<boolean>(true);
   const [open, setOpen] = useState<boolean>(false);
+  const [listOpen, setListOpen] = useState<boolean>(false);
   const [style, setStyle] = useState<string>('');
   const {width} = useWindowDimensions();
   const path = usePathname();
@@ -32,9 +33,16 @@ function SideNav() {
 
   const changeStyle = () => {
     if (open) {
-      setStyle('closed-sidenav');
+      setListOpen(false);
+
+      window.setTimeout(() => {
+        setStyle('closed-sidenav');
+      }, 10);
     } else {
       setStyle('open-sidenav');
+      window.setTimeout(() => {
+        setListOpen(true);
+      }, 110);
     }
   };
 
@@ -63,11 +71,11 @@ function SideNav() {
           )}
           {open ? (
             <div className={style}>
-              <SidenavFieldList isSidenavOpen={open} />
+              <SidenavFieldList isSidenavOpen={listOpen} />
             </div>
           ) : !open && !isMobile ? (
             <div className={style}>
-              <SidenavFieldList isSidenavOpen={open} />
+              <SidenavFieldList isSidenavOpen={listOpen} />
             </div>
           ) : (
             <div className={style}></div>

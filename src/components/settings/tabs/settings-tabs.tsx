@@ -3,7 +3,7 @@ import SettingsTabsTrigger from './settings-tabs-trigger';
 import SettingsTabsContent from './settings-tabs-content';
 import SettingsPageAccount from '../account/settings-page-account';
 import {createContext} from 'react';
-import SettingsPagePassword from '../settings-page-password';
+import SettingsPageSecuity from '../security/settings-page-secuity';
 
 interface Props {
   onTabChange: any;
@@ -24,7 +24,7 @@ export default function SettingsTabs({onTabChange}: Props) {
         <SettingsPageAccount />
       </SettingsTabsContent>
       <SettingsTabsContent value='password'>
-        <SettingsPagePassword />
+        <SettingsPageSecuity />
       </SettingsTabsContent>
     </TabContext.Provider>
   );
