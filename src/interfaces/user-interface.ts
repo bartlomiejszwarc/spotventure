@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IUser extends IUserProfileUpdate {
   uid: string;
   email: string | null;
   name: string;

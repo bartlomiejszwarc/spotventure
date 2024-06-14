@@ -9,11 +9,13 @@ import {useUserContext} from '@/hooks/context/useUserContext';
 import {IImage, uploadImage} from '@/firebase/storage';
 import {useToast} from '@/components/ui/use-toast';
 import CheckIcon from '@mui/icons-material/Check';
+import useDeleteFile from '@/hooks/storage/useDeleteFile';
 
 export default function SettingsPageAccount() {
   const {toast} = useToast();
   const {user, dispatch} = useUserContext();
   const {updateProfile} = useUpdateProfile();
+  const {deleteFile} = useDeleteFile();
   const [updateData, setUpdateData] = useState<IUpdate>();
 
   const handleUpdateProfile = async () => {
@@ -27,6 +29,9 @@ export default function SettingsPageAccount() {
             image: updateData.profileImageFile,
           };
           firebaseProfileImageUrl = await uploadImage(uploadImageObject);
+          if (user.profileImageUrl) {
+            await deleteFile(user.profileImageUrl);
+          }
         }
         if (updateData.backgroundImageFile) {
           const uploadImageObject: IImage = {
@@ -34,6 +39,9 @@ export default function SettingsPageAccount() {
             image: updateData.backgroundImageFile,
           };
           firebaseBackgroundImageUrl = await uploadImage(uploadImageObject);
+          if (user.backgroundImageUrl) {
+            await deleteFile(user.backgroundImageUrl);
+          }
         }
 
         const body: IUserProfileUpdate = {
