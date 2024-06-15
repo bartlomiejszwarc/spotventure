@@ -30,6 +30,7 @@ export default function ChangeBackgroundImage({onImageChange}: Props) {
       <>
         <div className='flex flex-col w-full sm:w-96 space-y-2 relative '>
           <Label text={'Background image'} disabled={false} />
+
           {!user.backgroundImageUrl && !selectedImage && (
             <div className='flex flex-col space-y-3 h-24 w-full sm:w-96'>
               <span className='text-sm dark:font-light'>You have not added a background photo yet</span>

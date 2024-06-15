@@ -2,7 +2,7 @@
 import PhotoIcon from '@mui/icons-material/Photo';
 import UserAvatar from '@/components/ui/user-avatar';
 import {useUserContext} from '@/hooks/context/useUserContext';
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import Label from './label';
 
 interface Props {

@@ -134,7 +134,7 @@ export default function SignInForm() {
     );
   if (processing) {
     return (
-      <div className='w-full h-full flex items-center justify-center'>
+      <div className='w-full h-screen lg:h-full flex items-center justify-center'>
         <LoadingSignScreen />
       </div>
     );

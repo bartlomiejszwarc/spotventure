@@ -47,3 +47,29 @@ export async function PUT(req: Request, context: any) {
     return NextResponse.json({success: false});
   }
 }
+export async function DELETE(req: Request, context: any) {
+  try {
+    const {params} = context;
+    const id = params.id;
+    if (!id) return new NextResponse('No ID provided');
+    const userData = await prisma.user.findUnique({
+      where: {
+        uid: id,
+      },
+    });
+    if (!userData) return new NextResponse('Error while fetching user data');
+    await prisma.post.deleteMany({
+      where: {
+        uid: userData.uid,
+      },
+    });
+    await prisma.user.delete({
+      where: {
+        uid: userData.uid,
+      },
+    });
+    return NextResponse.json({success: true});
+  } catch (error) {
+    return NextResponse.json({success: false});
+  }
+}
