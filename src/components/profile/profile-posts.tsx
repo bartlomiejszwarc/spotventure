@@ -1,6 +1,7 @@
 import {IPost} from '@/interfaces/post-interface';
 import PostPreviewCard from '../ui/card/post/post-preview-card';
 import LayoutPostsProfile from '@/layouts/layout-posts-profile';
+import NoResults from './NoResults';
 
 interface Props {
   posts: IPost[];
@@ -11,7 +12,7 @@ interface Props {
   processing: boolean;
 }
 export default function ProfilePosts({posts, uid, profileImageUrl, name, processed, processing}: Props) {
-  if (posts!?.length > 0 && processed) {
+  if (posts!?.length > 0 && processed && !processing) {
     return (
       <LayoutPostsProfile>
         {posts.map((post, idx) => (
@@ -32,10 +33,6 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
     );
   }
   if (posts.length === 0 && processed && !processing) {
-    return (
-      <div>
-        <span className='text-2xl font-light'>This user has not add any posts yet</span>
-      </div>
-    );
+    return <NoResults uid={uid} />;
   }
 }

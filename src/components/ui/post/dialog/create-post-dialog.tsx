@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog';
 import SidenavField from '../../sidenav/sidenav-field';
@@ -30,6 +31,7 @@ import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import CreatePostDialogSpinner from './create-post-dialog-spinner';
 import CreatePostDialogSuccess from './create-post-dialog-success';
+import SdCardAlertIcon from '@mui/icons-material/SdCardAlert';
 
 interface Props {
   isSidenavOpen: boolean;
@@ -38,12 +40,12 @@ function CreatePostDialog({isSidenavOpen}: Props) {
   const {createPost} = useCreatePost();
   const [user] = useAuthState(auth);
   const fileInputRef = useRef<any>(null);
+  const errorMessageRef = useRef<any>(null);
   const CreateDialogContent = () => {
     const [processing, setProcessing] = useState<boolean>(false);
     const [success, setSuccess] = useState<boolean>(false);
     const MAX_DESCRIPTION_LENGTH = 300;
     const [postImage, setPostImage] = useState<File | null>(null);
-    const [postImageUrl, setPostImageUrl] = useState<string>('null');
     const [imagePreviewUrl, setImagePreviewUrl] = useState<string>('');
     const [postLocation, setPostLocation] = useState<string>('');
     const [postDescription, setPostDescription] = useState<string>('');
@@ -53,6 +55,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
     const [postIsDisabilityFriendly, setPostIsDisabilityFriendly] = useState<boolean>(false);
     const [postIsParkingAvailable, setPostIsParkingAvailable] = useState<boolean>(false);
     const [postIsAvailableAnyTime, setPostIsAvailableAnyTime] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('');
 
     const handleOnChooseButtonClick = () => {
       if (fileInputRef.current) {
@@ -76,6 +79,12 @@ function CreatePostDialog({isSidenavOpen}: Props) {
           uid: user.uid,
           image: postImage,
         };
+        if (postLocation.length < 1 || postCategory.length < 1 || !postDate) {
+          errorMessageRef.current.scrollIntoView({behavior: 'smooth'});
+        }
+        if (postLocation.length < 1) throw new Error('Please enter a location name');
+        if (postCategory.length < 1) throw new Error('Please choose spot category');
+        if (!postDate) throw new Error('Please choose date');
         const firebaseImageUrl = await uploadImage(uploadImageObject);
         const body = {
           uid: user.uid,
@@ -94,7 +103,8 @@ function CreatePostDialog({isSidenavOpen}: Props) {
         await createPost(body);
         setProcessing(false);
         setSuccess(true);
-      } catch (error) {
+      } catch (error: any) {
+        setErrorMessage(error.message);
         setProcessing(false);
       }
     };
@@ -249,6 +259,10 @@ function CreatePostDialog({isSidenavOpen}: Props) {
                 <SelectCategory />
                 <Datepicker />
                 <Switches />
+                <div className='w-full text-red-600 flex h-6 space-x-1 items-center' ref={errorMessageRef}>
+                  <SdCardAlertIcon className='text-sm' />
+                  <span className='text-sm'>{errorMessage}</span>
+                </div>
               </div>
             </ScrollArea>
 

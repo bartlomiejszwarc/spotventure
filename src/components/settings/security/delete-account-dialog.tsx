@@ -31,8 +31,8 @@ export default function DeleteAccountDialog() {
         const reauth = await reauthenticateWithCredential(currentUser, credential);
         if (!reauth) throw new Error('Invalid credentials');
         await deleteUser(currentUser);
-        await deleteUserFilesFromStorage(user.uid);
-        await deleteUserData(user.uid);
+        await deleteUserFilesFromStorage(currentUser.uid);
+        await deleteUserData(currentUser.uid);
         router.push('/signin');
       } catch (error: any) {
         if (error instanceof FirebaseError) {

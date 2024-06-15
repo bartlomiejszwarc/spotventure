@@ -38,7 +38,7 @@ export default function FollowButton({uid}: Props) {
             </button>
           ) : (
             <button
-              className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
+              className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
               onClick={removeFromFollowing}
               onMouseEnter={() => setHover(true)}
               onMouseLeave={() => setHover(false)}>
