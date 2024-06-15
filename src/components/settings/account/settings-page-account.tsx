@@ -90,17 +90,22 @@ export default function SettingsPageAccount() {
     }));
   };
 
-  return (
-    <div className='flex flex-col space-y-6 pb-6'>
-      <ChangeProfileImage onImageChange={(value: File) => handleImageChange(value)} />
-      <ChangeDetailsInputs onDetailsChange={(name: string, country: string) => handleDetailsChange(name, country)} />
-      <ChangeBackgroundImage onImageChange={(value: File) => handleBackgroundImageChange(value)} />
+  if (user) {
+    return (
+      <div className='flex flex-col space-y-6 pb-6'>
+        <ChangeProfileImage onImageChange={(value: File) => handleImageChange(value)} user={user} />
+        <ChangeDetailsInputs
+          onDetailsChange={(name: string, country: string) => handleDetailsChange(name, country)}
+          user={user}
+        />
+        <ChangeBackgroundImage onImageChange={(value: File) => handleBackgroundImageChange(value)} user={user} />
 
-      <button
-        className='w-full sm:w-96 px-8 py-2 bg-emerald-500 dark:bg-emerald-600 text-zinc-100 text-base rounded-lg'
-        onClick={handleUpdateProfile}>
-        Save changes
-      </button>
-    </div>
-  );
+        <button
+          className='w-full sm:w-96 px-8 py-2 bg-emerald-500 dark:bg-emerald-600 text-zinc-100 text-base rounded-lg'
+          onClick={handleUpdateProfile}>
+          Save changes
+        </button>
+      </div>
+    );
+  }
 }

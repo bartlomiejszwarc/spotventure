@@ -1,14 +1,14 @@
 'use client';
 import {Input} from '@/components/ui/input';
-import {useUserContext} from '@/hooks/context/useUserContext';
 import {useState} from 'react';
 import CountriesList from './countries-list';
 import Label from './label';
+import {IUser} from '@/interfaces/user-interface';
 interface Props {
   onDetailsChange: any;
+  user: IUser;
 }
-export default function ChangeDetailsInputs({onDetailsChange}: Props) {
-  const {user} = useUserContext();
+export default function ChangeDetailsInputs({onDetailsChange, user}: Props) {
   const [name, setName] = useState<string>(user!?.name);
   const [country, setCountry] = useState<string>('');
 

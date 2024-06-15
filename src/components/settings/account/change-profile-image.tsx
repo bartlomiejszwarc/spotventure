@@ -1,15 +1,15 @@
 'use client';
 import PhotoIcon from '@mui/icons-material/Photo';
 import UserAvatar from '@/components/ui/user-avatar';
-import {useUserContext} from '@/hooks/context/useUserContext';
-import {useEffect, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import Label from './label';
+import {IUser} from '@/interfaces/user-interface';
 
 interface Props {
   onImageChange: any;
+  user: IUser;
 }
-export default function ChangeProfileImage({onImageChange}: Props) {
-  const {user} = useUserContext();
+export default function ChangeProfileImage({onImageChange, user}: Props) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 

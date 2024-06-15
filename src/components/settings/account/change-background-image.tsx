@@ -1,14 +1,14 @@
 'use client';
 import PhotoIcon from '@mui/icons-material/Photo';
-import {useUserContext} from '@/hooks/context/useUserContext';
 import {useRef, useState} from 'react';
 import Image from 'next/image';
 import Label from './label';
+import {IUser} from '@/interfaces/user-interface';
 interface Props {
   onImageChange: any;
+  user: IUser;
 }
-export default function ChangeBackgroundImage({onImageChange}: Props) {
-  const {user} = useUserContext();
+export default function ChangeBackgroundImage({onImageChange, user}: Props) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
