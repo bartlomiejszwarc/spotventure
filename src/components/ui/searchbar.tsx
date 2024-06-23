@@ -1,6 +1,6 @@
 'use client';
 import './styles.css';
-import {useState, useEffect} from 'react';
+import {useState, useEffect, Suspense} from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
@@ -36,24 +36,26 @@ function SearchBar() {
   };
 
   return (
-    <div
-      className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 dark:bg-zinc-600 border-zinc-300 dark:border-zinc-700 flex items-center justify-between pr-4 pl-6  ${
-        focused ? 'focused-full-width lg:w-full' : ''
-      }`}>
-      <input
-        defaultValue={searchParams.get('search') ? (searchParams.get('search') as string) : ''}
-        onFocus={() => setFocused(true)}
-        type='text'
-        className='w-full bg-transparent h-[70%] placeholder:text-lg outline-none'
-        placeholder='Explore'
-        onKeyDown={(e) => handleSearchOnKeyDown(e)}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}></input>
-      <button onClick={handleSearch}>
-        <SearchIcon className='text-zinc-600 dark:text-zinc-300' />
-      </button>
-    </div>
+    <Suspense>
+      <div
+        className={`w-full lg:w-96 h-12 rounded-full border-2 bg-zinc-100 dark:bg-zinc-600 border-zinc-300 dark:border-zinc-700 flex items-center justify-between pr-4 pl-6  ${
+          focused ? 'focused-full-width lg:w-full' : ''
+        }`}>
+        <input
+          defaultValue={searchParams.get('search') ? (searchParams.get('search') as string) : ''}
+          onFocus={() => setFocused(true)}
+          type='text'
+          className='w-full bg-transparent h-[70%] placeholder:text-lg outline-none'
+          placeholder='Explore'
+          onKeyDown={(e) => handleSearchOnKeyDown(e)}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}></input>
+        <button onClick={handleSearch}>
+          <SearchIcon className='text-zinc-600 dark:text-zinc-300' />
+        </button>
+      </div>
+    </Suspense>
   );
 }
 

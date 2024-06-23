@@ -44,8 +44,8 @@ export default function PostReply({reply, isLast}: Props) {
               <span className='text-sm font-semibold'>{user!.name} </span>
               <span className='text-sm'>{reply.text}</span>
             </div>
-            <div className='flex space-x-2 pt-[3px]'>
-              <span className='font-light text-xs w-4'>
+            <div className='flex pt-[3px]'>
+              <span className='font-light text-xs w-4 mr-3'>
                 <ReactTimeAgo date={reply.createdAt as Date} locale='en-US' timeStyle='mini-now' />
               </span>
               <span className='font-medium text-xs'>

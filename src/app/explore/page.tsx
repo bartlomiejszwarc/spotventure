@@ -1,5 +1,10 @@
+import {Suspense} from 'react';
 import SearchPage from './search-page';
 
 export default function Page() {
-  return <SearchPage />;
+  return (
+    <Suspense>
+      <SearchPage />
+    </Suspense>
+  );
 }

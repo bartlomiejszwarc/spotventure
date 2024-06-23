@@ -4,6 +4,7 @@ import {createContext, useReducer, useState, useEffect} from 'react';
 import {auth} from '@/firebase/config';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {useUserData} from '@/hooks/user/useUserData';
+import Cookies from 'js-cookie';
 
 interface Props {
   children: React.ReactNode;
@@ -94,6 +95,7 @@ export const UserContextProvider = ({children}: Props) => {
       const fetchUserDetails = async () => {
         try {
           const res = await getUserData(user.uid);
+          Cookies.set('uid', user.uid);
           if (res) {
             dispatch({type: 'SET_USER_DATA', payload: res.data.user});
           }

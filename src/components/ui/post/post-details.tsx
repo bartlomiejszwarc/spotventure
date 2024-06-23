@@ -14,6 +14,7 @@ import {IPost} from '@/interfaces/post-interface';
 import {IReply} from '@/interfaces/reply-interface';
 import {IUser} from '@/interfaces/user-interface';
 import {useState, useEffect} from 'react';
+import PostDetailsSkeleton from '../skeletons/post/post-details-skeleton';
 
 interface Props {
   id: string;
@@ -24,6 +25,8 @@ export default function PostDetails({id}: Props) {
   const [post, setPost] = useState<IPost | null>(null);
   const [user, setUser] = useState<IUser | null>(null);
   const [replies, setReplies] = useState<IReply[] | []>([]);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
   const {user: currentUser} = useUserContext();
 
   const {getReplies} = useReply();
@@ -35,6 +38,7 @@ export default function PostDetails({id}: Props) {
         const replies = await getReplies(id);
         setPost(res);
         setReplies(replies);
+        setLoaded(true);
       } catch (error) {}
     };
     getPostDetails();
@@ -60,7 +64,13 @@ export default function PostDetails({id}: Props) {
     return (
       <div className='flex flex-col lg:flex-row '>
         <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] sm:border-b-0 lg:border-b-[1px] lg:border-r-0 border-zinc-300 dark:border-zinc-700 flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-md '>
-          <Image fill={true} src={post.imageUrl} alt={'Spot image'} className='object-contain' />
+          <Image
+            onLoadingComplete={() => setImageLoaded(true)}
+            fill={true}
+            src={post.imageUrl}
+            alt={'Spot image'}
+            className='object-contain'
+          />
         </div>
         <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 dark:border-zinc-700 flex flex-col shadow-md bg-zinc-100 dark:bg-zinc-900 '>
           <div>
@@ -91,5 +101,8 @@ export default function PostDetails({id}: Props) {
         </div>
       </div>
     );
+  }
+  if (!loaded) {
+    return <PostDetailsSkeleton />;
   }
 }

@@ -2,6 +2,7 @@ import {IPost} from '@/interfaces/post-interface';
 import PostPreviewCard from '../ui/card/post/post-preview-card';
 import LayoutPostsProfile from '@/layouts/layout-posts-profile';
 import NoResults from './NoResults';
+import PostPreviewCardSkeleton from '../ui/skeletons/post-preview-card/post-preview-card-skeleton';
 
 interface Props {
   posts: IPost[];
@@ -12,6 +13,15 @@ interface Props {
   processing: boolean;
 }
 export default function ProfilePosts({posts, uid, profileImageUrl, name, processed, processing}: Props) {
+  if (processing && !processed) {
+    return (
+      <LayoutPostsProfile>
+        {Array.from({length: 3}).map((_, idx) => (
+          <PostPreviewCardSkeleton key={idx} />
+        ))}
+      </LayoutPostsProfile>
+    );
+  }
   if (posts!?.length > 0 && processed && !processing) {
     return (
       <LayoutPostsProfile>

@@ -1,6 +1,7 @@
 'use client';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
 import {useSearchParams, usePathname, useRouter} from 'next/navigation';
+import {Suspense} from 'react';
 
 type OrderByType = 'likesCount';
 export default function Sort() {
@@ -33,15 +34,17 @@ export default function Sort() {
     }
   };
   return (
-    <Select onValueChange={handleOnValueChange} defaultValue='popularity'>
-      <SelectTrigger className='w-full xs:w-64 outline-none bg-zinc-100 dark:bg-zinc-700'>
-        <SelectValue placeholder='Sort' />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value='popularity'>Popularity</SelectItem>
-        <SelectItem value='createdAtDesc'>Newest first</SelectItem>
-        <SelectItem value='createdAtAsc'>Oldest first</SelectItem>
-      </SelectContent>
-    </Select>
+    <Suspense>
+      <Select onValueChange={handleOnValueChange} defaultValue='popularity'>
+        <SelectTrigger className='w-full xs:w-64 outline-none bg-zinc-100 dark:bg-zinc-700'>
+          <SelectValue placeholder='Sort' />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value='popularity'>Popularity</SelectItem>
+          <SelectItem value='createdAtDesc'>Newest first</SelectItem>
+          <SelectItem value='createdAtAsc'>Oldest first</SelectItem>
+        </SelectContent>
+      </Select>
+    </Suspense>
   );
 }

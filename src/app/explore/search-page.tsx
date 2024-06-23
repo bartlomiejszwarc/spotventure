@@ -10,7 +10,7 @@ import {IUser} from '@/interfaces/user-interface';
 import {useSearchParams} from 'next/navigation';
 
 import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
-import {useEffect, useState} from 'react';
+import {Suspense, useEffect, useState} from 'react';
 import Sort from '@/components/explore/sort';
 
 type Order = 'asc' | 'desc';
@@ -56,30 +56,32 @@ export default function SearchPage() {
   }, [search, orderBy, order]);
 
   return (
-    <div className='w-full flex justify-center pt-16'>
-      <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
-        <SearchBar />
+    <Suspense>
+      <div className='w-full flex justify-center pt-16'>
+        <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
+          <SearchBar />
 
-        <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
-          <Tabs defaultValue='spots' className='w-full' value={tab} onValueChange={setActiveTab}>
-            <TabsList>
-              <TabsTrigger value='spots'>Spots</TabsTrigger>
-              <TabsTrigger value='people'>People</TabsTrigger>
-            </TabsList>
-            {tab === 'spots' && (
-              <div className='py-4'>
-                <Sort />
-              </div>
-            )}
-            <TabsContent value='spots' forceMount={true} hidden={'spots' !== tab}>
-              <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
-            </TabsContent>
-            <TabsContent value='people' forceMount={true} hidden={'people' !== tab}>
-              <ResultsUsers users={users} keyword={searchKeyword as string} processed={processed} />
-            </TabsContent>
-          </Tabs>
+          <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
+            <Tabs defaultValue='spots' className='w-full' value={tab} onValueChange={setActiveTab}>
+              <TabsList>
+                <TabsTrigger value='spots'>Spots</TabsTrigger>
+                <TabsTrigger value='people'>People</TabsTrigger>
+              </TabsList>
+              {tab === 'spots' && (
+                <div className='py-4'>
+                  <Sort />
+                </div>
+              )}
+              <TabsContent value='spots' forceMount={true} hidden={'spots' !== tab}>
+                <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
+              </TabsContent>
+              <TabsContent value='people' forceMount={true} hidden={'people' !== tab}>
+                <ResultsUsers users={users} keyword={searchKeyword as string} processed={processed} />
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </div>
-    </div>
+    </Suspense>
   );
 }

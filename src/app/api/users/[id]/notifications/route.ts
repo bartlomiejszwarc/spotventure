@@ -29,6 +29,7 @@ export async function POST(req: Request, context: any) {
     const {params} = context;
     const id = params.id;
     const body = await req.json();
+    if (id === body.receiverId) return;
     if (!id) return new NextResponse('No ID provided');
     const user = await prisma.user.findUnique({
       where: {
