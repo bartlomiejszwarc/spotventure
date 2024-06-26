@@ -5,6 +5,7 @@ import {useAddToFavorites} from '@/hooks/user/favorites/useAddToFavorites';
 import {useRemoveFromFavorites} from '@/hooks/user/favorites/useRemoveFromFavorites';
 import {INotification} from '@/interfaces/notification-interface';
 import {useEffect, useState} from 'react';
+import convertLikesCount from '@/utils/convertLikesCount';
 
 interface Props {
   id: string;
@@ -83,8 +84,9 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesC
           onClick={addPostToFavorites}
         />
       )}
+
       {!likesCountHidden ? (
-        <span className='font-medium text-zinc-800 dark:text-zinc-300'>{currentLikesCount}</span>
+        <span className='font-medium text-zinc-800 dark:text-zinc-300'>{convertLikesCount(currentLikesCount)}</span>
       ) : null}
     </div>
   );

@@ -79,7 +79,7 @@ export default function PostActions({
           uid={uid}
           likedByIds={likedByIds}
           likesCount={likesCount}
-          likesCountHidden={true}
+          likesCountHidden={false}
           iconFontSize={'30px'}
         />
         <ChatBubbleOutlineIcon
@@ -90,9 +90,6 @@ export default function PostActions({
         />
       </div>
       <div className='flex flex-col'>
-        <span className='font-bold'>
-          {likesCount} {likesCount === 1 ? 'like' : 'likes'}
-        </span>
         <span className=' text-xs'>{convertDate(createdAt, 'LLLL dd, yyyy')}</span>
       </div>
       <div className='relative flex space-x-4 items-start pt-4  '>
