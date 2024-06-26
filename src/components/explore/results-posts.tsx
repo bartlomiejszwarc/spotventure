@@ -2,14 +2,18 @@ import {IPost} from '@/interfaces/post-interface';
 import LayoutPosts from '@/layouts/layout-posts';
 import PostPreviewCard from '../ui/card/post/post-preview-card';
 import NoResults from './no-results';
+import {useSearchParams} from 'next/navigation';
 
 interface Props {
   posts: IPost[] | null;
-  keyword: string;
   processed: boolean;
 }
-export default function ResultsPosts({posts, keyword, processed}: Props) {
-  if (posts!?.length > 0 && keyword) {
+export default function ResultsPosts({posts, processed}: Props) {
+  const searchParams = useSearchParams();
+
+  const search = searchParams.get('search');
+
+  if (posts!?.length > 0 && search) {
     return (
       <LayoutPosts>
         {posts?.map((post, idx) => (
@@ -27,7 +31,7 @@ export default function ResultsPosts({posts, keyword, processed}: Props) {
       </LayoutPosts>
     );
   }
-  if (posts!?.length === 0 && keyword && processed) {
-    return <NoResults type={'posts'} keyword={keyword} />;
+  if (posts!?.length === 0 && search && processed) {
+    return <NoResults type={'posts'} keyword={search} />;
   }
 }

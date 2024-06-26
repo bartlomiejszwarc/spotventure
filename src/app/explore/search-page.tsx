@@ -13,7 +13,6 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from '@/components/ui/tabs';
 import {Suspense, useEffect, useState} from 'react';
 import Sort from '@/components/explore/sort';
 
-type Order = 'asc' | 'desc';
 export default function SearchPage() {
   const {searchPostsByKeyword, searchUsersByKeyword} = useSearchByKeyword();
   const [tab, setActiveTab] = useState('spots');
@@ -21,7 +20,6 @@ export default function SearchPage() {
   const [posts, setPosts] = useState<IPost[] | null>([]);
   const [users, setUsers] = useState<IUser[] | null>([]);
 
-  const [searchKeyword, setSearchKeyword] = useState<string | null>();
   const [processed, setProcessed] = useState<boolean>(false);
   const {user} = useUserContext();
 
@@ -37,7 +35,7 @@ export default function SearchPage() {
         try {
           if (search.length < 1) return;
           setProcessed(false);
-          setSearchKeyword(search);
+
           const resPosts = await searchPostsByKeyword(search, orderBy ? orderBy : 'createdAt', order ? order : 'desc');
           setPosts(resPosts);
           const resUsers = await searchUsersByKeyword(search);
@@ -57,8 +55,8 @@ export default function SearchPage() {
 
   return (
     <Suspense>
-      <div className='w-full flex justify-center pt-16'>
-        <div className='w-11/12 sm:w-full flex flex-col space-y-6'>
+      <div className='w-full flex justify-center pt-6'>
+        <div className='w-full flex flex-col space-y-6'>
           <SearchBar />
 
           <div className='w-full min-h-screen flex flex-wrap gap-4 justify-center md:justify-start'>
@@ -73,10 +71,10 @@ export default function SearchPage() {
                 </div>
               )}
               <TabsContent value='spots' forceMount={true} hidden={'spots' !== tab}>
-                <ResultsPosts posts={posts} keyword={searchKeyword as string} processed={processed} />
+                <ResultsPosts posts={posts} processed={processed} />
               </TabsContent>
               <TabsContent value='people' forceMount={true} hidden={'people' !== tab}>
-                <ResultsUsers users={users} keyword={searchKeyword as string} processed={processed} />
+                <ResultsUsers users={users} processed={processed} />
               </TabsContent>
             </Tabs>
           </div>

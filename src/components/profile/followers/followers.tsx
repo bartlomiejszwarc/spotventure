@@ -6,11 +6,14 @@ export default function Followers() {
 
   return (
     <div className='flex space-x-3 font-medium text-zinc-800 dark:text-zinc-300 dark:font-light'>
-      <span>
-        {followers!.length + ' '}
-        {followers!.length === 1 ? 'follower' : 'followers'}{' '}
-      </span>
-      <span>{following!.length} following </span>
+      {followers && (
+        <span>
+          {followers!?.length + ' '}
+          {followers!?.length === 1 ? 'follower' : 'followers'}{' '}
+        </span>
+      )}
+
+      {following && <span>{following!?.length} following </span>}
     </div>
   );
 }

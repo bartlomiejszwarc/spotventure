@@ -260,7 +260,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
                 <Datepicker />
                 <Switches />
                 <div className='w-full text-red-600 flex h-6 space-x-1 items-center' ref={errorMessageRef}>
-                  <SdCardAlertIcon className='text-sm' />
+                  {errorMessage && <SdCardAlertIcon className='text-sm' />}
                   <span className='text-sm'>{errorMessage}</span>
                 </div>
               </div>

@@ -13,7 +13,7 @@ interface Props {
   processing: boolean;
 }
 export default function ProfilePosts({posts, uid, profileImageUrl, name, processed, processing}: Props) {
-  if (processing && !processed) {
+  if (processing) {
     return (
       <LayoutPostsProfile>
         {Array.from({length: 3}).map((_, idx) => (

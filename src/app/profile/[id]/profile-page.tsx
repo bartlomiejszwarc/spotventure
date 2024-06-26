@@ -14,6 +14,7 @@ import ProfilePosts from '@/components/profile/profile-posts';
 import {useProfileFollowersContext} from '@/hooks/context/useProfileFollowersContext';
 import Image from 'next/image';
 import Nationality from '@/components/profile/nationality';
+import {Skeleton} from '@mui/material';
 interface Props {
   id: string;
 }
@@ -25,6 +26,7 @@ export default function ProfilePage({id}: Props) {
   const [userData, setUserData] = useState<IUser>();
   const [processed, setProcessed] = useState<boolean>(false);
   const [processing, setProcessing] = useState<boolean>(true);
+  const [notFound, setNotFound] = useState<boolean>(false);
   useEffect(() => {
     setProcessing(true);
     setProcessed(false);
@@ -34,65 +36,93 @@ export default function ProfilePage({id}: Props) {
     };
     const getUserDetails = async () => {
       const res = await getUserData(id);
-      if (res) setUserData(res.data.user);
-      const followers = res?.data.user.followers;
-      const following = res?.data.user.following;
-      dispatch({type: 'SET_PROFILE_FOLLOWERS', payload: {followers: followers, following: following}});
+      if (res?.data.user) {
+        setUserData(res.data.user);
+        const followers = res?.data.user.followers;
+        const following = res?.data.user.following;
+        dispatch({type: 'SET_PROFILE_FOLLOWERS', payload: {followers: followers, following: following}});
+      } else {
+        setNotFound(true);
+      }
       setProcessed(true);
       setProcessing(false);
     };
     getPosts();
     getUserDetails();
   }, [id]);
-  if (userData) {
-    return (
-      <div className='w-full flex justify-center pb-6'>
-        <div className='flex flex-col items-center w-full lg:w-3/4 space-y-12 '>
-          <div className='w-full'>
-            <div className='w-full flex space-x-16'>
-              <div className='relative w-full'>
-                <div className='w-full h-44 lg:h-72 bg-zinc-500'>
-                  {userData!?.backgroundImageUrl && (
-                    <Image
-                      quality={100}
-                      fill={true}
-                      alt='Background'
-                      className='w-full bg-zinc-500 h-44 lg:h-72 object-cover object-center shadow-md shadow-zinc-300 dark:shadow-zinc-950/30'
-                      src={userData!?.backgroundImageUrl}
-                    />
-                  )}
-                </div>
 
+  return (
+    <div className='w-full flex justify-center pb-6'>
+      <div className='flex flex-col items-center w-full lg:w-3/4 space-y-12 '>
+        <div className='w-full'>
+          <div className='w-full flex space-x-16'>
+            <div className='relative w-full'>
+              <div className='w-full h-44 lg:h-72 bg-zinc-500'>
+                {userData!?.backgroundImageUrl ? (
+                  <Image
+                    quality={100}
+                    fill={true}
+                    alt='Background'
+                    className='w-full bg-zinc-500 h-44 lg:h-72 object-cover object-center shadow-md shadow-zinc-300 dark:shadow-zinc-950/30'
+                    src={userData!?.backgroundImageUrl}
+                  />
+                ) : (
+                  <div className='w-full h-full bg-zinc-400 dark:bg-zinc-700' />
+                )}
+              </div>
+
+              {userData ? (
                 <UserAvatar
-                  profileImageUrl={userData!.profileImageUrl}
-                  name={userData.name}
-                  className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16 border-zinc-50 dark:border-zinc-300 border-[5px]'
+                  profileImageUrl={userData!?.profileImageUrl}
+                  name={userData!?.name}
+                  className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16  z-20'
                 />
-              </div>
-            </div>
-            <div className='w-full flex justify-end pt-2'>
-              <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
-                <span className='text-2xl font-semibold line-clamp-2 hover:line-clamp-none text-zinc-800 dark:text-zinc-300'>
-                  {userData?.name}
-                </span>
-                <Followers />
-                <MemberSince date={userData!.createdAt} />
-                <Nationality country={userData.country} />
-                <EditProfileButton uid={userData.uid} />
-                <FollowButton uid={userData.uid} />
-              </div>
+              ) : (
+                <Skeleton className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16  z-20 bg-zinc-300 dark:bg-zinc-700 rounded-full' />
+              )}
+
+              <div className='h-[7rem] w-[7rem] lg:w-[10rem] lg:h-[10rem] absolute translate-y-[-50%] left-4 lg:left-14 bg-zinc-50 dark:bg-zinc-300 rounded-full'></div>
             </div>
           </div>
+          <div className='w-full flex justify-end pt-2'>
+            <div className='w-64 flex flex-col items-end font-light font-manrope break-all text-right'>
+              {userData ? (
+                <span className='text-2xl font-semibold line-clamp-2 hover:line-clamp-none text-zinc-800 dark:text-zinc-300'>
+                  {userData!?.name}
+                </span>
+              ) : (
+                <Skeleton className='w-52 h-10 bg-zinc-300 dark:bg-zinc-700' />
+              )}
+
+              {userData ? <Followers /> : <Skeleton className='w-36 h-6 bg-zinc-300 dark:bg-zinc-700' />}
+              {userData ? (
+                <MemberSince date={userData!?.createdAt} />
+              ) : (
+                <Skeleton className='w-24 h-6 bg-zinc-300 dark:bg-zinc-700' />
+              )}
+              {userData ? (
+                <Nationality country={userData!?.country} />
+              ) : (
+                <Skeleton className='w-36 h-6 bg-zinc-300 dark:bg-zinc-700' />
+              )}
+              {userData && <EditProfileButton uid={userData!?.uid} />}
+              {userData && <FollowButton uid={userData!?.uid} />}
+            </div>
+          </div>
+        </div>
+        {!notFound ? (
           <ProfilePosts
             posts={posts}
-            uid={userData.uid}
-            profileImageUrl={userData.profileImageUrl}
-            name={userData.name}
+            uid={userData!?.uid}
+            profileImageUrl={userData!?.profileImageUrl}
+            name={userData!?.name}
             processed={processed}
             processing={processing}
           />
-        </div>
+        ) : (
+          <span className='text-2xl font-thin'> This user does not exist</span>
+        )}
       </div>
-    );
-  }
+    </div>
+  );
 }

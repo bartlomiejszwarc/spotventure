@@ -15,6 +15,7 @@ import {IReply} from '@/interfaces/reply-interface';
 import {IUser} from '@/interfaces/user-interface';
 import {useState, useEffect} from 'react';
 import PostDetailsSkeleton from '../skeletons/post/post-details-skeleton';
+import convertDate from '@/utils/convert-date';
 
 interface Props {
   id: string;
@@ -59,50 +60,47 @@ export default function PostDetails({id}: Props) {
   const handleAddReply = (reply: IReply) => {
     setReplies((prev) => [...prev, reply]);
   };
-
-  if (post && user && currentUser) {
-    return (
-      <div className='flex flex-col lg:flex-row '>
-        <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] sm:border-b-0 lg:border-b-[1px] lg:border-r-0 border-zinc-300 dark:border-zinc-700 flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-md '>
-          <Image
-            onLoadingComplete={() => setImageLoaded(true)}
-            fill={true}
-            src={post.imageUrl}
-            alt={'Spot image'}
-            className='object-contain'
-          />
-        </div>
-        <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 dark:border-zinc-700 flex flex-col shadow-md bg-zinc-100 dark:bg-zinc-900 '>
-          <div>
-            <PostUserInfo uid={post.uid} name={user!.name} profilePictureUrl={user?.profileImageUrl} />
-            <PostDescription
-              post={post}
-              name={user!.name}
-              description={post.description}
-              location={post.location}
-              date={formatDate(post.visitDate as Date, 'LLLL dd yyyy')}
-            />
-          </div>
-          <PostReplies postReplies={replies} />
-
-          <div className='w-full bg-zinc-100 dark:bg-zinc-900'>
-            <PostActions
-              postAuthorId={post.uid}
-              uid={currentUser!.uid}
-              id={post.id as string}
-              likesCount={post.likesCount}
-              likedByIds={post.likedByIds}
-              profileImageUrl={currentUser?.profileImageUrl}
-              name={currentUser?.name as string}
-              createdAt={post.createdAt as Date}
-              onAddReply={handleAddReply}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
   if (!loaded) {
     return <PostDetailsSkeleton />;
   }
+  return (
+    <div className='flex flex-col lg:flex-row '>
+      <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] sm:border-b-0 lg:border-b-[1px] lg:border-r-0 border-zinc-300 dark:border-zinc-700 flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-md '>
+        <Image
+          onLoadingComplete={() => setImageLoaded(true)}
+          fill={true}
+          src={post!?.imageUrl}
+          alt={'Spot image'}
+          className='object-contain'
+        />
+      </div>
+      <div className=' relative w-[22rem] xs:w-96 h-[35rem] lg:h-[50rem] sm:w-[40rem] lg:w-[25rem] sm:border-[1px] border-l-0 border-zinc-300 dark:border-zinc-700 flex flex-col shadow-md bg-zinc-100 dark:bg-zinc-900 '>
+        <div>
+          <PostUserInfo uid={post!?.uid} name={user!?.name} profilePictureUrl={user?.profileImageUrl} />
+          <PostDescription
+            post={post}
+            name={user!?.name}
+            description={post!?.description}
+            location={post!?.location}
+            date={convertDate(post!?.visitDate as Date, 'LLLL dd yyyy')}
+          />
+        </div>
+        <PostReplies postReplies={replies} />
+
+        <div className='w-full bg-zinc-100 dark:bg-zinc-900'>
+          <PostActions
+            postAuthorId={post!?.uid}
+            uid={currentUser!?.uid}
+            id={post!?.id as string}
+            likesCount={post!?.likesCount}
+            likedByIds={post!?.likedByIds}
+            profileImageUrl={currentUser!?.profileImageUrl}
+            name={currentUser?.name as string}
+            createdAt={post!?.createdAt as Date}
+            onAddReply={handleAddReply}
+          />
+        </div>
+      </div>
+    </div>
+  );
 }

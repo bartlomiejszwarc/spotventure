@@ -1,40 +1,56 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+'use client';
+
+import {useUserContext} from '@/hooks/context/useUserContext';
 import {useGetFollowingPosts} from '@/hooks/user/following/useGetFollowingPosts';
+import {IPost} from '@/interfaces/post-interface';
+import {useEffect, useState} from 'react';
+import PostDetails from '../post/post-details';
 import NoResults from '../svgs/NoResults';
 import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
-import dynamic from 'next/dynamic';
-import {cookies} from 'next/headers';
-import {Key} from 'react';
-import {IPost} from '@/interfaces/post-interface';
+import PostDetailsSkeleton from '../skeletons/post/post-details-skeleton';
 
-const PostDetailsComponent = dynamic(() => import('../post/post-details'));
-
-async function Posts() {
-  const cookieStore = cookies();
+export default function FollowingPostsList() {
+  const {user} = useUserContext();
   const {getFollowingPosts} = useGetFollowingPosts();
-  try {
-    const uid = cookieStore.get('uid');
-    if (uid!?.value) {
-      const posts = await getFollowingPosts(uid.value);
-      return posts;
-    }
-  } catch (error: any) {
-    return null;
-  }
-}
+  const [posts, setPosts] = useState<IPost[] | []>([]);
+  const [processed, setProcessed] = useState<boolean>(false);
 
-export default async function FollowingPostsList() {
-  const posts = await Posts();
+  useEffect(() => {
+    const getPosts = async () => {
+      if (user) {
+        try {
+          await getFollowingPosts(user.uid).then((res) => {
+            setPosts(res);
+          });
+          setProcessed(true);
+        } catch (error) {}
+      }
+    };
+    getPosts();
+  }, [user]);
 
-  if (posts!?.length > 0) {
+  if (!processed) {
     return (
-      <div className='py-8 w-full flex flex-col items-center space-y-10 '>
-        {posts!?.map((post: IPost, idx: Key) => <PostDetailsComponent key={idx} id={post.id as string} />)}
+      <div className='pt-8 overflow-y-clip space-y-10'>
+        {Array.from({length: 2}).map((_, idx) => (
+          <PostDetailsSkeleton key={idx} />
+        ))}
       </div>
     );
   }
-  if (posts?.length === 0) {
+
+  if (posts?.length > 0) {
+    return (
+      <div className='py-8 w-full flex flex-col items-center space-y-10 '>
+        {posts.map((post, idx) => (
+          <PostDetails key={idx} id={post.id as string} />
+        ))}
+      </div>
+    );
+  }
+  if (posts?.length === 0 && processed) {
     return (
       <div className='py-20 md:py-10 w-full flex flex-col items-center space-y-10'>
         <span className='text-zinc-700 dark:text-zinc-400 text-xl font-thin'>

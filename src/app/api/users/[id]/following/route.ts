@@ -15,7 +15,7 @@ export async function GET(req: Request, context: any) {
     if (!user) return new NextResponse('User not found');
 
     const posts = await prisma.post.findMany({
-      take: 3,
+      take: 5,
       where: {uid: {in: user.following}},
     });
 

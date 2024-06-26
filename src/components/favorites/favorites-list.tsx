@@ -34,7 +34,7 @@ export default function FavoritesList() {
   }, [user]);
 
   return (
-    <div className='pt-16 lg:pt-6'>
+    <div className='pt-6 lg:pt-6'>
       <LayoutPosts>
         {userFavorites.map((post, idx) => (
           <PostPreviewCard

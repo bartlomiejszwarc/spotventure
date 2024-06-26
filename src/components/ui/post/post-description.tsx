@@ -13,8 +13,8 @@ interface Props {
   name: string;
   description: string;
   location: string;
-  date: string;
-  post: IPost;
+  date: string | undefined;
+  post: IPost | null;
 }
 export default function PostDescription({name, description, location, date, post}: Props) {
   return (
@@ -27,22 +27,22 @@ export default function PostDescription({name, description, location, date, post
           {', '} {location}
         </span>
         <div className='flex space-x-1 '>
-          {post.free ? <MoneyOffIcon className='text-md w-[18px]' /> : <PaidIcon className='text-md w-[18px]' />}
-          {post.disabilityFriendly ? (
+          {post?.free ? <MoneyOffIcon className='text-md w-[18px]' /> : <PaidIcon className='text-md w-[18px]' />}
+          {post?.disabilityFriendly ? (
             <AccessibleIcon className='text-md w-[18px]' />
           ) : (
             <NotAccessibleIcon className='text-md w-[17px]' />
           )}
-          {post.anyTimeAvailable ? (
+          {post?.anyTimeAvailable ? (
             <AccessTimeIcon className='text-md w-[19px]' />
           ) : (
             <BedtimeOffIcon className='text-md w-[19px]' />
           )}
-          {post.parkingAvailable ? (
+          {post?.parkingAvailable ? (
             <LocalParkingIcon className='text-md w-[19px]' />
           ) : (
-            <div className='relative  w-[19px] flex justify-center'>
-              <DriveEtaIcon className='text-md absolute w-[12px]' />
+            <div className='relative w-[19px] flex justify-center items-center '>
+              <DriveEtaIcon className='text-md absolute w-[10px]' sx={{fontSize: '15px'}} />
               <NotInterestedIcon className='text-md absolute w-[20px]' />
             </div>
           )}

@@ -27,7 +27,7 @@ function NotificationList() {
   }, [user]);
 
   return (
-    <div className='flex flex-col space-y-4'>
+    <div className='flex flex-col space-y-4 pt-6'>
       {notifications?.map((notification, idx) => <Notification key={idx} {...notification} />)}
     </div>
   );

@@ -1,3 +1,4 @@
+'use client';
 import {useState} from 'react';
 import SettingsTabsTrigger from './settings-tabs-trigger';
 import SettingsTabsContent from './settings-tabs-content';
@@ -5,11 +6,8 @@ import SettingsPageAccount from '../account/settings-page-account';
 import {createContext} from 'react';
 import SettingsPageSecuity from '../security/settings-page-secuity';
 
-interface Props {
-  onTabChange: any;
-}
 export const TabContext = createContext('account');
-export default function SettingsTabs({onTabChange}: Props) {
+export default function SettingsTabs() {
   const [activeTab, setActiveTab] = useState<string>('account');
   const tabChange = (tab: string) => {
     setActiveTab(tab);
