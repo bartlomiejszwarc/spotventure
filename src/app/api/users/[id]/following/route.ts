@@ -17,6 +17,9 @@ export async function GET(req: Request, context: any) {
     const posts = await prisma.post.findMany({
       //take: 5,
       where: {uid: {in: user.following}},
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return NextResponse.json({success: true, posts: posts});

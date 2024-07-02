@@ -63,12 +63,13 @@ export default function FollowingPostsList() {
         <div className='w-full flex justify-center'>
           <NoResults className=' w-64 h-80' />
         </div>
-        <button className='text-zinc-700 dark:text-zinc-200 text-2xl font-thin bg-emerald-500 rounded-full px-10 py-2'>
-          <Link href='/explore' className='font-normal'>
-            <SearchIcon />
-            Start here!
-          </Link>
-        </button>
+
+        <Link
+          href='/explore'
+          className='font-normal text-zinc-700 dark:text-zinc-200 text-2xl bg-emerald-500 rounded-full px-10 py-2'>
+          <SearchIcon />
+          Start here!
+        </Link>
       </div>
     );
   }

@@ -22,7 +22,7 @@ export default function PostReplyLikes({id, uid, onAddLike}: Props) {
         try {
           onAddLike(-1);
           dispatch({type: 'REMOVE_FROM_USER_LIKED_REPLIES', payload: id});
-          await dislikeReply(id, uid);
+          await dislikeReply(id, user.uid);
           setProcessing(false);
         } catch (error) {
           setProcessing(false);
@@ -31,7 +31,7 @@ export default function PostReplyLikes({id, uid, onAddLike}: Props) {
         try {
           onAddLike(1);
           dispatch({type: 'ADD_TO_USER_LIKED_REPLIES', payload: id});
-          await likeReply(id, uid);
+          await likeReply(id, user!.uid);
           setProcessing(false);
         } catch (error) {
           setProcessing(false);
@@ -42,9 +42,9 @@ export default function PostReplyLikes({id, uid, onAddLike}: Props) {
   return (
     <button className=' flex pt-[2px] outline-none' onClick={handleLike}>
       {!user?.likedReplies!.includes(id) ? (
-        <FavoriteBorderIcon className='text-[17px] text-zinc-700' />
+        <FavoriteBorderIcon className='text-[17px] text-zinc-700' sx={{fontSize: '17px'}} />
       ) : (
-        <FavoriteIcon className='text-[17px] text-rose-500' />
+        <FavoriteIcon className='text-[17px] text-rose-500' sx={{fontSize: '17px'}} />
       )}
     </button>
   );

@@ -23,6 +23,10 @@ export default function PostLikes({id, likedByIds, uid, likesCountHidden, likesC
   const [likedByIdsState, setLikedByIdsState] = useState<string[]>(likedByIds);
   const [currentLikesCount, setCurrentLikesCount] = useState<number>(likesCount);
 
+  useEffect(() => {
+    setCurrentLikesCount(likesCount);
+  }, [id, likesCount]);
+
   const addPostToFavorites = async () => {
     if (user && !processing) {
       dispatch({type: 'ADD_TO_USER_FAVORITES', payload: id});

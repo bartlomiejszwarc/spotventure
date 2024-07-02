@@ -37,6 +37,7 @@ export default function SearchPage() {
           setProcessed(false);
 
           const resPosts = await searchPostsByKeyword(search, orderBy ? orderBy : 'createdAt', order ? order : 'desc');
+
           setPosts(resPosts);
           const resUsers = await searchUsersByKeyword(search);
           const resUsersUpdated = resUsers.filter((userObj: {uid: string}) => {

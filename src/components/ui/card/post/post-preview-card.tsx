@@ -51,7 +51,7 @@ function PostPreviewCard({
     };
 
     getUserDataFromUid();
-  }, []);
+  }, [id]);
 
   if (!id) return null;
 

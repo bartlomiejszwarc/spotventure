@@ -16,6 +16,9 @@ export async function GET(req: Request, context: any) {
 
     const notifications = await prisma.notification.findMany({
       where: {receiverId: id},
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return NextResponse.json({success: true, notifications: notifications});
