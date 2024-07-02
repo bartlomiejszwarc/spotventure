@@ -54,8 +54,8 @@ export default function PostDescription({name, description, location, date, post
         <Skeleton className='w-64 h-5 mb-2' />
       )}
 
-      <div className='flex space-x-1'>
-        {post ? <span className='font-bold text-md'>{name} </span> : <Skeleton className='w-24 h-5' />}
+      <div className='block'>
+        {post ? <span className='font-bold text-md pr-[2px]'>{name} </span> : <Skeleton className='w-24 h-5' />}
         {post ? <span>{description}</span> : <Skeleton className='w-36 h-5' />}
       </div>
     </ScrollArea>

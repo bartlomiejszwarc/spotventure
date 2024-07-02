@@ -73,7 +73,7 @@ export default function PostActions({
 
   return (
     <div className='p-3 w-full border-t-[1px] border-zinc-300 dark:border-zinc-700 flex flex-col md:space-y-1 text-zinc-800 dark:text-zinc-300'>
-      <div className='  flex space-x-4 items-end '>
+      <div className='flex space-x-4 items-center'>
         <PostLikes
           id={id}
           uid={uid}
@@ -83,7 +83,8 @@ export default function PostActions({
           iconFontSize={'30px'}
         />
         <ChatBubbleOutlineIcon
-          className='hover:opacity-70 cursor-pointer text-zinc-800 dark:text-zinc-300 text-[28px]'
+          sx={{fontSize: '28px'}}
+          className='hover:opacity-70 cursor-pointer text-zinc-800 dark:text-zinc-300'
           onClick={() => {
             setTextAreaAutofocus(true);
           }}

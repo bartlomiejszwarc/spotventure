@@ -11,15 +11,12 @@ import CreatePostDialog from '../post/dialog/create-post-dialog';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {useLogout} from '@/hooks/auth/useLogout';
-import {useTheme} from 'next-themes';
-import {Switch} from '../switch';
 import {ThemeSwitch} from '../theme-switch';
 interface ISidenavFieldListProps {
   isSidenavOpen: boolean;
 }
 
 function SidenavFieldList({isSidenavOpen}: ISidenavFieldListProps) {
-  const {theme, setTheme} = useTheme();
   const {user} = useUserContext();
   const {logoutUser} = useLogout();
 

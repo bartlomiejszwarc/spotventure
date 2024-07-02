@@ -21,11 +21,14 @@ function SideNav() {
     if (width && width > 768) {
       setIsMobile(false);
       setStyle('closed-sidenav-initial');
+      setListOpen(false);
+
       setOpen(false);
       setLoading(false);
     } else {
       setIsMobile(true);
       setStyle('closed-sidenav-initial-mobile');
+      setListOpen(false);
       setOpen(false);
       setLoading(false);
     }
