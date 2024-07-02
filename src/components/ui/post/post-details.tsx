@@ -16,6 +16,7 @@ import {IUser} from '@/interfaces/user-interface';
 import {useState, useEffect} from 'react';
 import PostDetailsSkeleton from '../skeletons/post/post-details-skeleton';
 import convertDate from '@/utils/convert-date';
+import {Skeleton} from '../skeleton';
 
 interface Props {
   id: string;
@@ -63,6 +64,7 @@ export default function PostDetails({id}: Props) {
   if (!loaded) {
     return <PostDetailsSkeleton />;
   }
+  if (!id) return null;
   return (
     <div className='flex flex-col lg:flex-row '>
       <div className='relative w-[22rem] xs:w-96 h-[15rem] lg:h-[50rem] sm:w-[40rem] sm:border-[1px] sm:border-b-0 lg:border-b-[1px] lg:border-r-0 border-zinc-300 dark:border-zinc-700 flex items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-md '>

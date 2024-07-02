@@ -53,6 +53,8 @@ function PostPreviewCard({
     getUserDataFromUid();
   }, []);
 
+  if (!id) return null;
+
   return (
     <div className='relative h-[12rem] lg:h-[17rem]'>
       <div
