@@ -15,6 +15,7 @@ import {useProfileFollowersContext} from '@/hooks/context/useProfileFollowersCon
 import Image from 'next/image';
 import Nationality from '@/components/profile/nationality';
 import {Skeleton} from '@mui/material';
+import {useUserContext} from '@/hooks/context/useUserContext';
 interface Props {
   id: string;
 }
@@ -22,6 +23,7 @@ export default function ProfilePage({id}: Props) {
   const {getUserPosts} = useGetUserPosts();
   const {dispatch} = useProfileFollowersContext();
   const {getUserData} = useUserData();
+  const {user} = useUserContext();
   const [posts, setPosts] = useState<IPost[]>([]);
   const [userData, setUserData] = useState<IUser>();
   const [processed, setProcessed] = useState<boolean>(false);
@@ -105,8 +107,8 @@ export default function ProfilePage({id}: Props) {
               ) : (
                 <Skeleton className='w-36 h-6 bg-zinc-300 dark:bg-zinc-700' />
               )}
-              {userData && userData.uid === id && <EditProfileButton uid={userData!?.uid} />}
-              {userData && userData.uid !== id && <FollowButton uid={userData!?.uid} />}
+              {userData && user!?.uid === id && <EditProfileButton uid={userData!?.uid} />}
+              {userData && user!?.uid !== id && <FollowButton uid={userData!?.uid} />}
             </div>
           </div>
         </div>

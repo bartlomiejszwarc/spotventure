@@ -21,7 +21,7 @@ export async function POST(req: Request, context: any) {
     await prisma.user.update({
       data: {
         following: {
-          set: [...user.following, followId],
+          push: followId,
         },
       },
       where: {uid: user!.uid},
@@ -37,7 +37,7 @@ export async function POST(req: Request, context: any) {
     await prisma.user.update({
       data: {
         followers: {
-          set: [...userToFollow.followers, id],
+          push: id,
         },
       },
       where: {uid: userToFollow!.uid},
@@ -85,7 +85,7 @@ export async function PUT(req: Request, context: any) {
     await prisma.user.update({
       data: {
         followers: {
-          set: user!.followers.filter((userId) => userId !== id),
+          set: userToUnfollow!.followers.filter((userId) => userId !== id),
         },
       },
 
