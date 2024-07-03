@@ -1,12 +1,9 @@
 'use client';
-
 import {useUserContext} from '@/hooks/context/useUserContext';
 import SectionText from './section-text';
 import useDeleteUserData from '@/hooks/user/settings/useDeleteUserData';
 import useDeleteUserFilesFromStorage from '@/hooks/storage/useDeleteUserFilesFromStorage';
-import {useAuthState} from 'react-firebase-hooks/auth';
-import {auth} from '@/firebase/config';
-import {User, EmailAuthProvider, reauthenticateWithCredential, getAuth, deleteUser} from 'firebase/auth';
+import {EmailAuthProvider, reauthenticateWithCredential, getAuth, deleteUser} from 'firebase/auth';
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import DeleteAccountDialog from './delete-account-dialog';

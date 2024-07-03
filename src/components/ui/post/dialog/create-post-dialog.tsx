@@ -116,14 +116,14 @@ function CreatePostDialog({isSidenavOpen}: Props) {
 
     const SelectCategory = () => {
       return (
-        <Select onValueChange={setPostCategory} defaultValue={postCategory ? postCategory : ''}>
-          <SelectTrigger className='w-full shadow-sm'>
+        <Select onValueChange={setPostCategory} value={postCategory}>
+          <SelectTrigger className='w-full bg-white dark:bg-zinc-800'>
             <SelectValue placeholder='Category' className='capitalize ' />
           </SelectTrigger>
           <SelectContent>
             {categories.map((category, idx) => (
               <SelectItem key={idx} value={category.categoryName} className='capitalize'>
-                {category.categoryName}
+                {category.categoryName.charAt(0).toUpperCase() + category.categoryName.slice(1)}
               </SelectItem>
             ))}
           </SelectContent>

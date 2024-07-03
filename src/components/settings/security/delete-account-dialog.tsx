@@ -1,3 +1,4 @@
+'use client';
 import {Dialog, DialogContent, DialogTrigger} from '@/components/ui/dialog';
 import {useUserContext} from '@/hooks/context/useUserContext';
 import useDeleteUserFilesFromStorage from '@/hooks/storage/useDeleteUserFilesFromStorage';

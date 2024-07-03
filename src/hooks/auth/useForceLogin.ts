@@ -1,16 +1,20 @@
+'use client';
 import {useRouter} from 'next/navigation';
 import {useAuthState} from 'react-firebase-hooks/auth';
+import {useEffect} from 'react';
 import {auth} from '@/firebase/config';
 
 export const useForceLogin = () => {
-  const [user] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const router = useRouter();
-  const forceLogin = async () => {
-    try {
-      if (!user) router.push('/signin');
-    } catch (error: any) {
-      throw Error(error);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (!user && !loading) {
+        router.push('/signin');
+      }
     }
-  };
-  return {forceLogin};
+  }, [user, router]);
+
+  return {forceLogin: () => {}};
 };

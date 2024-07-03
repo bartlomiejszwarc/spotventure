@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -15,6 +16,7 @@
     "@mui/base": "^5.0.0-beta.40",
     "@mui/icons-material": "^5.15.17",
     "@mui/material": "^5.15.18",
+    "@netlify/plugin-nextjs": "^5.1.1",
     "@nextui-org/input": "^2.1.21",
     "@nextui-org/react": "^2.3.6",
     "@nextui-org/system": "^2.1.2",
@@ -44,7 +46,7 @@
     "lucide-react": "^0.378.0",
     "mongodb": "^6.6.2",
     "mongoose": "^8.4.0",
-    "next": "14.2.3",
+    "next": "^14.2.4",
     "next-themes": "^0.3.0",
     "prettier-plugin-prisma": "^5.0.0",
     "react": "^18",

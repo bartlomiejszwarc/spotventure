@@ -28,8 +28,6 @@ export default function ProfilePage({id}: Props) {
   const [processing, setProcessing] = useState<boolean>(true);
   const [notFound, setNotFound] = useState<boolean>(false);
   useEffect(() => {
-    setProcessing(true);
-    setProcessed(false);
     const getPosts = async () => {
       const res = await getUserPosts(id);
       if (res) setPosts(res);
@@ -41,11 +39,13 @@ export default function ProfilePage({id}: Props) {
         const followers = res?.data.user.followers;
         const following = res?.data.user.following;
         dispatch({type: 'SET_PROFILE_FOLLOWERS', payload: {followers: followers, following: following}});
+        setProcessed(true);
+        setProcessing(false);
       } else {
         setNotFound(true);
+        setProcessed(true);
+        setProcessing(false);
       }
-      setProcessed(true);
-      setProcessing(false);
     };
     getPosts();
     getUserDetails();
@@ -78,7 +78,7 @@ export default function ProfilePage({id}: Props) {
                   className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16  z-20'
                 />
               ) : (
-                <Skeleton className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16  z-20 bg-zinc-300 dark:bg-zinc-700 rounded-full' />
+                <div className='h-24 w-24 lg:w-36 lg:h-36 absolute translate-y-[-50%] left-6 lg:left-16  z-20 bg-zinc-300 dark:bg-zinc-700 rounded-full'></div>
               )}
 
               <div className='h-[7rem] w-[7rem] lg:w-[10rem] lg:h-[10rem] absolute translate-y-[-50%] left-4 lg:left-14 bg-zinc-50 dark:bg-zinc-300 rounded-full'></div>
@@ -105,8 +105,8 @@ export default function ProfilePage({id}: Props) {
               ) : (
                 <Skeleton className='w-36 h-6 bg-zinc-300 dark:bg-zinc-700' />
               )}
-              {userData && <EditProfileButton uid={userData!?.uid} />}
-              {userData && <FollowButton uid={userData!?.uid} />}
+              {userData && userData.uid === id && <EditProfileButton uid={userData!?.uid} />}
+              {userData && userData.uid !== id && <FollowButton uid={userData!?.uid} />}
             </div>
           </div>
         </div>

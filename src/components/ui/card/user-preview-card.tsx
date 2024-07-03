@@ -42,12 +42,12 @@ export default function UserPreviewCard({uid, name, profileImageUrl}: Props) {
     <div className='relative h-full'>
       {user?.following?.includes(uid) ? (
         <PersonRemoveIcon
-          className='absolute z-30 right-2 top-2 text-zinc-100 text-2xl bg-rose-600 opacity-80 rounded-full p-1'
+          className='absolute z-30 right-2 top-2 text-zinc-100 text-2xl bg-rose-600 opacity-80 rounded-full p-1 cursor-pointer'
           onClick={removeFromFollowing}
         />
       ) : (
         <AddIcon
-          className='absolute z-30 right-2 top-2 text-zinc-100 text-2xl bg-emerald-600 opacity-85 rounded-full p-1'
+          className='absolute z-30 right-2 top-2 text-zinc-100 text-2xl bg-emerald-600 opacity-85 rounded-full p-1 cursor-pointer'
           onClick={addToFollowing}
         />
       )}

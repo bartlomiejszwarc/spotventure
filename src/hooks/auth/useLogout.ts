@@ -1,3 +1,4 @@
+'use client';
 import {useSignOut} from 'react-firebase-hooks/auth';
 import {useState} from 'react';
 import {auth} from '@/firebase/config';

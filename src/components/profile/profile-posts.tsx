@@ -22,7 +22,7 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
       </LayoutPostsProfile>
     );
   }
-  if (posts!?.length > 0 && processed && !processing) {
+  if (posts!?.length > 0 && !processing) {
     return (
       <LayoutPostsProfile>
         {posts.map((post, idx) => (
@@ -42,7 +42,7 @@ export default function ProfilePosts({posts, uid, profileImageUrl, name, process
       </LayoutPostsProfile>
     );
   }
-  if (posts.length === 0 && processed && !processing) {
+  if (posts!?.length === 0 && !processing) {
     return <NoResults uid={uid} />;
   }
 }

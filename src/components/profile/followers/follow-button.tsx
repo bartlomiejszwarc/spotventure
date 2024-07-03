@@ -28,24 +28,20 @@ export default function FollowButton({uid}: Props) {
 
   return (
     <>
-      {user?.uid !== uid && (
-        <>
-          {!user?.following!?.includes(uid) ? (
-            <button
-              className='py-2 w-28 bg-emerald-500 text-zinc-200 font-medium rounded-full text-base mt-4 border-2 border-transparent'
-              onClick={addToFollowing}>
-              Follow
-            </button>
-          ) : (
-            <button
-              className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
-              onClick={removeFromFollowing}
-              onMouseEnter={() => setHover(true)}
-              onMouseLeave={() => setHover(false)}>
-              {hover ? 'Unfollow' : 'Following'}
-            </button>
-          )}
-        </>
+      {!user?.following!?.includes(uid) ? (
+        <button
+          className='py-2 w-28 bg-emerald-500 text-zinc-200 font-medium rounded-full text-base mt-4 border-2 border-transparent'
+          onClick={addToFollowing}>
+          Follow
+        </button>
+      ) : (
+        <button
+          className={`py-2 w-28 ${hover ? 'text-red-400 ' : 'text-emerald-500'} bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 font-medium rounded-full text-base mt-4 border-2 ${hover ? 'border-red-400 ' : 'border-emerald-500'}`}
+          onClick={removeFromFollowing}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}>
+          {hover ? 'Unfollow' : 'Following'}
+        </button>
       )}
     </>
   );

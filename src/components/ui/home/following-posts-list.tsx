@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-
-import {useUserContext} from '@/hooks/context/useUserContext';
 import {useGetFollowingPosts} from '@/hooks/user/following/useGetFollowingPosts';
 import {IPost} from '@/interfaces/post-interface';
 import {useEffect, useState} from 'react';
@@ -11,11 +9,12 @@ import Link from 'next/link';
 import SearchIcon from '@mui/icons-material/Search';
 import PostDetailsSkeleton from '../skeletons/post/post-details-skeleton';
 import {getAuth} from 'firebase/auth';
+import {useAuthState} from 'react-firebase-hooks/auth';
+import GoExploreSvg from '../svgs/go-explore-svg';
 
 export default function FollowingPostsList() {
   const auth = getAuth();
-  const currentUser = auth.currentUser;
-  const {user} = useUserContext();
+  const [user, loading] = useAuthState(auth);
   const {getFollowingPosts} = useGetFollowingPosts();
   const [posts, setPosts] = useState<IPost[] | []>([]);
   const [processed, setProcessed] = useState<boolean>(false);
@@ -26,32 +25,32 @@ export default function FollowingPostsList() {
         try {
           await getFollowingPosts(user.uid).then((res) => {
             setPosts(res);
+            setProcessed(true);
           });
+        } catch (error) {
           setProcessed(true);
-        } catch (error) {}
-      }
-      if (!currentUser) {
-        setProcessed(true);
+        }
       }
     };
     getPosts();
   }, [user]);
 
-  if (!currentUser && processed) {
+  if (!user && !loading) {
     return (
-      <div className='py-20 md:py-10 w-full flex flex-col items-center space-y-10'>
-        <span className='text-zinc-700 dark:text-zinc-400 text-xl font-thin'>
-          Uh-oh... <br /> <span className='text-2xl'>There is nothing here, annonymous.</span>
-        </span>
+      <div className='py-20 md:py-10 w-full  flex flex-col items-center justify-center space-y-10 '>
+        <span className='text-zinc-700 dark:text-zinc-400 text-3xl font-thin text-center'>Uh-oh...</span>
         <div className='w-full flex justify-center'>
           <NoResults className=' w-64 h-80' />
         </div>
 
+        <span className='text-zinc-700 dark:text-zinc-400 text-2xl font-medium text-center'>
+          Nothing here, annonymous.
+        </span>
+
         <Link
           href='/signin'
-          className='font-normal text-zinc-700 dark:text-zinc-200 text-2xl bg-emerald-500 rounded-full px-10 py-2'>
-          <SearchIcon />
-          Sign up here!
+          className='font-normal  text-zinc-200 text-2xl bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-lg px-10 py-2'>
+          Sign in here!
         </Link>
       </div>
     );
@@ -67,35 +66,34 @@ export default function FollowingPostsList() {
     );
   }
 
+  if (posts?.length === 0 && processed) {
+    return (
+      <div className='py-20 md:py-10 w-full flex flex-col items-center space-y-10'>
+        <span className='text-zinc-700 dark:text-zinc-400 text-2xl font-thin text-center'>Uh-oh...</span>
+        <div className='w-full flex justify-center'>
+          <NoResults className=' w-64 h-80' />
+        </div>
+        <span className='text-2xl text-center text-zinc-700 dark:text-zinc-400 '>
+          Quite empty here. <br />
+          Have you tried searching?
+        </span>
+
+        <Link
+          href='/explore'
+          className='font-normal  text-zinc-200 text-2xl bg-gradient-to-r from-emerald-500 to-emerald-700 rounded-lg px-10 py-2'>
+          <SearchIcon />
+          Start here!
+        </Link>
+      </div>
+    );
+  }
+
   if (posts?.length > 0) {
     return (
       <div className='py-8 w-full flex flex-col items-center space-y-10 '>
         {posts.map((post, idx) => (
           <PostDetails key={idx} id={post.id as string} />
         ))}
-      </div>
-    );
-  }
-  if (posts?.length === 0 && processed) {
-    return (
-      <div className='py-20 md:py-10 w-full flex flex-col items-center space-y-10'>
-        <span className='text-zinc-700 dark:text-zinc-400 text-xl font-thin'>
-          Uh-oh... <br />{' '}
-          <span className='text-2xl'>
-            Quite empty here. <br />
-            Have you tried searching?
-          </span>
-        </span>
-        <div className='w-full flex justify-center'>
-          <NoResults className=' w-64 h-80' />
-        </div>
-
-        <Link
-          href='/explore'
-          className='font-normal text-zinc-700 dark:text-zinc-200 text-2xl bg-emerald-500 rounded-full px-10 py-2'>
-          <SearchIcon />
-          Start here!
-        </Link>
       </div>
     );
   }
