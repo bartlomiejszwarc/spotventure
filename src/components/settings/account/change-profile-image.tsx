@@ -42,7 +42,7 @@ export default function ChangeProfileImage({onImageChange, user}: Props) {
             <PhotoIcon className='text-zinc-300' />
             <input
               type='file'
-              className='w-0 h-0'
+              className='hidden'
               ref={inputRef}
               onChange={(e) => {
                 handleChangeProfileImage(e.target);
