@@ -146,7 +146,7 @@ function CreatePostDialog({isSidenavOpen}: Props) {
             </Button>
           </PopoverTrigger>
           <PopoverContent className='w-auto p-0'>
-            <Calendar mode='single' selected={postDate} onSelect={setPostDate} initialFocus />
+            <Calendar mode='single' selected={postDate} onSelect={setPostDate} />
           </PopoverContent>
         </Popover>
       );
