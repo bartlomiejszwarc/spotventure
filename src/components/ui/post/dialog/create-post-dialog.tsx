@@ -32,8 +32,7 @@ import {useAuthState} from 'react-firebase-hooks/auth';
 import CreatePostDialogSpinner from './create-post-dialog-spinner';
 import CreatePostDialogSuccess from './create-post-dialog-success';
 import SdCardAlertIcon from '@mui/icons-material/SdCardAlert';
-import {getAuth} from 'firebase/auth';
-import {useRouter} from 'next/navigation';
+import {useForceLogin} from '@/hooks/auth/useForceLogin';
 
 interface Props {
   isSidenavOpen: boolean;
@@ -59,12 +58,9 @@ function CreatePostDialog({isSidenavOpen}: Props) {
     const [postIsAvailableAnyTime, setPostIsAvailableAnyTime] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    const auth = getAuth();
-    const currentUser = auth.currentUser;
-    const router = useRouter();
-    if (!currentUser) {
-      router.push('/signin');
-    }
+    const {forceLogin} = useForceLogin();
+
+    forceLogin();
 
     const handleOnChooseButtonClick = () => {
       if (fileInputRef.current) {

@@ -8,18 +8,16 @@ import NotificationSkeleton from '../skeletons/notification-skeleton';
 import NoResults from '../svgs/NoResults';
 import {getAuth} from 'firebase/auth';
 import {useRouter} from 'next/navigation';
+import {useForceLogin} from '@/hooks/auth/useForceLogin';
 
 function NotificationList() {
   const {user} = useUserContext();
   const {getUserNotifications} = useNotifications();
   const [notifications, setNotifications] = useState<INotification[] | null>([]);
   const [processed, setProcessed] = useState<boolean>(false);
-  const auth = getAuth();
-  const currentUser = auth.currentUser;
-  const router = useRouter();
-  if (!currentUser) {
-    router.push('/signin');
-  }
+  const {forceLogin} = useForceLogin();
+  forceLogin();
+
   useEffect(() => {
     const getNotifications = async () => {
       try {

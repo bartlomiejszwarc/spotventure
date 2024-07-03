@@ -1,8 +1,6 @@
 import NotificationList from '@/components/ui/notifications/notification-list';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import {getAuth} from 'firebase/auth';
-import {Router} from 'lucide-react';
-import {useRouter} from 'next/navigation';
+
 function Page() {
   return (
     <div className='pt-20 md:pt-6 md:pl-6'>
