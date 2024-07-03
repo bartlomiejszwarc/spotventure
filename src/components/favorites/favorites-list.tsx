@@ -6,6 +6,8 @@ import {IPost} from '@/interfaces/post-interface';
 import LayoutPosts from '@/layouts/layout-posts';
 import {useState, useEffect} from 'react';
 import PostPreviewCard from '../ui/card/post/post-preview-card';
+import {getAuth} from 'firebase/auth';
+import {useRouter} from 'next/navigation';
 
 export default function FavoritesList() {
   const {getPostData} = useGetPostData();
@@ -13,7 +15,12 @@ export default function FavoritesList() {
 
   const [userFavorites, setUserFavorites] = useState<IPost[]>([]);
   const [processed, setProcessed] = useState<boolean>(false);
-
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const router = useRouter();
+  if (!currentUser) {
+    router.push('/signin');
+  }
   useEffect(() => {
     if (user && !processed) {
       const fetchUserFavorites = async () => {

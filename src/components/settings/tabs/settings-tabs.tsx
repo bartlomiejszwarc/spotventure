@@ -5,9 +5,17 @@ import SettingsTabsContent from './settings-tabs-content';
 import SettingsPageAccount from '../account/settings-page-account';
 import {createContext} from 'react';
 import SettingsPageSecuity from '../security/settings-page-secuity';
+import {getAuth} from 'firebase/auth';
+import {useRouter} from 'next/navigation';
 
 export const TabContext = createContext('account');
 export default function SettingsTabs() {
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  const router = useRouter();
+  if (!currentUser) {
+    router.push('/signin');
+  }
   const [activeTab, setActiveTab] = useState<string>('account');
   const tabChange = (tab: string) => {
     setActiveTab(tab);
