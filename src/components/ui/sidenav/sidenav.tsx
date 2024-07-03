@@ -17,6 +17,14 @@ function SideNav() {
   const path = usePathname();
   const [loading, setLoading] = useState<boolean>(true);
 
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (open) changeStyle();
+    setListOpen(false);
+    setOpen(false);
+  }, [pathname]);
+
   useEffect(() => {
     if (width && width > 768) {
       setIsMobile(false);
